@@ -9,39 +9,108 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Lombok constructor expecting all attributes of the building to be instantiated.
+ * @return Building instance
+ */
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
+
 public class Elevator {
+    /**
+     * Stores the elevator's number
+     * @return Number of that elevator instance.
+     */
     @Getter
     private int number;
+
+    /**
+     * Direction the elevator is about to move.
+     * @return 0 if no direction, 1 if direction is upwards, 2 if direction is downwards.
+     * @oaram Integer value representing the corresponding commitedDirection.
+     */
     @Getter
     @Setter
     private int commitedDirection;
+
+    /**
+     * Elevators acceleration in m/sec^2. Downwards is negative signed.
+     * @return Current acceleration value in m/sec^2.
+     * @oaram Current acceleration in m/sec^2
+     */
     @Getter
     @Setter
     private int acceleration;
+
+    /**
+     * Indicating if the door is closed or open.
+     * @return 0 if door is closed, 1 if door is open.
+     * @oaram Status, 0 or 1 depending of the doors current status.
+     */
     @Getter
     @Setter
     private int doorStatus;
+
+    /**
+     * Position of the elevator within the building.
+     * @return Floor the elevator is currently in.
+     * @oaram Floor object that represents the elevators position.
+     */
     @Getter
     @Setter
     private Floor floor;
+
+    /**
+     * Height of the elevator from the ground floor.
+     * @return Provides the current location of the specified elevator in feet from the bottom of the building.
+     * @oaram Current location in feet.
+     */
     @Getter
     @Setter
     private int position;
+
+    /**
+     * Speed of the elevator in m/s.
+     * @return Current speed.
+     * @oaram Current speed.
+     */
     @Getter
     @Setter
     private int speed;
+
+    /**
+     * How much load the elevator is facing.
+     * @return Load in kg.
+     * @oaram Load in kg.
+     */
     @Getter
     @Setter
     private int weight;
+
+    /**
+     * Elevators max. capacity in kg.
+     * @return the max. capacity.
+     */
     @Getter
     private int capacity;
+
+    /**
+     * Next Floor the elevator is about to move to.
+     * @return The destination floor.
+     * @oaram The destination floor.
+     */
     @Getter
     @Setter
     private Floor Target;
 
+    /**
+     * The elevator requesting buttons within the building.
+     */
     private HashMap<Floor, Boolean> floorButtons;
 
+    /**
+     * Status on the services floors of the building by that elevator.
+     * @return List of floors which are serviced within the building.
+     */
     public List<Floor> getServicedFloors() {
         return new ArrayList<Floor>(floorButtons.keySet());
     }
