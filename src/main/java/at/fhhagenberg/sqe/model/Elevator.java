@@ -9,13 +9,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Lombok constructor expecting all attributes of the building to be instantiated.
- * @return Building instance
- */
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 
+/**
+ * Represent the data model of a single elevator
+ */
 public class Elevator {
+    public Elevator(int number, int commitedDirection, int acceleration, int doorStatus, Floor floor, int position, int speed, int weight, int capacity, Floor target, HashMap<Floor, Boolean> floorButtons) {
+        if(commitedDirection!=0&&commitedDirection!=1&&commitedDirection!=2) {
+            throw new IllegalArgumentException("Constructor: Commited direction has a range from 0 to 2");
+        }
+
+        if(doorStatus!=1&&doorStatus!=2) {
+            throw  new IllegalArgumentException("Constructor: Door status can either be 1 or 2");
+        }
+        this.number = number;
+        this.commitedDirection = commitedDirection;
+        this.acceleration = acceleration;
+        this.doorStatus = doorStatus;
+        this.floor = floor;
+        this.position = position;
+        this.speed = speed;
+        this.weight = weight;
+        this.capacity = capacity;
+        Target = target;
+        this.floorButtons = floorButtons;
+    }
+
     /**
      * Stores the elevator's number
      * @return Number of that elevator instance.
@@ -29,7 +48,6 @@ public class Elevator {
      * @oaram Integer value representing the corresponding commitedDirection.
      */
     @Getter
-    @Setter
     private int commitedDirection;
 
     /**
@@ -47,7 +65,6 @@ public class Elevator {
      * @oaram Status, 0 or 1 depending of the doors current status.
      */
     @Getter
-    @Setter
     private int doorStatus;
 
     /**
@@ -113,5 +130,29 @@ public class Elevator {
      */
     public List<Floor> getServicedFloors() {
         return new ArrayList<Floor>(floorButtons.keySet());
+    }
+
+    public void setCommitedDirection(int commitedDirection) {
+        if(commitedDirection==0||commitedDirection==1||commitedDirection==2) {
+            this.commitedDirection = commitedDirection;
+        }else{
+            throw new IllegalArgumentException("Set: Commited direction has a range from 0 to 2");
+        }
+    }
+
+    public void setDoorStatus(int doorStatus) {
+        if(doorStatus==1||doorStatus==2) {
+            this.doorStatus = doorStatus;
+        }else{
+            throw  new IllegalArgumentException("Set: Door status can either be 1 or 2");
+        }
+    }
+
+    public Boolean getFloorButtonStatus(Floor floor){
+        if(floorButtons.containsKey(floor)) {
+            return floorButtons.get(floor);
+        }else{
+            throw new IllegalArgumentException("Floor Button is not present in this elevator");
+        }
     }
 }
