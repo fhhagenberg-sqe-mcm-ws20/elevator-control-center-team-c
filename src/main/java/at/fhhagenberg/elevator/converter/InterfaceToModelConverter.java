@@ -1,9 +1,9 @@
-package at.fhhagenberg.sqe.converter;
+package at.fhhagenberg.elevator.converter;
 
-import at.fhhagenberg.sqe.model.Building;
-import at.fhhagenberg.sqe.model.Elevator;
-import at.fhhagenberg.sqe.model.Floor;
-import at.fhhagenberg.sqe.model.IElevator;
+import at.fhhagenberg.elevator.model.Building;
+import at.fhhagenberg.elevator.model.Elevator;
+import at.fhhagenberg.elevator.model.Floor;
+import at.fhhagenberg.elevator.model.IElevator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 

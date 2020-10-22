@@ -1,9 +1,9 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.elevator;
 
-import at.fhhagenberg.sqe.converter.InterfaceToModelConverter;
-import at.fhhagenberg.sqe.model.Building;
-import at.fhhagenberg.sqe.model.Floor;
-import at.fhhagenberg.sqe.model.IElevator;
+import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
+import at.fhhagenberg.elevator.model.Building;
+import at.fhhagenberg.elevator.model.Floor;
+import at.fhhagenberg.elevator.model.IElevator;
 import org.junit.jupiter.api.Test;
 
 import java.rmi.RemoteException;

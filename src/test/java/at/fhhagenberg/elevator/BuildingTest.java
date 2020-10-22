@@ -1,6 +1,6 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.elevator;
 
-import at.fhhagenberg.sqe.model.Building;
+import at.fhhagenberg.elevator.model.Building;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

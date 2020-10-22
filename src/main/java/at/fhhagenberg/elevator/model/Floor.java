@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe.model;
+package at.fhhagenberg.elevator.model;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

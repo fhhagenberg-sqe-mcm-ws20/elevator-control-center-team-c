@@ -1,7 +1,7 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.elevator;
 
-import at.fhhagenberg.sqe.model.Elevator;
-import at.fhhagenberg.sqe.model.Floor;
+import at.fhhagenberg.elevator.model.Elevator;
+import at.fhhagenberg.elevator.model.Floor;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
