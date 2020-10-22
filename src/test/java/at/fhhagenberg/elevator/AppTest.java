@@ -41,7 +41,6 @@ public class AppTest {
     public void testButtonClick(FxRobot robot) {
         // when:
         robot.clickOn(".button");
-
         // or (lookup by css class):
         FxAssert.verifyThat(".button", LabeledMatchers.hasText("Clicked!"));
     }
