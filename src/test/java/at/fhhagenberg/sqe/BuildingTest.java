@@ -5,10 +5,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BuildingTest {
+
+    @Test
+    public void testConstructorWhenFloorHeightIsNotNegative() {
+        Building building = new Building(new ArrayList<>(), new ArrayList<>(), 100);
+        assertEquals(100, building.getFloorHeight());
+    }
+
     @Test
     public void testConstructorWhenFloorHeightIsNegative() {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
@@ -19,7 +27,7 @@ public class BuildingTest {
     }
 
     @Test
-    public void testsetFloorHeightWhenFloorHeightIsNegative() {
+    public void testSetFloorHeightWhenFloorHeightIsNegative() {
         Building building = new Building(new ArrayList<>(), new ArrayList<>(), 100);
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 building.setFloorHeight(-100));

@@ -56,6 +56,18 @@ public class ElevatorTest {
     }
 
     @Test
+    public void testSetCommitedDirectionWhenCommitedDirectionIsInRange() {
+        HashMap<Floor, Boolean> floorButtons = new HashMap<>();
+        Elevator elevator = new Elevator(1, 1, 1, 1, null, 1, 1, 1, 1, null, floorButtons);
+        elevator.setCommitedDirection(0);
+        assertEquals(0, elevator.getCommitedDirection());
+        elevator.setCommitedDirection(1);
+        assertEquals(1, elevator.getCommitedDirection());
+        elevator.setCommitedDirection(2);
+        assertEquals(2, elevator.getCommitedDirection());
+    }
+
+    @Test
     public void testSetCommitedDirectionWhenCommitedDirectionIsOutOfRange() {
         HashMap<Floor, Boolean> floorButtons = new HashMap<>();
         Elevator elevator = new Elevator(1, 1, 1, 1, null, 1, 1, 1, 1, null, floorButtons);
@@ -63,6 +75,16 @@ public class ElevatorTest {
         String expectedMessage = "Set: Commited direction has a range from 0 to 2";
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void testSetDoorStatusWhenDoorStatusIsInRange() {
+        HashMap<Floor, Boolean> floorButtons = new HashMap<>();
+        Elevator elevator = new Elevator(1, 1, 1, 1, null, 1, 1, 1, 1, null, floorButtons);
+        elevator.setDoorStatus(1);
+        assertEquals(1, elevator.getDoorStatus());
+        elevator.setDoorStatus(2);
+        assertEquals(2, elevator.getDoorStatus());
     }
 
     @Test
@@ -74,6 +96,21 @@ public class ElevatorTest {
         String actualMessage = exception.getMessage();
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+    @Test
+    public void testGetFloorButtonStatusWhenElevatorDoesServiceTheFloor() {
+        HashMap<Floor, Boolean> floorButtons = new HashMap<>();
+        Floor floor0 = new Floor(0, false, false);
+        Floor floor1 = new Floor(1, false, false);
+        Floor floor2 = new Floor(2, false, false);
+
+        floorButtons.put(floor0, false);
+        floorButtons.put(floor1, true);
+        Elevator elevator = new Elevator(1, 1, 1, 1, null, 1, 1, 1, 1, null, floorButtons);
+        assertEquals(false, elevator.getFloorButtonStatus(floor0));
+        assertEquals(true, elevator.getFloorButtonStatus(floor1));
+    }
+
 
     @Test
     public void testGetFloorButtonStatusWhenElevatorDoesntServiceTheFloor() {
