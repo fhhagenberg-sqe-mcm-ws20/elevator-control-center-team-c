@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.elevator;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
