@@ -42,12 +42,4 @@ public class Floor {
     @Getter
     @Setter
     private boolean buttonDown;
-
-    /**
-     * The floor's height in foot.
-     *
-     * @return The height of the Floor in feet.
-     */
-    @Getter
-    private int height;
 }

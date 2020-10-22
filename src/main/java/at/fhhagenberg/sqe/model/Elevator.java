@@ -1,7 +1,5 @@
 package at.fhhagenberg.sqe.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +13,12 @@ import java.util.List;
  */
 public class Elevator {
     public Elevator(int number, int commitedDirection, int acceleration, int doorStatus, Floor floor, int position, int speed, int weight, int capacity, Floor target, HashMap<Floor, Boolean> floorButtons) {
-        if(commitedDirection!=0&&commitedDirection!=1&&commitedDirection!=2) {
+        if (commitedDirection != 0 && commitedDirection != 1 && commitedDirection != 2) {
             throw new IllegalArgumentException("Constructor: Commited direction has a range from 0 to 2");
         }
 
-        if(doorStatus!=1&&doorStatus!=2) {
-            throw  new IllegalArgumentException("Constructor: Door status can either be 1 or 2");
+        if (doorStatus != 1 && doorStatus != 2) {
+            throw new IllegalArgumentException("Constructor: Door status can either be 1 or 2");
         }
         this.number = number;
         this.commitedDirection = commitedDirection;
@@ -37,6 +35,7 @@ public class Elevator {
 
     /**
      * Stores the elevator's number
+     *
      * @return Number of that elevator instance.
      */
     @Getter
@@ -44,6 +43,7 @@ public class Elevator {
 
     /**
      * Direction the elevator is about to move.
+     *
      * @return 0 if no direction, 1 if direction is upwards, 2 if direction is downwards.
      * @oaram Integer value representing the corresponding commitedDirection.
      */
@@ -52,6 +52,7 @@ public class Elevator {
 
     /**
      * Elevators acceleration in m/sec^2. Downwards is negative signed.
+     *
      * @return Current acceleration value in m/sec^2.
      * @oaram Current acceleration in m/sec^2
      */
@@ -61,6 +62,7 @@ public class Elevator {
 
     /**
      * Indicating if the door is closed or open.
+     *
      * @return 0 if door is closed, 1 if door is open.
      * @oaram Status, 0 or 1 depending of the doors current status.
      */
@@ -69,6 +71,7 @@ public class Elevator {
 
     /**
      * Position of the elevator within the building.
+     *
      * @return Floor the elevator is currently in.
      * @oaram Floor object that represents the elevators position.
      */
@@ -78,6 +81,7 @@ public class Elevator {
 
     /**
      * Height of the elevator from the ground floor.
+     *
      * @return Provides the current location of the specified elevator in feet from the bottom of the building.
      * @oaram Current location in feet.
      */
@@ -87,6 +91,7 @@ public class Elevator {
 
     /**
      * Speed of the elevator in m/s.
+     *
      * @return Current speed.
      * @oaram Current speed.
      */
@@ -96,6 +101,7 @@ public class Elevator {
 
     /**
      * How much load the elevator is facing.
+     *
      * @return Load in kg.
      * @oaram Load in kg.
      */
@@ -105,6 +111,7 @@ public class Elevator {
 
     /**
      * Elevators max. capacity in kg.
+     *
      * @return the max. capacity.
      */
     @Getter
@@ -112,6 +119,7 @@ public class Elevator {
 
     /**
      * Next Floor the elevator is about to move to.
+     *
      * @return The destination floor.
      * @oaram The destination floor.
      */
@@ -126,6 +134,7 @@ public class Elevator {
 
     /**
      * Status on the services floors of the building by that elevator.
+     *
      * @return List of floors which are serviced within the building.
      */
     public List<Floor> getServicedFloors() {
@@ -133,25 +142,25 @@ public class Elevator {
     }
 
     public void setCommitedDirection(int commitedDirection) {
-        if(commitedDirection==0||commitedDirection==1||commitedDirection==2) {
+        if (commitedDirection == 0 || commitedDirection == 1 || commitedDirection == 2) {
             this.commitedDirection = commitedDirection;
-        }else{
+        } else {
             throw new IllegalArgumentException("Set: Commited direction has a range from 0 to 2");
         }
     }
 
     public void setDoorStatus(int doorStatus) {
-        if(doorStatus==1||doorStatus==2) {
+        if (doorStatus == 1 || doorStatus == 2) {
             this.doorStatus = doorStatus;
-        }else{
-            throw  new IllegalArgumentException("Set: Door status can either be 1 or 2");
+        } else {
+            throw new IllegalArgumentException("Set: Door status can either be 1 or 2");
         }
     }
 
-    public Boolean getFloorButtonStatus(Floor floor){
-        if(floorButtons.containsKey(floor)) {
+    public Boolean getFloorButtonStatus(Floor floor) {
+        if (floorButtons.containsKey(floor)) {
             return floorButtons.get(floor);
-        }else{
+        } else {
             throw new IllegalArgumentException("Floor Button is not present in this elevator");
         }
     }

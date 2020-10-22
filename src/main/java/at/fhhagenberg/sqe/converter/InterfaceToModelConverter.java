@@ -37,7 +37,7 @@ public class InterfaceToModelConverter {
         List<Floor> floors = getFloorsFromInterface();
         List<Elevator> elevators = getElevatorsFromInterface(floors);
 
-        return new Building(elevators, floors);
+        return new Building(elevators, floors, getFloorHeight());
     }
 
     /**
@@ -51,7 +51,7 @@ public class InterfaceToModelConverter {
         List<Floor> floors = new ArrayList<Floor>();
         int numberOfFloors = elevatorConnection.getFloorNum();
         for (int i = 0; i < numberOfFloors; i++) {
-            floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i), elevatorConnection.getFloorHeight()));
+            floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
         }
         return floors;
     }
@@ -79,5 +79,9 @@ public class InterfaceToModelConverter {
             elevators.add(new Elevator(i, elevatorConnection.getCommittedDirection(i), elevatorConnection.getElevatorAccel(i), elevatorConnection.getElevatorDoorStatus(i), floors.get(elevatorConnection.getElevatorFloor(i)), elevatorConnection.getElevatorPosition(i), elevatorConnection.getElevatorSpeed(i), elevatorConnection.getElevatorWeight(i), elevatorConnection.getElevatorCapacity(i), floors.get(elevatorConnection.getTarget(i)), floorButtonMap));
         }
         return elevators;
+    }
+
+    private int getFloorHeight() throws RemoteException {
+        return elevatorConnection.getFloorHeight();
     }
 }

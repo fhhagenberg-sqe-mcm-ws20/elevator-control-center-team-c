@@ -13,9 +13,9 @@ public class ElevatorTest {
     @Test
     public void testGetServicedFloorsWhenThereAreFloorButtons() {
         HashMap<Floor, Boolean> floorButtons = new HashMap<>();
-        Floor floor0 = new Floor(0, false, false, 80);
-        Floor floor1 = new Floor(1, false, false, 80);
-        Floor floor2 = new Floor(2, false, false, 80);
+        Floor floor0 = new Floor(0, false, false);
+        Floor floor1 = new Floor(1, false, false);
+        Floor floor2 = new Floor(2, false, false);
         floorButtons.put(floor0, true);
         floorButtons.put(floor1, false);
         floorButtons.put(floor2, true);
@@ -78,9 +78,9 @@ public class ElevatorTest {
     @Test
     public void testGetFloorButtonStatusWhenElevatorDoesntServiceTheFloor() {
         HashMap<Floor, Boolean> floorButtons = new HashMap<>();
-        Floor floor0 = new Floor(0, false, false, 90);
-        Floor floor1 = new Floor(1, false, false, 90);
-        Floor floor2 = new Floor(2, false, false, 90);
+        Floor floor0 = new Floor(0, false, false);
+        Floor floor1 = new Floor(1, false, false);
+        Floor floor2 = new Floor(2, false, false);
 
         floorButtons.put(floor0, false);
         floorButtons.put(floor1, false);
@@ -91,7 +91,7 @@ public class ElevatorTest {
     @Test
     public void testGetFloorButtonStatusWhenElevatorServicesNoFloor() {
         HashMap<Floor, Boolean> floorButtons = new HashMap<>();
-        Floor floor0 = new Floor(0, false, false, 90);
+        Floor floor0 = new Floor(0, false, false);
         Elevator elevator = new Elevator(1, 1, 1, 1, null, 1, 1, 1, 1, null, floorButtons);
         assertThrows(IllegalArgumentException.class, () -> elevator.getFloorButtonStatus(floor0));
     }

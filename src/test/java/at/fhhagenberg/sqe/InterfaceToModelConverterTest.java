@@ -15,14 +15,14 @@ import static org.mockito.Mockito.*;
 
 public class InterfaceToModelConverterTest {
     @Test
-    public void testConvertIfGetCommitedDirectionsIsCalledAccordingToTheNumberOfElevators() throws RemoteException {
+    public void testConvertIfItCreatesRightAmountOfElevators() throws RemoteException {
         IElevator interfaceMock = mock(IElevator.class);
         InterfaceToModelConverter interfaceToModelConverter = new InterfaceToModelConverter(interfaceMock);
         when(interfaceMock.getElevatorNum()).thenReturn(5);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getFloorNum()).thenReturn(1);
-        interfaceToModelConverter.convert();
-        verify(interfaceMock, times(5)).getCommittedDirection(anyInt());
+        Building building = interfaceToModelConverter.convert();
+        assertEquals(5, building.getNumberOfElevators());
     }
 
     @Test
@@ -194,6 +194,53 @@ public class InterfaceToModelConverterTest {
 
             }
         }
+    }
+
+    @Test
+    public void testConvertIfItCreatesRightAmountOfFloors() throws RemoteException {
+        IElevator interfaceMock = mock(IElevator.class);
+        InterfaceToModelConverter interfaceToModelConverter = new InterfaceToModelConverter(interfaceMock);
+        when(interfaceMock.getElevatorNum()).thenReturn(0);
+        when(interfaceMock.getFloorNum()).thenReturn(5);
+        Building building = interfaceToModelConverter.convert();
+        assertEquals(5, building.getNumberOfFloors());
+    }
+
+    @Test
+    public void testConvertIfButtonDownIsConvertedCorrectly() throws RemoteException {
+        IElevator interfaceMock = mock(IElevator.class);
+        InterfaceToModelConverter interfaceToModelConverter = new InterfaceToModelConverter(interfaceMock);
+        when(interfaceMock.getElevatorNum()).thenReturn(0);
+        when(interfaceMock.getFloorNum()).thenReturn(2);
+        when(interfaceMock.getFloorButtonDown(0)).thenReturn(true);
+        when(interfaceMock.getFloorButtonDown(1)).thenReturn(false);
+        Building building = interfaceToModelConverter.convert();
+        assertTrue(building.getFloor(0).isButtonDown());
+        assertFalse(building.getFloor(1).isButtonDown());
+    }
+
+    @Test
+    public void testConvertIfButtonUpIsConvertedCorrectly() throws RemoteException {
+        IElevator interfaceMock = mock(IElevator.class);
+        InterfaceToModelConverter interfaceToModelConverter = new InterfaceToModelConverter(interfaceMock);
+        when(interfaceMock.getElevatorNum()).thenReturn(0);
+        when(interfaceMock.getFloorNum()).thenReturn(2);
+        when(interfaceMock.getFloorButtonUp(0)).thenReturn(true);
+        when(interfaceMock.getFloorButtonUp(1)).thenReturn(false);
+        Building building = interfaceToModelConverter.convert();
+        assertTrue(building.getFloor(0).isButtonUp());
+        assertFalse(building.getFloor(1).isButtonUp());
+    }
+
+    @Test
+    public void testConvertIfHeightIsConvertedCorrectly() throws RemoteException {
+        IElevator interfaceMock = mock(IElevator.class);
+        InterfaceToModelConverter interfaceToModelConverter = new InterfaceToModelConverter(interfaceMock);
+        when(interfaceMock.getElevatorNum()).thenReturn(0);
+        when(interfaceMock.getFloorNum()).thenReturn(1);
+        when(interfaceMock.getFloorHeight()).thenReturn(150);
+        Building building = interfaceToModelConverter.convert();
+        assertEquals(150, building.getFloorHeight());
     }
 
     @Test
