@@ -3,7 +3,7 @@ package at.fhhagenberg.elevator;
 import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Floor;
-import at.fhhagenberg.elevator.model.IElevator;
+import sqe.IElevator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
