@@ -29,7 +29,7 @@ public class Elevator {
         this.speed = speed;
         this.weight = weight;
         this.capacity = capacity;
-        Target = target;
+        this.target = target;
         this.floorButtons = floorButtons;
     }
 
@@ -125,7 +125,7 @@ public class Elevator {
      */
     @Getter
     @Setter
-    private Floor Target;
+    private Floor target;
 
     /**
      * The elevator requesting buttons within the building.
@@ -163,5 +163,22 @@ public class Elevator {
         } else {
             throw new IllegalArgumentException("Floor Button is not present in this elevator");
         }
+    }
+
+    public void copyValues(Elevator elevator, List<Floor> floors) {
+        this.commitedDirection = elevator.commitedDirection;
+        this.acceleration = elevator.acceleration;
+        this.doorStatus = elevator.doorStatus;
+        this.floor = floors.get(elevator.floor.getNumber());
+        this.position = elevator.position;
+        this.speed = elevator.speed;
+        this.weight = elevator.weight;
+        this.capacity = elevator.capacity;
+        this.target = floors.get(elevator.target.getNumber());
+        copyButtonStates(elevator.floorButtons);
+    }
+
+    private void copyButtonStates(HashMap<Floor, Boolean> floorButtons) {
+        floorButtons.forEach((key, value) -> this.floorButtons.put(key, floorButtons.get(key)));
     }
 }

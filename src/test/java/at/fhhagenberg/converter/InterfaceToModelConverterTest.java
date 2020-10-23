@@ -1,14 +1,16 @@
-package at.fhhagenberg.elevator;
+package at.fhhagenberg.converter;
 
 import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import at.fhhagenberg.elevator.model.Building;
+import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
-import sqe.IElevator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sqe.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +32,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getFloorNum()).thenReturn(1);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(5, building.getNumberOfElevators());
     }
@@ -41,7 +44,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(0, building.getElevator(0).getNumber());
     }
@@ -53,7 +57,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getCommitedDirection());
     }
@@ -65,7 +70,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getElevatorAccel(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getAcceleration());
     }
@@ -76,7 +82,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getDoorStatus());
     }
@@ -88,7 +95,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getElevatorFloor(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getFloor().getNumber());
     }
@@ -100,7 +108,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getElevatorPosition(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getPosition());
     }
@@ -112,7 +121,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getElevatorSpeed(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getSpeed());
     }
@@ -124,7 +134,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getElevatorWeight(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getWeight());
     }
@@ -136,7 +147,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getElevatorCapacity(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getCapacity());
     }
@@ -148,7 +160,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getTarget(0)).thenReturn(2);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(2, building.getElevator(0).getTarget().getNumber());
     }
@@ -162,7 +175,9 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getServicesFloors(0, 2)).thenReturn(true);
         when(interfaceMock.getServicesFloors(0, 4)).thenReturn(true);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
+
         List<Floor> servicedFloors = building.getElevator(0).getServicedFloors();
         List<Integer> servicedFloorsNumber = new ArrayList<>();
         servicedFloorsNumber.add(servicedFloors.get(0).getNumber());
@@ -187,7 +202,9 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorButton(0, 2)).thenReturn(false);
         when(interfaceMock.getElevatorButton(0, 4)).thenReturn(true);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
+
         List<Floor> servicedFloors = building.getElevator(0).getServicedFloors();
         assertEquals(3, servicedFloors.size());
 
@@ -210,7 +227,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorNum()).thenReturn(0);
         when(interfaceMock.getFloorNum()).thenReturn(5);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertEquals(5, building.getNumberOfFloors());
     }
@@ -222,7 +240,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorButtonDown(0)).thenReturn(true);
         when(interfaceMock.getFloorButtonDown(1)).thenReturn(false);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertTrue(building.getFloor(0).isButtonDown());
         assertFalse(building.getFloor(1).isButtonDown());
@@ -235,7 +254,8 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorButtonUp(0)).thenReturn(true);
         when(interfaceMock.getFloorButtonUp(1)).thenReturn(false);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
         assertTrue(building.getFloor(0).isButtonUp());
         assertFalse(building.getFloor(1).isButtonUp());
@@ -247,8 +267,69 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getFloorHeight()).thenReturn(150);
 
-        Building building = interfaceToModelConverter.convert();
+        Building building = new Building();
+        interfaceToModelConverter.convert(building);
 
+        assertEquals(150, building.getFloorHeight());
+    }
+
+    @Test
+    public void testConvertIfOverridingValueCorrectly() throws RemoteException {
+        Floor floor1 = new Floor(0, false, false);
+        Floor floor2 = new Floor(1, false, false);
+        HashMap<Floor, Boolean> floorButtons1 = new HashMap<>();
+        floorButtons1.put(floor1, false);
+        floorButtons1.put(floor2, false);
+        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor1, 1, 1, 1, 1, floor2, floorButtons1);
+        List<Elevator> elevators = new ArrayList<>();
+        List<Floor> floors = new ArrayList<>();
+        elevators.add(elevator1);
+        floors.add(floor1);
+        floors.add(floor2);
+
+        Building building = new Building(elevators, floors, 50);
+        when(interfaceMock.getElevatorNum()).thenReturn(1);
+        when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
+        when(interfaceMock.getElevatorAccel(0)).thenReturn(2);
+        when(interfaceMock.getElevatorDoorStatus(0)).thenReturn(2);
+        when(interfaceMock.getElevatorFloor(0)).thenReturn(1);
+        when(interfaceMock.getElevatorPosition(0)).thenReturn(2);
+        when(interfaceMock.getElevatorSpeed(0)).thenReturn(2);
+        when(interfaceMock.getElevatorWeight(0)).thenReturn(2);
+        when(interfaceMock.getElevatorCapacity(0)).thenReturn(2);
+        when(interfaceMock.getTarget(0)).thenReturn(0);
+        when(interfaceMock.getFloorNum()).thenReturn(2);
+        when(interfaceMock.getFloorButtonDown(0)).thenReturn(true);
+        when(interfaceMock.getFloorButtonUp(0)).thenReturn(true);
+        when(interfaceMock.getFloorButtonDown(1)).thenReturn(true);
+        when(interfaceMock.getFloorButtonUp(1)).thenReturn(true);
+        when(interfaceMock.getServicesFloors(0, 0)).thenReturn(true);
+        when(interfaceMock.getServicesFloors(0, 1)).thenReturn(true);
+        when(interfaceMock.getElevatorButton(0, 0)).thenReturn(true);
+        when(interfaceMock.getElevatorButton(0, 1)).thenReturn(true);
+        when(interfaceMock.getFloorButtonUp(1)).thenReturn(true);
+        when(interfaceMock.getFloorHeight()).thenReturn(150);
+
+        interfaceToModelConverter.convert(building);
+
+        assertTrue(building.getFloor(0).isButtonDown());
+        assertTrue(building.getFloor(0).isButtonUp());
+        assertEquals(0, building.getElevator(0).getNumber());
+        assertEquals(2, building.getElevator(0).getCommitedDirection());
+        assertEquals(2, building.getElevator(0).getAcceleration());
+        assertEquals(2, building.getElevator(0).getDoorStatus());
+        assertEquals(1, building.getElevator(0).getFloor().getNumber());
+        assertTrue(building.getElevator(0).getFloor().isButtonUp());
+        assertTrue(building.getElevator(0).getFloor().isButtonDown());
+        assertEquals(2, building.getElevator(0).getPosition());
+        assertEquals(2, building.getElevator(0).getCommitedDirection());
+        assertEquals(2, building.getElevator(0).getSpeed());
+        assertEquals(2, building.getElevator(0).getWeight());
+        assertEquals(2, building.getElevator(0).getCapacity());
+        assertEquals(0, building.getElevator(0).getTarget().getNumber());
+        assertTrue(building.getElevator(0).getTarget().isButtonUp());
+        assertTrue(building.getElevator(0).getTarget().isButtonDown());
+        assertEquals(true, building.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
         assertEquals(150, building.getFloorHeight());
     }
 
@@ -256,6 +337,8 @@ public class InterfaceToModelConverterTest {
     public void testConvertIfRemoteExceptionIsNotCaught() throws RemoteException {
         when(interfaceMock.getElevatorNum()).thenThrow(RemoteException.class);
 
-        assertThrows(RemoteException.class, interfaceToModelConverter::convert);
+        assertThrows(RemoteException.class, () -> {
+            interfaceToModelConverter.convert(null);
+        });
     }
 }

@@ -1,7 +1,9 @@
 package at.fhhagenberg.elevator.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +16,8 @@ public class Building {
      *
      * @return List object containing all the elevators of that building.
      */
+    @Setter
+    @Getter
     private List<Elevator> elevators;
 
     /**
@@ -21,6 +25,8 @@ public class Building {
      *
      * @return List object containing all the floors of that building.
      */
+    @Setter
+    @Getter
     private List<Floor> floors;
 
     @Getter
@@ -33,6 +39,12 @@ public class Building {
         this.elevators = elevators;
         this.floors = floors;
         this.floorHeight = floorHeight;
+    }
+
+    public Building() {
+        this.elevators = new ArrayList<>();
+        this.floors = new ArrayList<>();
+        this.floorHeight = 0;
     }
 
     public Elevator getElevator(int index) {
@@ -56,5 +68,23 @@ public class Building {
             throw new IllegalArgumentException("Setter: Floor height can't be negative");
         }
         this.floorHeight = floorHeight;
+    }
+
+    public void copyValues(Building building) {
+        for (int i = 0; i < this.floors.size(); i++) {
+            floors.get(i).copyValues(building.floors.get(i));
+        }
+        for (int i = 0; i < this.elevators.size(); i++) {
+            elevators.get(i).copyValues(building.elevators.get(i), this.floors);
+        }
+        this.floorHeight = building.floorHeight;
+    }
+
+    public Boolean isEmpty() {
+        if (elevators.size() == 0 && floors.size() == 0 && floorHeight == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

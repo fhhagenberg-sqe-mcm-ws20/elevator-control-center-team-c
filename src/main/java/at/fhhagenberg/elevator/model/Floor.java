@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
  * Lombok constructor expecting all attributes of floor to be instantiated.
  *
@@ -42,4 +44,23 @@ public class Floor {
     @Getter
     @Setter
     private boolean buttonDown;
+
+    public void copyValues(Floor floor) {
+        this.buttonUp = floor.buttonUp;
+        this.buttonDown = floor.buttonDown;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Floor floor = (Floor) o;
+        return number == floor.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number);
+    }
 }

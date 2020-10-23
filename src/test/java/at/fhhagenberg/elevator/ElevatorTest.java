@@ -4,6 +4,7 @@ import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -145,5 +146,40 @@ public class ElevatorTest {
         Elevator elevator = new Elevator(1, 1, 1, 1, null, 1, 1, 1, 1, null, floorButtons);
 
         assertThrows(IllegalArgumentException.class, () -> elevator.getFloorButtonStatus(floor0));
+    }
+
+    @Test
+    public void testCopyValues() {
+        HashMap<Floor, Boolean> floorButtons1 = new HashMap<>();
+        floorButtons1.put(new Floor(1, false, false), false);
+        HashMap<Floor, Boolean> floorButtons2 = new HashMap<>();
+        floorButtons2.put(new Floor(1, true, false), true);
+        List<Floor> floors = new ArrayList<>();
+        Floor floor1 = new Floor(0, false, false);
+        Floor floor2 = new Floor(1, false, false);
+        floors.add(floor1);
+        floors.add(floor2);
+        Floor floor3 = new Floor(0, true, false);
+        Floor floor4 = new Floor(1, true, true);
+        Elevator elevator1 = new Elevator(1, 1, 1, 1, floor1, 1, 1, 1, 1, floor2, floorButtons1);
+        Elevator elevator2 = new Elevator(2, 2, 2, 2, floor4, 2, 2, 2, 2, floor3, floorButtons2);
+
+        elevator1.copyValues(elevator2, floors);
+
+        assertNotSame(elevator1, elevator2);
+        assertEquals(2, elevator1.getCommitedDirection());
+        assertEquals(2, elevator1.getAcceleration());
+        assertEquals(2, elevator1.getDoorStatus());
+        assertNotSame(elevator1.getFloor(), elevator2.getFloor());
+        assertEquals(1, elevator1.getFloor().getNumber());
+        assertEquals(2, elevator1.getPosition());
+        assertEquals(2, elevator1.getCommitedDirection());
+        assertEquals(2, elevator1.getSpeed());
+        assertEquals(2, elevator1.getWeight());
+        assertEquals(2, elevator1.getCapacity());
+        assertNotSame(elevator1.getTarget(), elevator2.getTarget());
+        assertEquals(0, elevator1.getTarget().getNumber());
+        assertEquals(true, elevator1.getFloorButtonStatus(new Floor(1, true, true)));
+
     }
 }

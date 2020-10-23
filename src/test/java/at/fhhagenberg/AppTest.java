@@ -1,5 +1,6 @@
-package at.fhhagenberg.elevator;
+package at.fhhagenberg;
 
+import at.fhhagenberg.elevator.App;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;

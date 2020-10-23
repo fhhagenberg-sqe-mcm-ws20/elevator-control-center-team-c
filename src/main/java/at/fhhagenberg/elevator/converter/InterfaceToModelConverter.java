@@ -3,9 +3,9 @@ package at.fhhagenberg.elevator.converter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
-import sqe.IElevator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import sqe.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -33,12 +33,23 @@ public class InterfaceToModelConverter {
      * @return data model representation of the building as a Building object
      * @throws RemoteException
      */
-    public Building convert() throws RemoteException {
+    public void convert(Building building) throws RemoteException {
+        Long firstClockTick = elevatorConnection.getClockTick();
         List<Floor> floors = getFloorsFromInterface();
         List<Elevator> elevators = getElevatorsFromInterface(floors);
+        Building newBuildingMapping = new Building(elevators, floors, getFloorHeight());
 
-        return new Building(elevators, floors, getFloorHeight());
+        if (compareTicks(firstClockTick, elevatorConnection.getClockTick())) {
+            if (building.isEmpty()) {
+                building.setFloors(newBuildingMapping.getFloors());
+                building.setElevators(newBuildingMapping.getElevators());
+                building.setFloorHeight(newBuildingMapping.getFloorHeight());
+            } else {
+                building.copyValues(newBuildingMapping);
+            }
+        }
     }
+
 
     /**
      * Converts the information about floors from the elevator interface
@@ -83,5 +94,9 @@ public class InterfaceToModelConverter {
 
     private int getFloorHeight() throws RemoteException {
         return elevatorConnection.getFloorHeight();
+    }
+
+    private boolean compareTicks(Long firstClockTick, long secondClockTick) {
+        return firstClockTick == secondClockTick;
     }
 }
