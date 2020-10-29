@@ -87,4 +87,13 @@ public class Building {
             return false;
         }
     }
+
+    public static Floor getFloorFromFloors(Floor floor, List<Floor>floors){
+        for(Floor tempFloor :floors){
+            if(floor.equals(tempFloor)){
+                return tempFloor;
+            }
+        }
+        throw new IllegalArgumentException("Floor isn't in List");
+    }
 }

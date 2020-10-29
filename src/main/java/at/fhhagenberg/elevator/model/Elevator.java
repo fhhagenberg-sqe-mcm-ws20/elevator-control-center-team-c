@@ -141,6 +141,10 @@ public class Elevator {
         return new ArrayList<Floor>(floorButtons.keySet());
     }
 
+    public boolean servicesFloor(Floor floor){
+        return floorButtons.containsKey(floor);
+    }
+
     public void setCommitedDirection(int commitedDirection) {
         if (commitedDirection == 0 || commitedDirection == 1 || commitedDirection == 2) {
             this.commitedDirection = commitedDirection;
@@ -169,16 +173,12 @@ public class Elevator {
         this.commitedDirection = elevator.commitedDirection;
         this.acceleration = elevator.acceleration;
         this.doorStatus = elevator.doorStatus;
-        this.floor = floors.get(elevator.floor.getNumber());
+        this.floor = Building.getFloorFromFloors(elevator.floor,floors);
         this.position = elevator.position;
         this.speed = elevator.speed;
         this.weight = elevator.weight;
         this.capacity = elevator.capacity;
-        this.target = floors.get(elevator.target.getNumber());
-        copyButtonStates(elevator.floorButtons);
-    }
-
-    private void copyButtonStates(HashMap<Floor, Boolean> floorButtons) {
-        floorButtons.forEach((key, value) -> this.floorButtons.put(key, floorButtons.get(key)));
+        this.target=Building.getFloorFromFloors(elevator.target,floors);
+        this.floorButtons=elevator.floorButtons;
     }
 }

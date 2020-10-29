@@ -72,28 +72,30 @@ public class BuildingTest {
 
     @Test
     public void testCopyValues() {
-        Floor floor1 = new Floor(0, false, false);
-        Floor floor2 = new Floor(1, false, true);
-        Floor floor3 = new Floor(0, true, false);
-        Floor floor4 = new Floor(1, true, true);
+        Floor floor01 = new Floor(0, false, false);
+        Floor floor02 = new Floor(1, false, true);
+        Floor floor03 = new Floor(2, false, true);
+        Floor floor11 = new Floor(0, true, false);
+        Floor floor12 = new Floor(1, true, true);
         HashMap<Floor, Boolean> floorButtons1 = new HashMap<>();
-        floorButtons1.put(floor1, false);
-        floorButtons1.put(floor2, false);
+        floorButtons1.put(floor01, false);
+        floorButtons1.put(floor02, false);
+        floorButtons1.put(floor03, false);
         HashMap<Floor, Boolean> floorButtons2 = new HashMap<>();
-        floorButtons2.put(floor3, true);
-        floorButtons2.put(floor4, true);
-        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor1, 1, 1, 1, 1, floor2, floorButtons1);
-        Elevator elevator2 = new Elevator(1, 2, 2, 2, floor4, 2, 2, 2, 2, floor3, floorButtons2);
+        floorButtons2.put(floor11, true);
+        floorButtons2.put(floor12, true);
+        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor01, 1, 1, 1, 1, floor02, floorButtons1);
+        Elevator elevator2 = new Elevator(1, 2, 2, 2, floor12, 2, 2, 2, 2, floor11, floorButtons2);
         List<Elevator> elevators1 = new ArrayList<>();
         List<Floor> floors1 = new ArrayList<>();
         List<Elevator> elevators2 = new ArrayList<>();
         List<Floor> floors2 = new ArrayList<>();
         elevators1.add(elevator1);
-        floors1.add(floor1);
-        floors1.add(floor2);
+        floors1.add(floor01);
+        floors1.add(floor02);
         elevators2.add(elevator2);
-        floors2.add(floor3);
-        floors2.add(floor4);
+        floors2.add(floor11);
+        floors2.add(floor12);
         Building building1 = new Building(elevators1, floors1, 50);
         Building building2 = new Building(elevators2, floors2, 100);
 
@@ -120,7 +122,13 @@ public class BuildingTest {
         assertEquals(2, building1.getElevator(0).getCapacity());
         assertNotSame(building1.getElevator(0).getTarget(), building2.getElevator(0).getTarget());
         assertEquals(0, building1.getElevator(0).getTarget().getNumber());
-        assertEquals(true, building1.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
+        assertTrue(building1.getElevator(0).servicesFloor(new Floor(0, true, true)));
+        assertTrue(building1.getElevator(0).servicesFloor(new Floor(1, true, true)));
+        assertFalse(building1.getElevator(0).servicesFloor(new Floor(2, true, true)));
+        assertTrue(building1.getElevator(0).getFloorButtonStatus(new Floor(0, true, true)));
+        assertTrue(building1.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
+        assertThrows(IllegalArgumentException.class, () -> building1.getElevator(0).getFloorButtonStatus(new Floor(2, true, true)));
+
         assertEquals(100, building1.getFloorHeight());
     }
 }

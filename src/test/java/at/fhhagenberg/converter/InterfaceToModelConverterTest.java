@@ -277,10 +277,18 @@ public class InterfaceToModelConverterTest {
     public void testConvertIfOverridingValueCorrectly() throws RemoteException {
         Floor floor1 = new Floor(0, false, false);
         Floor floor2 = new Floor(1, false, false);
-        HashMap<Floor, Boolean> floorButtons1 = new HashMap<>();
-        floorButtons1.put(floor1, false);
-        floorButtons1.put(floor2, false);
-        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor1, 1, 1, 1, 1, floor2, floorButtons1);
+        Floor floor3 = new Floor(2, false, false);
+        Floor floor4 = new Floor(3, false, false);
+        Floor floor5 = new Floor(4, false, false);
+        Floor floor6 = new Floor(5, false, false);
+
+        HashMap<Floor, Boolean> floorButtons = new HashMap<>();
+        floorButtons.put(floor1, false);
+        floorButtons.put(floor2, false);
+        floorButtons.put(floor3, false);
+        floorButtons.put(floor5, false);
+        floorButtons.put(floor6, false);
+        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor1, 1, 1, 1, 1, floor2, floorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
         elevators.add(elevator1);
@@ -298,15 +306,21 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getElevatorWeight(0)).thenReturn(2);
         when(interfaceMock.getElevatorCapacity(0)).thenReturn(2);
         when(interfaceMock.getTarget(0)).thenReturn(0);
-        when(interfaceMock.getFloorNum()).thenReturn(2);
+        when(interfaceMock.getFloorNum()).thenReturn(7);
         when(interfaceMock.getFloorButtonDown(0)).thenReturn(true);
         when(interfaceMock.getFloorButtonUp(0)).thenReturn(true);
         when(interfaceMock.getFloorButtonDown(1)).thenReturn(true);
         when(interfaceMock.getFloorButtonUp(1)).thenReturn(true);
         when(interfaceMock.getServicesFloors(0, 0)).thenReturn(true);
         when(interfaceMock.getServicesFloors(0, 1)).thenReturn(true);
+        when(interfaceMock.getServicesFloors(0, 3)).thenReturn(true);
+        when(interfaceMock.getServicesFloors(0, 4)).thenReturn(true);
+        when(interfaceMock.getServicesFloors(0, 6)).thenReturn(true);
         when(interfaceMock.getElevatorButton(0, 0)).thenReturn(true);
         when(interfaceMock.getElevatorButton(0, 1)).thenReturn(true);
+        when(interfaceMock.getElevatorButton(0, 3)).thenReturn(true);
+        when(interfaceMock.getElevatorButton(0, 4)).thenReturn(true);
+        when(interfaceMock.getElevatorButton(0, 6)).thenReturn(true);
         when(interfaceMock.getFloorButtonUp(1)).thenReturn(true);
         when(interfaceMock.getFloorHeight()).thenReturn(150);
 
@@ -329,7 +343,20 @@ public class InterfaceToModelConverterTest {
         assertEquals(0, building.getElevator(0).getTarget().getNumber());
         assertTrue(building.getElevator(0).getTarget().isButtonUp());
         assertTrue(building.getElevator(0).getTarget().isButtonDown());
-        assertEquals(true, building.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
+        assertTrue(building.getElevator(0).servicesFloor(new Floor(0, true, true)));
+        assertTrue(building.getElevator(0).servicesFloor(new Floor(1, true, true)));
+        assertFalse(building.getElevator(0).servicesFloor(new Floor(2, true, true)));
+        assertTrue(building.getElevator(0).servicesFloor(new Floor(3, true, true)));
+        assertTrue(building.getElevator(0).servicesFloor(new Floor(4, true, true)));
+        assertFalse(building.getElevator(0).servicesFloor(new Floor(5, true, true)));
+        assertTrue(building.getElevator(0).servicesFloor(new Floor(6, true, true)));
+        assertTrue(building.getElevator(0).getFloorButtonStatus(new Floor(0, true, true)));
+        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
+        assertThrows(IllegalArgumentException.class, () -> building.getElevator(0).getFloorButtonStatus(new Floor(2, true, true)));
+        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(3, true, true)));
+        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(4, true, true)));
+        assertThrows(IllegalArgumentException.class, () -> building.getElevator(0).getFloorButtonStatus(new Floor(5, true, true)));
+        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(6, true, true)));
         assertEquals(150, building.getFloorHeight());
     }
 

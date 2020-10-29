@@ -151,7 +151,7 @@ public class ElevatorTest {
     @Test
     public void testCopyValues() {
         HashMap<Floor, Boolean> floorButtons1 = new HashMap<>();
-        floorButtons1.put(new Floor(1, false, false), false);
+        floorButtons1.put(new Floor(0, false, false), false);
         HashMap<Floor, Boolean> floorButtons2 = new HashMap<>();
         floorButtons2.put(new Floor(1, true, false), true);
         List<Floor> floors = new ArrayList<>();
@@ -179,7 +179,9 @@ public class ElevatorTest {
         assertEquals(2, elevator1.getCapacity());
         assertNotSame(elevator1.getTarget(), elevator2.getTarget());
         assertEquals(0, elevator1.getTarget().getNumber());
-        assertEquals(true, elevator1.getFloorButtonStatus(new Floor(1, true, true)));
-
+        assertTrue(elevator1.servicesFloor(new Floor(1, true, true)));
+        assertFalse(elevator1.servicesFloor(new Floor(0, true, true)));
+        assertTrue(elevator1.getFloorButtonStatus(new Floor(1, true, true)));
+        assertThrows(IllegalArgumentException.class, () -> elevator1.getFloorButtonStatus(new Floor(0, true, true)));
     }
 }
