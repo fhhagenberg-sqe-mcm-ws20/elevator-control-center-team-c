@@ -131,4 +131,26 @@ public class BuildingTest {
 
         assertEquals(100, building1.getFloorHeight());
     }
+
+    @Test
+    public void testGetFloorFromFloorsIfTheFloorIsInTheList() {
+        List<Floor> floors = new ArrayList<>();
+        Floor floor2 = new Floor(1, false, false);
+        floors.add(new Floor(0, false, false));
+        floors.add(floor2);
+        floors.add(new Floor(2, false, false));
+
+        assertSame(floor2, Building.getFloorFromFloors(new Floor(1, false, false), floors));
+    }
+
+    @Test
+    public void testGetFloorFromFloorsIfExceptionIsThrownIfTheFloorIsntInTheList() {
+        List<Floor> floors = new ArrayList<>();
+        floors.add(new Floor(0, false, false));
+        floors.add(new Floor(2, false, false));
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Building.getFloorFromFloors(new Floor(1, false, false), floors));
+
+    }
 }

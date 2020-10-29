@@ -278,7 +278,6 @@ public class InterfaceToModelConverterTest {
         Floor floor1 = new Floor(0, false, false);
         Floor floor2 = new Floor(1, false, false);
         Floor floor3 = new Floor(2, false, false);
-        Floor floor4 = new Floor(3, false, false);
         Floor floor5 = new Floor(4, false, false);
         Floor floor6 = new Floor(5, false, false);
 
@@ -367,7 +366,7 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
-        when(interfaceMock.getClockTick()).thenReturn(1216554l).thenReturn(1216554l);
+        when(interfaceMock.getClockTick()).thenReturn(1216554L).thenReturn(1216554L);
 
         interfaceToModelConverter.convert(building);
 
@@ -381,7 +380,7 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
-        when(interfaceMock.getClockTick()).thenReturn(1216554l).thenReturn(46879l);
+        when(interfaceMock.getClockTick()).thenReturn(1216554L).thenReturn(46879L);
 
         interfaceToModelConverter.convert(building);
 

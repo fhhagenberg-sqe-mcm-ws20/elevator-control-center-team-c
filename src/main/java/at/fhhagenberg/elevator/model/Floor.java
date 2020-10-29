@@ -45,12 +45,23 @@ public class Floor {
     @Setter
     private boolean buttonDown;
 
+    /**
+     * Copies the value of a given floor to this floor
+     *
+     * @param floor floor which hold the values that should be copied
+     */
     public void copyValues(Floor floor) {
         this.buttonUp = floor.buttonUp;
         this.buttonDown = floor.buttonDown;
     }
 
-
+    /**
+     * Overriding the equals method
+     * A Floor is the same floor if they have the same floor number
+     *
+     * @param o object that should be checked with this object
+     * @return if it is the dame floor
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,6 +70,12 @@ public class Floor {
         return number == floor.number;
     }
 
+    /**
+     * Overriding hashcode for uniformity with the equals function
+     * The hashcode of the object is the hashed floor number
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         return Objects.hash(number);

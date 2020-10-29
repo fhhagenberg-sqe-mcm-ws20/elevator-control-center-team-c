@@ -11,7 +11,7 @@ public class FloorTest {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(1, false, false);
 
-        assertTrue(floor1.equals(floor2));
+        assertEquals(floor1, floor2);
     }
 
     @Test
@@ -19,7 +19,7 @@ public class FloorTest {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(2, false, false);
 
-        assertFalse(floor1.equals(floor2));
+        assertNotEquals(floor1, floor2);
     }
 
     @Test
