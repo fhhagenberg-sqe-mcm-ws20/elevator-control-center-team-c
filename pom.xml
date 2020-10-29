@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>at.fhhagenberg.elevator</groupId>
-    <artifactId>javafx-base</artifactId>
+    <artifactId>elevator-system-hu-ha-gr</artifactId>
     <version>0.0.2-SNAPSHOT</version>
 
     <properties>
