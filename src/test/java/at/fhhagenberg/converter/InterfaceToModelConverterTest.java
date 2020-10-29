@@ -351,13 +351,41 @@ public class InterfaceToModelConverterTest {
         assertFalse(building.getElevator(0).servicesFloor(new Floor(5, true, true)));
         assertTrue(building.getElevator(0).servicesFloor(new Floor(6, true, true)));
         assertTrue(building.getElevator(0).getFloorButtonStatus(new Floor(0, true, true)));
-        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
+        assertTrue(building.getElevator(0).getFloorButtonStatus(new Floor(1, true, true)));
         assertThrows(IllegalArgumentException.class, () -> building.getElevator(0).getFloorButtonStatus(new Floor(2, true, true)));
-        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(3, true, true)));
-        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(4, true, true)));
+        assertTrue(building.getElevator(0).getFloorButtonStatus(new Floor(3, true, true)));
+        assertTrue(building.getElevator(0).getFloorButtonStatus(new Floor(4, true, true)));
         assertThrows(IllegalArgumentException.class, () -> building.getElevator(0).getFloorButtonStatus(new Floor(5, true, true)));
-        assertTrue( building.getElevator(0).getFloorButtonStatus(new Floor(6, true, true)));
+        assertTrue(building.getElevator(0).getFloorButtonStatus(new Floor(6, true, true)));
         assertEquals(150, building.getFloorHeight());
+    }
+
+    @Test
+    public void testConvertIfBuildingObjectIsNotThrownAwayWhenClockTimesMatch() throws RemoteException {
+        Building building = new Building();
+        when(interfaceMock.getElevatorNum()).thenReturn(1);
+        when(interfaceMock.getFloorNum()).thenReturn(1);
+        when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
+        when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
+        when(interfaceMock.getClockTick()).thenReturn(1216554l).thenReturn(1216554l);
+
+        interfaceToModelConverter.convert(building);
+
+        assertFalse(building.isEmpty());
+    }
+
+    @Test
+    public void testConvertIfBuildingObjectIsThrownAwayWhenClockTimesDontMatch() throws RemoteException {
+        Building building = new Building();
+        when(interfaceMock.getElevatorNum()).thenReturn(1);
+        when(interfaceMock.getFloorNum()).thenReturn(1);
+        when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
+        when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
+        when(interfaceMock.getClockTick()).thenReturn(1216554l).thenReturn(46879l);
+
+        interfaceToModelConverter.convert(building);
+
+        assertTrue(building.isEmpty());
     }
 
     @Test
