@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 /**
  * Class which holds the connection to the elevator interface and converts the information of the interface to the data model
  *
@@ -25,6 +24,12 @@ public class InterfaceToModelConverter {
      * Elevator interface to retrieve data from
      */
     private IElevator elevatorConnection;
+
+    public InterfaceToModelConverter(IElevator elevatorConnection){
+        this.elevatorConnection=elevatorConnection;
+    }
+
+    private Long lastClockTick = -1L;
 
     /**
      * Converts the information retrieved from the elevator interface to the data model
@@ -39,17 +44,20 @@ public class InterfaceToModelConverter {
      */
     public void convert(Building building) throws RemoteException {
         Long firstClockTick = elevatorConnection.getClockTick();
-        List<Floor> floors = getFloorsFromInterface();
-        List<Elevator> elevators = getElevatorsFromInterface(floors);
-        Building newBuildingMapping = new Building(elevators, floors, getFloorHeight());
+        if (!firstClockTick.equals(lastClockTick)) {
+            List<Floor> floors = getFloorsFromInterface();
+            List<Elevator> elevators = getElevatorsFromInterface(floors);
+            Building newBuildingMapping = new Building(elevators, floors, getFloorHeight());
+            lastClockTick = elevatorConnection.getClockTick();
 
-        if (compareTicks(firstClockTick, elevatorConnection.getClockTick())) {
-            if (building.isEmpty()) {
-                building.setFloors(newBuildingMapping.getFloors());
-                building.setElevators(newBuildingMapping.getElevators());
-                building.setFloorHeight(newBuildingMapping.getFloorHeight());
-            } else {
-                building.copyValues(newBuildingMapping);
+            if (compareTicks(firstClockTick, lastClockTick)) {
+                if (building.isEmpty()) {
+                    building.setFloors(newBuildingMapping.getFloors());
+                    building.setElevators(newBuildingMapping.getElevators());
+                    building.setFloorHeight(newBuildingMapping.getFloorHeight());
+                } else {
+                    building.copyValues(newBuildingMapping);
+                }
             }
         }
     }

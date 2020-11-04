@@ -366,7 +366,7 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
-        when(interfaceMock.getClockTick()).thenReturn(1216554L).thenReturn(1216554L);
+        when(interfaceMock.getClockTick()).thenReturn(1L).thenReturn(1L);
 
         interfaceToModelConverter.convert(building);
 
@@ -380,11 +380,45 @@ public class InterfaceToModelConverterTest {
         when(interfaceMock.getFloorNum()).thenReturn(1);
         when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
         when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
-        when(interfaceMock.getClockTick()).thenReturn(1216554L).thenReturn(46879L);
+        when(interfaceMock.getClockTick()).thenReturn(1L).thenReturn(2L);
 
         interfaceToModelConverter.convert(building);
 
         assertTrue(building.isEmpty());
+    }
+
+    @Test
+    public void testConvertIfApiFunctionsAreNotCalledIfItIsTheSameClockTickAsBefore() throws RemoteException {
+        Building building = new Building();
+        when(interfaceMock.getElevatorNum()).thenReturn(1);
+        when(interfaceMock.getFloorNum()).thenReturn(1);
+        when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
+        when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
+        when(interfaceMock.getClockTick()).thenReturn(1L);
+
+        interfaceToModelConverter.convert(building);
+
+        interfaceToModelConverter.convert(building);
+
+        verify(interfaceMock, times(1)).getElevatorNum();
+    }
+
+    @Test
+    public void testConvertIfApiFunctionsAreCalledIfItIsNotTheSameClockTickAsBefore() throws RemoteException {
+        Building building = new Building();
+        when(interfaceMock.getElevatorNum()).thenReturn(1);
+        when(interfaceMock.getFloorNum()).thenReturn(1);
+        when(interfaceMock.getElevatorDoorStatus(anyInt())).thenReturn(1);
+        when(interfaceMock.getCommittedDirection(0)).thenReturn(2);
+        when(interfaceMock.getClockTick()).thenReturn(1L);
+
+        interfaceToModelConverter.convert(building);
+
+        when(interfaceMock.getClockTick()).thenReturn(2L);
+
+        interfaceToModelConverter.convert(building);
+
+        verify(interfaceMock, times(2)).getElevatorNum();
     }
 
     @Test
