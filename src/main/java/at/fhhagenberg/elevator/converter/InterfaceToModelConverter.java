@@ -62,7 +62,6 @@ public class InterfaceToModelConverter {
         }
     }
 
-
     /**
      * Converts the information about floors from the elevator interface
      * Reads the number of floors and the creates as many Floor objects
