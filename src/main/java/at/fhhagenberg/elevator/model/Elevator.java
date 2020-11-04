@@ -29,7 +29,7 @@ public class Elevator {
         this.speed = speed;
         this.weight = weight;
         this.capacity = capacity;
-        Target = target;
+        this.target = target;
         this.floorButtons = floorButtons;
     }
 
@@ -125,7 +125,7 @@ public class Elevator {
      */
     @Getter
     @Setter
-    private Floor Target;
+    private Floor target;
 
     /**
      * The elevator requesting buttons within the building.
@@ -141,6 +141,22 @@ public class Elevator {
         return new ArrayList<Floor>(floorButtons.keySet());
     }
 
+    /**
+     * Checks if the elevator service the floor
+     *
+     * @param floor that should be checked
+     * @return boolean wether the elevator services the floor or not
+     */
+    public boolean servicesFloor(Floor floor) {
+        return floorButtons.containsKey(floor);
+    }
+
+    /**
+     * Setter for commitedDirection, which checks if the value is inside the given value range
+     * Else exception is thrown
+     *
+     * @param commitedDirection
+     */
     public void setCommitedDirection(int commitedDirection) {
         if (commitedDirection == 0 || commitedDirection == 1 || commitedDirection == 2) {
             this.commitedDirection = commitedDirection;
@@ -149,6 +165,12 @@ public class Elevator {
         }
     }
 
+    /**
+     * Setter for doorStatus, which checks if the value is inside the given value range
+     * Else exception is thrown
+     *
+     * @param doorStatus
+     */
     public void setDoorStatus(int doorStatus) {
         if (doorStatus == 1 || doorStatus == 2) {
             this.doorStatus = doorStatus;
@@ -157,11 +179,37 @@ public class Elevator {
         }
     }
 
+    /**
+     * Returns the value of the specified floor button of the elevator
+     * Throws an exception if the elevator does not have that floor button
+     *
+     * @param floor
+     * @return
+     */
     public Boolean getFloorButtonStatus(Floor floor) {
         if (floorButtons.containsKey(floor)) {
             return floorButtons.get(floor);
         } else {
             throw new IllegalArgumentException("Floor Button is not present in this elevator");
         }
+    }
+
+    /**
+     * Copies the values of a given elevator to this elevator
+     *
+     * @param elevator elevator which the values are extracted from
+     * @param floors   all possible floors of the elevator can be associated with
+     */
+    public void copyValues(Elevator elevator, List<Floor> floors) {
+        this.commitedDirection = elevator.commitedDirection;
+        this.acceleration = elevator.acceleration;
+        this.doorStatus = elevator.doorStatus;
+        this.floor = Building.getFloorFromFloors(elevator.floor, floors);
+        this.position = elevator.position;
+        this.speed = elevator.speed;
+        this.weight = elevator.weight;
+        this.capacity = elevator.capacity;
+        this.target = Building.getFloorFromFloors(elevator.target, floors);
+        this.floorButtons = elevator.floorButtons;
     }
 }
