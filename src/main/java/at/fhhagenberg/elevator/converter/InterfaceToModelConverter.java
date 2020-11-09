@@ -3,18 +3,15 @@ package at.fhhagenberg.elevator.converter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import sqe.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Class which holds the connection to the elevator interface and converts the information of the interface to the data model
- *
+ * <p>
  * The converts first reads out all floors and then all elevators, connecting the elevators to the floors it services
  * The connection of elevators and floor is currently stored inside the elevator class.
  */
@@ -25,8 +22,8 @@ public class InterfaceToModelConverter {
      */
     private IElevator elevatorConnection;
 
-    public InterfaceToModelConverter(IElevator elevatorConnection){
-        this.elevatorConnection=elevatorConnection;
+    public InterfaceToModelConverter(IElevator elevatorConnection) {
+        this.elevatorConnection = elevatorConnection;
     }
 
     private Long lastClockTick = -1L;
@@ -39,10 +36,10 @@ public class InterfaceToModelConverter {
      * if the the clocktick before extracting anything and the clocktick after extracting everything doesn't match
      *
      * @param building the building to which the new values should be copied
-     * @return data model representation of the building as a Building object
+     * @return boolean if building object was updated
      * @throws RemoteException
      */
-    public void convert(Building building) throws RemoteException {
+    public boolean convert(Building building) throws RemoteException {
         Long firstClockTick = elevatorConnection.getClockTick();
         if (!firstClockTick.equals(lastClockTick)) {
             List<Floor> floors = getFloorsFromInterface();
@@ -51,15 +48,11 @@ public class InterfaceToModelConverter {
             lastClockTick = elevatorConnection.getClockTick();
 
             if (compareTicks(firstClockTick, lastClockTick)) {
-                if (building.isEmpty()) {
-                    building.setFloors(newBuildingMapping.getFloors());
-                    building.setElevators(newBuildingMapping.getElevators());
-                    building.setFloorHeight(newBuildingMapping.getFloorHeight());
-                } else {
-                    building.copyValues(newBuildingMapping);
-                }
+                building.copyValues(newBuildingMapping);
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -92,13 +85,15 @@ public class InterfaceToModelConverter {
         int numberOfElevators = elevatorConnection.getElevatorNum();
 
         for (int i = 0; i < numberOfElevators; i++) {
-            HashMap<Floor, Boolean> floorButtonMap = new HashMap<>();
+            List<Boolean> floorButtonMap = new ArrayList<>();
+            List<Integer> listOfServicedFloors = new ArrayList<>();
             for (Floor floor : floors) {
                 if (elevatorConnection.getServicesFloors(i, floor.getNumber())) {
-                    floorButtonMap.put(floor, elevatorConnection.getElevatorButton(i, floor.getNumber()));
+                    listOfServicedFloors.add(floor.getNumber());
                 }
+                floorButtonMap.add(elevatorConnection.getElevatorButton(i, floor.getNumber()));
             }
-            elevators.add(new Elevator(i, elevatorConnection.getCommittedDirection(i), elevatorConnection.getElevatorAccel(i), elevatorConnection.getElevatorDoorStatus(i), floors.get(elevatorConnection.getElevatorFloor(i)), elevatorConnection.getElevatorPosition(i), elevatorConnection.getElevatorSpeed(i), elevatorConnection.getElevatorWeight(i), elevatorConnection.getElevatorCapacity(i), floors.get(elevatorConnection.getTarget(i)), floorButtonMap));
+            elevators.add(new Elevator(i, elevatorConnection.getCommittedDirection(i), elevatorConnection.getElevatorAccel(i), elevatorConnection.getElevatorDoorStatus(i), elevatorConnection.getElevatorFloor(i), elevatorConnection.getElevatorPosition(i), elevatorConnection.getElevatorSpeed(i), elevatorConnection.getElevatorWeight(i), elevatorConnection.getElevatorCapacity(i), elevatorConnection.getTarget(i), listOfServicedFloors, floorButtonMap));
         }
         return elevators;
     }
