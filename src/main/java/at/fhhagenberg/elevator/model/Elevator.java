@@ -1,10 +1,8 @@
 package at.fhhagenberg.elevator.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import javafx.beans.property.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -12,7 +10,7 @@ import java.util.List;
  * Represent the data model of a single elevator
  */
 public class Elevator {
-    public Elevator(int number, int commitedDirection, int acceleration, int doorStatus, Floor floor, int position, int speed, int weight, int capacity, Floor target, HashMap<Floor, Boolean> floorButtons) {
+    public Elevator(int number, int commitedDirection, int acceleration, int doorStatus, int floor, int position, int speed, int weight, int capacity, int target, List<Integer> listOfServicedFloors, List<Boolean> floorButtonStatuses) {
         if (commitedDirection != 0 && commitedDirection != 1 && commitedDirection != 2) {
             throw new IllegalArgumentException("Constructor: Commited direction has a range from 0 to 2");
         }
@@ -21,125 +19,85 @@ public class Elevator {
             throw new IllegalArgumentException("Constructor: Door status can either be 1 or 2");
         }
         this.number = number;
-        this.commitedDirection = commitedDirection;
-        this.acceleration = acceleration;
-        this.doorStatus = doorStatus;
-        this.floor = floor;
-        this.position = position;
-        this.speed = speed;
-        this.weight = weight;
-        this.capacity = capacity;
-        this.target = target;
-        this.floorButtons = floorButtons;
+        this.commitedDirection.set(commitedDirection);
+        this.acceleration.set(acceleration);
+        this.doorStatus.set(doorStatus);
+        this.floor.set(floor);
+        this.position.set(position);
+        this.speed.set(speed);
+        this.weight.set(weight);
+        this.capacity.set(capacity);
+        this.target.set(target);
+        this.listOfServicedFloors.set(listOfServicedFloors);
+        for (int i = 0; i < floorButtonStatuses.size(); i++) {
+            this.floorButtonStatuses.add(new SimpleBooleanProperty(floorButtonStatuses.get(i)));
+        }
     }
 
     /**
      * Stores the elevator's number
-     *
-     * @return Number of that elevator instance.
      */
-    @Getter
     private int number;
 
     /**
      * Direction the elevator is about to move.
-     *
-     * @return 0 if no direction, 1 if direction is upwards, 2 if direction is downwards.
-     * @oaram Integer value representing the corresponding commitedDirection.
      */
-    @Getter
-    private int commitedDirection;
+    private IntegerProperty commitedDirection = new SimpleIntegerProperty();
 
     /**
      * Elevators acceleration in m/sec^2. Downwards is negative signed.
-     *
-     * @return Current acceleration value in m/sec^2.
-     * @oaram Current acceleration in m/sec^2
      */
-    @Getter
-    @Setter
-    private int acceleration;
+    private IntegerProperty acceleration = new SimpleIntegerProperty();
 
     /**
      * Indicating if the door is closed or open.
-     *
-     * @return 0 if door is closed, 1 if door is open.
-     * @oaram Status, 0 or 1 depending of the doors current status.
      */
-    @Getter
-    private int doorStatus;
+    private IntegerProperty doorStatus = new SimpleIntegerProperty();
 
     /**
      * Position of the elevator within the building.
-     *
-     * @return Floor the elevator is currently in.
-     * @oaram Floor object that represents the elevators position.
      */
-    @Getter
-    @Setter
-    private Floor floor;
+    private IntegerProperty floor = new SimpleIntegerProperty();
 
     /**
      * Height of the elevator from the ground floor.
-     *
-     * @return Provides the current location of the specified elevator in feet from the bottom of the building.
-     * @oaram Current location in feet.
      */
-    @Getter
-    @Setter
-    private int position;
+    private IntegerProperty position = new SimpleIntegerProperty();
 
     /**
      * Speed of the elevator in m/s.
-     *
-     * @return Current speed.
-     * @oaram Current speed.
      */
-    @Getter
-    @Setter
-    private int speed;
+    private IntegerProperty speed = new SimpleIntegerProperty();
 
     /**
      * How much load the elevator is facing.
-     *
-     * @return Load in kg.
-     * @oaram Load in kg.
      */
-    @Getter
-    @Setter
-    private int weight;
+    private IntegerProperty weight = new SimpleIntegerProperty();
 
     /**
      * Elevators max. capacity in kg.
-     *
-     * @return the max. capacity.
      */
-    @Getter
-    private int capacity;
+    private IntegerProperty capacity = new SimpleIntegerProperty();
 
     /**
      * Next Floor the elevator is about to move to.
-     *
-     * @return The destination floor.
-     * @oaram The destination floor.
      */
-    @Getter
-    @Setter
-    private Floor target;
+    private IntegerProperty target = new SimpleIntegerProperty();
+
+    /**
+     * List of all floors the elevators serves
+     */
+    private ObjectProperty<List<Integer>> listOfServicedFloors = new SimpleObjectProperty<>(new ArrayList<>());
 
     /**
      * The elevator requesting buttons within the building.
      */
-    private HashMap<Floor, Boolean> floorButtons;
+    private List<BooleanProperty> floorButtonStatuses = new ArrayList<>();
 
     /**
-     * Status on the services floors of the building by that elevator.
-     *
-     * @return List of floors which are serviced within the building.
+     * True if the elevator is controlled manually.
      */
-    public List<Floor> getServicedFloors() {
-        return new ArrayList<Floor>(floorButtons.keySet());
-    }
+    private BooleanProperty manualControl = new SimpleBooleanProperty(false);
 
     /**
      * Checks if the elevator service the floor
@@ -147,8 +105,8 @@ public class Elevator {
      * @param floor that should be checked
      * @return boolean wether the elevator services the floor or not
      */
-    public boolean servicesFloor(Floor floor) {
-        return floorButtons.containsKey(floor);
+    public boolean servicesFloor(int floor) {
+        return listOfServicedFloors.get().contains(floor);
     }
 
     /**
@@ -159,7 +117,7 @@ public class Elevator {
      */
     public void setCommitedDirection(int commitedDirection) {
         if (commitedDirection == 0 || commitedDirection == 1 || commitedDirection == 2) {
-            this.commitedDirection = commitedDirection;
+            this.commitedDirection.set(commitedDirection);
         } else {
             throw new IllegalArgumentException("Set: Commited direction has a range from 0 to 2");
         }
@@ -173,7 +131,7 @@ public class Elevator {
      */
     public void setDoorStatus(int doorStatus) {
         if (doorStatus == 1 || doorStatus == 2) {
-            this.doorStatus = doorStatus;
+            this.doorStatus.set(doorStatus);
         } else {
             throw new IllegalArgumentException("Set: Door status can either be 1 or 2");
         }
@@ -186,12 +144,8 @@ public class Elevator {
      * @param floor
      * @return
      */
-    public Boolean getFloorButtonStatus(Floor floor) {
-        if (floorButtons.containsKey(floor)) {
-            return floorButtons.get(floor);
-        } else {
-            throw new IllegalArgumentException("Floor Button is not present in this elevator");
-        }
+    public Boolean getFloorButtonStatus(int floor) {
+        return floorButtonStatuses.get(floor).get();
     }
 
     /**
@@ -201,15 +155,164 @@ public class Elevator {
      * @param floors   all possible floors of the elevator can be associated with
      */
     public void copyValues(Elevator elevator, List<Floor> floors) {
-        this.commitedDirection = elevator.commitedDirection;
-        this.acceleration = elevator.acceleration;
-        this.doorStatus = elevator.doorStatus;
-        this.floor = Building.getFloorFromFloors(elevator.floor, floors);
-        this.position = elevator.position;
-        this.speed = elevator.speed;
-        this.weight = elevator.weight;
-        this.capacity = elevator.capacity;
-        this.target = Building.getFloorFromFloors(elevator.target, floors);
-        this.floorButtons = elevator.floorButtons;
+        this.commitedDirection.set(elevator.commitedDirection.get());
+        this.acceleration.set(elevator.acceleration.get());
+        this.doorStatus.set(elevator.doorStatus.get());
+        this.floor.set(elevator.floor.get());
+        this.position.set(elevator.position.get());
+        this.speed.set(elevator.speed.get());
+        this.weight.set(elevator.weight.get());
+        this.capacity.set(elevator.capacity.get());
+        this.target.set(elevator.target.get());
+        this.listOfServicedFloors = elevator.listOfServicedFloors;
+        copyButtonStatus(elevator.floorButtonStatuses);
+    }
+
+    private void copyButtonStatus(List<BooleanProperty> floorButtons) {
+        for (int i = 0; i < floorButtons.size(); i++) {
+            if (i < this.floorButtonStatuses.size()) {
+                this.floorButtonStatuses.get(i).set(floorButtons.get(i).get());
+            } else {
+                this.floorButtonStatuses.add(floorButtons.get(i));
+            }
+        }
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int getCommitedDirection() {
+        return commitedDirection.get();
+    }
+
+    public IntegerProperty commitedDirectionProperty() {
+        return commitedDirection;
+    }
+
+    public int getAcceleration() {
+        return acceleration.get();
+    }
+
+    public IntegerProperty accelerationProperty() {
+        return acceleration;
+    }
+
+    public int getDoorStatus() {
+        return doorStatus.get();
+    }
+
+    public IntegerProperty doorStatusProperty() {
+        return doorStatus;
+    }
+
+    public int getFloor() {
+        return floor.get();
+    }
+
+    public IntegerProperty floorProperty() {
+        return floor;
+    }
+
+    public int getPosition() {
+        return position.get();
+    }
+
+    public IntegerProperty positionProperty() {
+        return position;
+    }
+
+    public int getSpeed() {
+        return speed.get();
+    }
+
+    public IntegerProperty speedProperty() {
+        return speed;
+    }
+
+    public int getWeight() {
+        return weight.get();
+    }
+
+    public IntegerProperty weightProperty() {
+        return weight;
+    }
+
+    public int getCapacity() {
+        return capacity.get();
+    }
+
+    public IntegerProperty capacityProperty() {
+        return capacity;
+    }
+
+    public int getTarget() {
+        return target.get();
+    }
+
+    public IntegerProperty targetProperty() {
+        return target;
+    }
+
+    public List<BooleanProperty> getFloorButtonStatuses() {
+        return floorButtonStatuses;
+    }
+
+    public List<Integer> getListOfServicedFloors() {
+        return listOfServicedFloors.get();
+    }
+
+    public ObjectProperty<List<Integer>> listOfServicedFloorsProperty() {
+        return listOfServicedFloors;
+    }
+
+    public Boolean isManualControl() {
+        return manualControl.get();
+    }
+
+    public void setAcceleration(int acceleration) {
+        this.acceleration.set(acceleration);
+    }
+
+    public void setFloor(int floor) {
+        this.floor.set(floor);
+    }
+
+    public void setPosition(int position) {
+        this.position.set(position);
+    }
+
+    public void setSpeed(int speed) {
+        this.speed.set(speed);
+    }
+
+    public void setWeight(int weight) {
+        this.weight.set(weight);
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity.set(capacity);
+    }
+
+    public void setTarget(int target) {
+        this.target.set(target);
+    }
+
+    public void setListOfServicedFloors(List<Integer> listOfServicedFloors) {
+        this.listOfServicedFloors.set(listOfServicedFloors);
+    }
+
+    public void setManualControl(Boolean isManual) {
+        this.manualControl.set(isManual);
+    }
+
+    public void setFloorButtonStatuses(List<Boolean> floorButtonStatuses) {
+        for (int i = 0; i < floorButtonStatuses.size(); i++) {
+            if (i < this.floorButtonStatuses.size()) {
+                this.floorButtonStatuses.get(i).set(floorButtonStatuses.get(i));
+            } else {
+                this.floorButtonStatuses.add(new SimpleBooleanProperty(floorButtonStatuses.get(i)));
+            }
+        }
     }
 }

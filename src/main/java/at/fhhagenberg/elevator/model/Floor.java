@@ -1,9 +1,8 @@
 package at.fhhagenberg.elevator.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ import java.util.Objects;
  *
  * @return Floor instance
  */
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
+
 /**
  * Represent the data model of a single floor
  */
@@ -27,23 +26,19 @@ public class Floor {
 
     /**
      * Toggle indicating the upward button's activeness.
-     *
-     * @return Boolean value indicating if the button is currently active.
-     * @param buttonUp as boolean value indicating if the button is active.
      */
-    @Getter
-    @Setter
-    private boolean buttonUp;
+    private BooleanProperty buttonUp = new SimpleBooleanProperty();
 
     /**
      * Toggle indicating the downward button's activeness.
-     *
-     * @return Boolean value indicating if the button is currently active.
-     * @param buttonDown as boolean value indicating if the button is active.
      */
-    @Getter
-    @Setter
-    private boolean buttonDown;
+    private BooleanProperty buttonDown = new SimpleBooleanProperty();
+
+    public Floor(int number, boolean buttonUp, boolean buttonDown) {
+        this.number = number;
+        this.buttonUp.set(buttonUp);
+        this.buttonDown.set(buttonDown);
+    }
 
     /**
      * Copies the value of a given floor to this floor
@@ -51,8 +46,8 @@ public class Floor {
      * @param floor floor which hold the values that should be copied
      */
     public void copyValues(Floor floor) {
-        this.buttonUp = floor.buttonUp;
-        this.buttonDown = floor.buttonDown;
+        this.buttonUp.set(floor.buttonUp.get());
+        this.buttonDown.set(floor.buttonDown.get());
     }
 
     /**
@@ -79,5 +74,29 @@ public class Floor {
     @Override
     public int hashCode() {
         return Objects.hash(number);
+    }
+
+    public boolean isButtonDown() {
+        return this.buttonDown.get();
+    }
+
+    public boolean isButtonUp() {
+        return this.buttonUp.get();
+    }
+
+    public BooleanProperty buttonUpProperty() {
+        return buttonUp;
+    }
+
+    public BooleanProperty buttonDownProperty() {
+        return buttonDown;
+    }
+
+    public void setButtonUp(boolean buttonUp) {
+        this.buttonUp.set(buttonUp);
+    }
+
+    public void setButtonDown(boolean buttonDown) {
+        this.buttonDown.set(buttonDown);
     }
 }

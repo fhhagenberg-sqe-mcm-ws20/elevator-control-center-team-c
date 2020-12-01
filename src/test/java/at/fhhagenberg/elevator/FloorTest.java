@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FloorTest {
+class FloorTest {
     @Test
-    public void testEqualsIfFloorNumbersAreTheSame() {
+    void testEqualsIfFloorNumbersAreTheSame() {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(1, false, false);
 
@@ -15,7 +15,7 @@ public class FloorTest {
     }
 
     @Test
-    public void testEqualsIfFloorNumbersAreNotTheSame() {
+    void testEqualsIfFloorNumbersAreNotTheSame() {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(2, false, false);
 
@@ -23,7 +23,7 @@ public class FloorTest {
     }
 
     @Test
-    public void testHashCodeIfFloorNumbersAreTheSame() {
+    void testHashCodeIfFloorNumbersAreTheSame() {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(1, false, false);
 
@@ -31,7 +31,7 @@ public class FloorTest {
     }
 
     @Test
-    public void testHashCodeIfFloorNumbersAreNotTheSame() {
+    void testHashCodeIfFloorNumbersAreNotTheSame() {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(2, false, false);
 
@@ -39,7 +39,7 @@ public class FloorTest {
     }
 
     @Test
-    public void testCopyValues() {
+    void testCopyValues() {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(2, true, true);
 

@@ -1,5 +1,6 @@
 package at.fhhagenberg.elevator.model;
 
+import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,8 @@ public class Building {
 
     @Getter
     private int floorHeight;
+
+    private final List<INotifyModelSizeChangedListener> changeListeners = new ArrayList<>();
 
     /**
      * Constructor for the object
@@ -111,17 +114,32 @@ public class Building {
 
     /**
      * Copies the values of a given building to this building using the copy function of all elevators and floors
+     * Adds new floors and elevators if there are new ones in the parameter building object
      *
      * @param building
      */
     public void copyValues(Building building) {
-        for (int i = 0; i < this.floors.size(); i++) {
-            floors.get(i).copyValues(building.floors.get(i));
+        boolean reload = false;
+        for (int i = 0; i < building.floors.size(); i++) {
+            if (i < this.floors.size()) {
+                this.floors.get(i).copyValues(building.floors.get(i));
+            } else {
+                this.floors.add(building.getFloor(i));
+                reload = true;
+            }
         }
-        for (int i = 0; i < this.elevators.size(); i++) {
-            elevators.get(i).copyValues(building.elevators.get(i), this.floors);
+        for (int i = 0; i < building.elevators.size(); i++) {
+            if (i < this.elevators.size()) {
+                this.elevators.get(i).copyValues(building.elevators.get(i), this.floors);
+            } else {
+                this.elevators.add(building.getElevator(i));
+                reload = true;
+            }
         }
         this.floorHeight = building.floorHeight;
+        if (reload) {
+            notifyChangeListeners();
+        }
     }
 
     /**
@@ -137,20 +155,11 @@ public class Building {
         }
     }
 
-    /**
-     * Static function to retrieve the given floor with the same floornumber from a list of floors
-     * If there isn't such a floor, an exception is thrown
-     *
-     * @param floor  given floor
-     * @param floors floor list
-     * @return floor with the same floornumber as the given floor from the floors list
-     */
-    public static Floor getFloorFromFloors(Floor floor, List<Floor> floors) {
-        for (Floor tempFloor : floors) {
-            if (floor.equals(tempFloor)) {
-                return tempFloor;
-            }
-        }
-        throw new IllegalArgumentException("Floor isn't in List");
+    private void notifyChangeListeners() {
+        changeListeners.forEach(INotifyModelSizeChangedListener::modelChanged);
+    }
+
+    public void addChangeListener(INotifyModelSizeChangedListener changeListener) {
+        changeListeners.add(changeListener);
     }
 }
