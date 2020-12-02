@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+@SuppressWarnings("java:S110")
 public class GeneralInfoPane extends VBox {
     public GeneralInfoPane() {
         super();

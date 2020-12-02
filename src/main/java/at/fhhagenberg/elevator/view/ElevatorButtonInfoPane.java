@@ -10,11 +10,9 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 
-
+@SuppressWarnings("java:S110")
 public class ElevatorButtonInfoPane extends GridPane {
     public ElevatorButtonInfoPane(int numberOfFloors, ElevatorViewModel elevatorViewModel) {
-        int column = 0;
-        int row = 0;
         for (int i = 0; i < numberOfFloors; i++) {
             Button singleButton = new Button();
             singleButton.setText(""+i);

@@ -6,6 +6,7 @@ import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+@SuppressWarnings("java:S110")
 public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeChangedListener {
     private BuildingViewModel buildingViewModel;
     private Stage stage;
