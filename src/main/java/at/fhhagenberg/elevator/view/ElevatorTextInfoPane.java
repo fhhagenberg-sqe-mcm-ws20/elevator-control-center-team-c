@@ -4,6 +4,7 @@ import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+@SuppressWarnings("java:S110")
 public class ElevatorTextInfoPane extends GridPane {
     public ElevatorTextInfoPane(ElevatorViewModel elevatorViewModel) {
         Label capacityLabel = new Label("Capacity:");

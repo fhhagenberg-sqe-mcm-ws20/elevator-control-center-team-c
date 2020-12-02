@@ -148,11 +148,7 @@ public class Building {
      * @return true if the list or empty and the floorheight is 0, else returns true
      */
     public Boolean isEmpty() {
-        if (elevators.size() == 0 && floors.size() == 0 && floorHeight == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return elevators.isEmpty() && floors.isEmpty() && floorHeight == 0;
     }
 
     private void notifyChangeListeners() {

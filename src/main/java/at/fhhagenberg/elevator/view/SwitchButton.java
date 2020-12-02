@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+@SuppressWarnings("java:S110")
 public class SwitchButton extends StackPane {
     private final Rectangle back = new Rectangle(30, 10, Color.RED);
     private final Button button = new Button();
@@ -38,20 +39,17 @@ public class SwitchButton extends StackPane {
 
     public SwitchButton() {
         init();
-        EventHandler<Event> click = new EventHandler<Event>() {
-            @Override
-            public void handle(Event e) {
-                if (state.get()) {
-                    button.setStyle(buttonStyleOff);
-                    back.setFill(Color.valueOf("#ced5da"));
-                    setAlignment(button, Pos.CENTER_LEFT);
-                    state.set(false);
-                } else {
-                    button.setStyle(buttonStyleOn);
-                    back.setFill(Color.valueOf("#80C49E"));
-                    setAlignment(button, Pos.CENTER_RIGHT);
-                    state.set(true);
-                }
+        EventHandler<Event> click = e -> {
+            if (state.get()) {
+                button.setStyle(buttonStyleOff);
+                back.setFill(Color.valueOf("#ced5da"));
+                setAlignment(button, Pos.CENTER_LEFT);
+                state.set(false);
+            } else {
+                button.setStyle(buttonStyleOn);
+                back.setFill(Color.valueOf("#80C49E"));
+                setAlignment(button, Pos.CENTER_RIGHT);
+                state.set(true);
             }
         };
 

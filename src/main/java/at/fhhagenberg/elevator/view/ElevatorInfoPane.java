@@ -3,6 +3,7 @@ package at.fhhagenberg.elevator.view;
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.scene.layout.VBox;
 
+@SuppressWarnings("java:S110")
 public class ElevatorInfoPane extends VBox {
     public ElevatorInfoPane(int numberOfFloors, ElevatorViewModel elevatorViewModel) {
         super();

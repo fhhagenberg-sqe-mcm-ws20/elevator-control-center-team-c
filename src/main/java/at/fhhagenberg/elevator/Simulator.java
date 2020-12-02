@@ -21,6 +21,7 @@ public class Simulator {
             Random random = new Random();
 
             @SneakyThrows
+            @Override
             public void run() {
                 while (true) {
                     List<Floor> newFloors = new ArrayList<>();
@@ -38,11 +39,9 @@ public class Simulator {
                         for (int i = 0; i < building.getNumberOfFloors(); i++) {
                             newfloorButtonStatuses.add(random.nextBoolean());
                         }
-                        newElevators.add(new Elevator(elevator.getNumber(), random.nextInt(2), random.nextInt(200), 1, random.nextInt(building.getNumberOfFloors()), (elevator.getPosition() + 25) % 900, random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(building.getNumberOfFloors()), new ArrayList<Integer>(List.of(random.nextInt(building.getNumberOfFloors()), random.nextInt(building.getNumberOfFloors()), random.nextInt(building.getNumberOfFloors()))), newfloorButtonStatuses));
+                        newElevators.add(new Elevator(elevator.getNumber(), random.nextInt(2), random.nextInt(200), 1, random.nextInt(building.getNumberOfFloors()), (elevator.getPosition() + 25) % 900, random.nextInt(200), random.nextInt(200), random.nextInt(200), random.nextInt(building.getNumberOfFloors()), new ArrayList<>(List.of(random.nextInt(building.getNumberOfFloors()), random.nextInt(building.getNumberOfFloors()), random.nextInt(building.getNumberOfFloors()))), newfloorButtonStatuses));
                     }
-                    Platform.runLater(() -> {
-                        building.copyValues(new Building(newElevators, newFloors, 100));
-                    });
+                    Platform.runLater(() -> building.copyValues(new Building(newElevators, newFloors, 100)));
                 }
             }
         };

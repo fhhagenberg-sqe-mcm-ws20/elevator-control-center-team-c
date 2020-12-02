@@ -4,7 +4,6 @@ import at.fhhagenberg.elevator.model.Floor;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.paint.Color;
 import lombok.Getter;
 
 public class FloorViewModel {

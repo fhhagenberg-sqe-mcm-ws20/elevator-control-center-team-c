@@ -4,7 +4,7 @@ import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 
-
+@SuppressWarnings("java:S110")
 public class ElevatorModeButtonPane extends EmptyElevatorModeButtonPane {
     public ElevatorModeButtonPane(ElevatorViewModel elevatorViewModel) {
         super();

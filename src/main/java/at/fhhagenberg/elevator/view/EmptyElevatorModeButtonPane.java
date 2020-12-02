@@ -2,6 +2,7 @@ package at.fhhagenberg.elevator.view;
 
 import javafx.scene.layout.HBox;
 
+@SuppressWarnings("java:S110")
 public class EmptyElevatorModeButtonPane extends HBox {
     public EmptyElevatorModeButtonPane() {
         this.setPrefSize(100, 40);
