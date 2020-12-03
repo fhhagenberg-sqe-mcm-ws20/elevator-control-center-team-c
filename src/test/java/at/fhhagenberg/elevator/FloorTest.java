@@ -11,7 +11,7 @@ class FloorTest {
         Floor floor1 = new Floor(1, false, false);
         Floor floor2 = new Floor(1, false, false);
 
-        assertEquals(floor1, floor2);
+        assertEquals(floor2, floor1);
     }
 
     @Test
@@ -20,6 +20,25 @@ class FloorTest {
         Floor floor2 = new Floor(2, false, false);
 
         assertNotEquals(floor1, floor2);
+    }
+
+    @Test
+    void testEqualsIfNotTheSameObjectsType() {
+        Floor floor1 = new Floor(1, false, false);
+        Object object = new Object();
+        assertNotEquals(floor1, object);
+    }
+
+    @Test
+    void testEqualsIfItIsTheSameObject() {
+        Floor floor1 = new Floor(1, false, false);
+        assertEquals(floor1, floor1);
+    }
+
+    @Test
+    void testEqualsIfItIsTheObjectIsNull() {
+        Floor floor1 = new Floor(1, false, false);
+        assertNotEquals(null, floor1);
     }
 
     @Test

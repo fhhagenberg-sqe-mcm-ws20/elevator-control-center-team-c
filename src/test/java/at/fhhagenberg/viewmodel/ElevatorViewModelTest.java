@@ -12,36 +12,36 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 class ElevatorViewModelTest {
-    private Elevator mockElevator = mock(Elevator.class);
+    private Elevator elevatorMock = mock(Elevator.class);
 
     @BeforeEach
     void initTest() {
-        when(mockElevator.accelerationProperty()).thenReturn(new SimpleIntegerProperty());
-        when(mockElevator.capacityProperty()).thenReturn(new SimpleIntegerProperty());
-        when(mockElevator.speedProperty()).thenReturn(new SimpleIntegerProperty());
-        when(mockElevator.targetProperty()).thenReturn(new SimpleIntegerProperty());
-        when(mockElevator.weightProperty()).thenReturn(new SimpleIntegerProperty());
-        when(mockElevator.positionProperty()).thenReturn(new SimpleIntegerProperty());
-        when(mockElevator.getFloorButtonStatuses()).thenReturn(List.of(new SimpleBooleanProperty(false), new SimpleBooleanProperty(true), new SimpleBooleanProperty(false)));
-        when(mockElevator.listOfServicedFloorsProperty()).thenReturn(new SimpleObjectProperty<>());
+        when(elevatorMock.accelerationProperty()).thenReturn(new SimpleIntegerProperty());
+        when(elevatorMock.capacityProperty()).thenReturn(new SimpleIntegerProperty());
+        when(elevatorMock.speedProperty()).thenReturn(new SimpleIntegerProperty());
+        when(elevatorMock.targetProperty()).thenReturn(new SimpleIntegerProperty());
+        when(elevatorMock.weightProperty()).thenReturn(new SimpleIntegerProperty());
+        when(elevatorMock.positionProperty()).thenReturn(new SimpleIntegerProperty());
+        when(elevatorMock.getFloorButtonStatuses()).thenReturn(List.of(new SimpleBooleanProperty(false), new SimpleBooleanProperty(true), new SimpleBooleanProperty(false)));
+        when(elevatorMock.listOfServicedFloorsProperty()).thenReturn(new SimpleObjectProperty<>());
     }
 
     @Test
     void testConstructor() {
-        when(mockElevator.getAcceleration()).thenReturn(7);
-        when(mockElevator.getCapacity()).thenReturn(12);
-        when(mockElevator.getSpeed()).thenReturn(10);
-        when(mockElevator.getTarget()).thenReturn(2);
-        when(mockElevator.getWeight()).thenReturn(11);
-        when(mockElevator.getPosition()).thenReturn(60);
-        when(mockElevator.getFloorButtonStatuses()).thenReturn(List.of(new SimpleBooleanProperty(false), new SimpleBooleanProperty(true), new SimpleBooleanProperty(false)));
-        when(mockElevator.servicesFloor(0)).thenReturn(true);
+        when(elevatorMock.getAcceleration()).thenReturn(7);
+        when(elevatorMock.getCapacity()).thenReturn(12);
+        when(elevatorMock.getSpeed()).thenReturn(10);
+        when(elevatorMock.getTarget()).thenReturn(2);
+        when(elevatorMock.getWeight()).thenReturn(11);
+        when(elevatorMock.getPosition()).thenReturn(60);
+        when(elevatorMock.getFloorButtonStatuses()).thenReturn(List.of(new SimpleBooleanProperty(false), new SimpleBooleanProperty(true), new SimpleBooleanProperty(false)));
+        when(elevatorMock.servicesFloor(0)).thenReturn(true);
 
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
         assertEquals("7 m/s2", elevatorViewModel.getAccelerationString());
         assertEquals("12 kg", elevatorViewModel.getCapacityString());
         assertEquals("10 m/s", elevatorViewModel.getSpeedString());
@@ -59,9 +59,9 @@ class ElevatorViewModelTest {
     @Test
     void testAccelerationStringBinding() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.accelerationProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getAcceleration()).thenReturn(5);
+        when(elevatorMock.accelerationProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getAcceleration()).thenReturn(5);
         testProperty.set(5);
         assertEquals("5 m/s2", elevatorViewModel.getAccelerationString());
     }
@@ -69,9 +69,9 @@ class ElevatorViewModelTest {
     @Test
     void testCapacityStringBinding() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.capacityProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getCapacity()).thenReturn(5);
+        when(elevatorMock.capacityProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getCapacity()).thenReturn(5);
         testProperty.set(5);
         assertEquals("5 kg", elevatorViewModel.getCapacityString());
     }
@@ -79,9 +79,9 @@ class ElevatorViewModelTest {
     @Test
     void testSpeedStringBinding() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.speedProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getSpeed()).thenReturn(5);
+        when(elevatorMock.speedProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getSpeed()).thenReturn(5);
         testProperty.set(5);
         assertEquals("5 m/s", elevatorViewModel.getSpeedString());
     }
@@ -89,9 +89,9 @@ class ElevatorViewModelTest {
     @Test
     void testTargetStringBinding() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.targetProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getTarget()).thenReturn(5);
+        when(elevatorMock.targetProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getTarget()).thenReturn(5);
         testProperty.set(5);
         assertEquals("5", elevatorViewModel.getTargetString());
     }
@@ -99,9 +99,9 @@ class ElevatorViewModelTest {
     @Test
     void testWeightStringBinding() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.weightProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getWeight()).thenReturn(5);
+        when(elevatorMock.weightProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getWeight()).thenReturn(5);
         testProperty.set(5);
         assertEquals("5 kg", elevatorViewModel.getWeightString());
     }
@@ -109,9 +109,9 @@ class ElevatorViewModelTest {
     @Test
     void testPositionBinding() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.positionProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getPosition()).thenReturn(5);
+        when(elevatorMock.positionProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getPosition()).thenReturn(5);
         testProperty.set(30);
         assertEquals(0.1, elevatorViewModel.getPosition());
     }
@@ -119,10 +119,10 @@ class ElevatorViewModelTest {
     @Test
     void testFloorColorsBindingBindingWhenSettingTarget() {
         SimpleIntegerProperty testProperty = new SimpleIntegerProperty(1);
-        when(mockElevator.targetProperty()).thenReturn(testProperty);
-        when(mockElevator.servicesFloor(1)).thenReturn(true);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.getTarget()).thenReturn(2);
+        when(elevatorMock.targetProperty()).thenReturn(testProperty);
+        when(elevatorMock.servicesFloor(1)).thenReturn(true);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.getTarget()).thenReturn(2);
         testProperty.set(0);
         assertEquals(Color.GRAY, elevatorViewModel.getElevatorFloorColor(0));
         assertEquals(Color.WHITE, elevatorViewModel.getElevatorFloorColor(1));
@@ -132,9 +132,9 @@ class ElevatorViewModelTest {
     @Test
     void testFloorColorsBindingBindingWhenSettingListOfServicedFloors() {
         SimpleObjectProperty<List<Integer>> testProperty = new SimpleObjectProperty<>();
-        when(mockElevator.listOfServicedFloorsProperty()).thenReturn(testProperty);
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
-        when(mockElevator.servicesFloor(1)).thenReturn(true);
+        when(elevatorMock.listOfServicedFloorsProperty()).thenReturn(testProperty);
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
+        when(elevatorMock.servicesFloor(1)).thenReturn(true);
         testProperty.set(List.of(1));
         assertEquals(Color.GREEN, elevatorViewModel.getElevatorFloorColor(0));
         assertEquals(Color.WHITE, elevatorViewModel.getElevatorFloorColor(1));
@@ -146,13 +146,44 @@ class ElevatorViewModelTest {
         SimpleBooleanProperty testProperty1 = new SimpleBooleanProperty(false);
         SimpleBooleanProperty testProperty2 = new SimpleBooleanProperty(true);
         SimpleBooleanProperty testProperty3 = new SimpleBooleanProperty(false);
-        when(mockElevator.getFloorButtonStatuses()).thenReturn(List.of(testProperty1, testProperty2, testProperty3));
-        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(mockElevator, 3, 100);
+        when(elevatorMock.getFloorButtonStatuses()).thenReturn(List.of(testProperty1, testProperty2, testProperty3));
+        ElevatorViewModel elevatorViewModel = new ElevatorViewModel(elevatorMock, 3, 100);
         testProperty1.set(true);
         testProperty2.set(false);
         testProperty3.set(true);
         assertEquals(Color.GREEN, elevatorViewModel.getElevatorFloorButtonColor(0));
         assertEquals(Color.WHITE, elevatorViewModel.getElevatorFloorButtonColor(1));
         assertEquals(Color.GREEN, elevatorViewModel.getElevatorFloorButtonColor(2));
+    }
+
+    @Test
+    void testSetManualControl(){
+        ElevatorViewModel elevatorViewModel=new ElevatorViewModel(elevatorMock,5,10);
+        elevatorViewModel.setManualControl(false);
+        verify(elevatorMock, times(1)).setManualControl(anyBoolean());
+    }
+
+    @Test
+    void testPropertyGetters(){
+        when(elevatorMock.getAcceleration()).thenReturn(1);
+        when(elevatorMock.getCapacity()).thenReturn(2);
+        when(elevatorMock.getSpeed()).thenReturn(3);
+        when(elevatorMock.getTarget()).thenReturn(4);
+        when(elevatorMock.getWeight()).thenReturn(5);
+        when(elevatorMock.getPosition()).thenReturn(6);
+        when(elevatorMock.getFloorButtonStatuses()).thenReturn(List.of(new SimpleBooleanProperty(false), new SimpleBooleanProperty(true), new SimpleBooleanProperty(false)));
+        when(elevatorMock.listOfServicedFloorsProperty()).thenReturn(new SimpleObjectProperty<>());
+
+        ElevatorViewModel elevatorViewModel=new ElevatorViewModel(elevatorMock,6,10);
+
+        assertEquals("1 m/s2",elevatorViewModel.accelerationStringProperty().get());
+        assertEquals("2 kg",elevatorViewModel.capacityStringProperty().get());
+        assertEquals("3 m/s",elevatorViewModel.speedStringProperty().get());
+        assertEquals("4",elevatorViewModel.targetStringProperty().get());
+        assertEquals("5 kg",elevatorViewModel.weightStringProperty().get());
+        assertEquals(0.1,elevatorViewModel.positionProperty().get());
+        assertEquals(Color.GRAY,elevatorViewModel.getElevatorFloorColor(0));
+        assertEquals(Color.WHITE,elevatorViewModel.getElevatorFloorButtonColor(0));
+
     }
 }

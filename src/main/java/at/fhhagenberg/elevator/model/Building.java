@@ -2,7 +2,6 @@ package at.fhhagenberg.elevator.model;
 
 import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ public class Building {
      *
      * @return List object containing all the elevators of that building.
      */
-    @Setter
     @Getter
     private List<Elevator> elevators;
 
@@ -26,7 +24,6 @@ public class Building {
      *
      * @return List object containing all the floors of that building.
      */
-    @Setter
     @Getter
     private List<Floor> floors;
 

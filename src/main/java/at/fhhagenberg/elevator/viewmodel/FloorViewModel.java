@@ -9,36 +9,36 @@ import lombok.Getter;
 public class FloorViewModel {
     @Getter
     private final Floor floor;
-    private final ObjectProperty<String> buttonUpColorProperty = new SimpleObjectProperty<>("file:up_filled.png");
-    private final ObjectProperty<String> buttonDownColorProperty = new SimpleObjectProperty<>("file:down_filled.png");
+    private final ObjectProperty<String> buttonUpImageProperty = new SimpleObjectProperty<>("file:up_filled.png");
+    private final ObjectProperty<String> buttonDownImageProperty = new SimpleObjectProperty<>("file:down_filled.png");
 
-    public ObjectProperty<String> buttonUpColorProperty() {
-        return buttonUpColorProperty;
+    public ObjectProperty<String> buttonUpImageProperty() {
+        return buttonUpImageProperty;
     }
 
-    public ObjectProperty<String> buttonDownColorProperty() {
-        return buttonDownColorProperty;
+    public ObjectProperty<String> buttonDownImageProperty() {
+        return buttonDownImageProperty;
     }
 
     public FloorViewModel(Floor floor) {
         this.floor = floor;
-        buttonUpColorProperty.bind(Bindings.when(
+        buttonUpImageProperty.bind(Bindings.when(
                 floor.buttonUpProperty())
                 .then("file:up_filled.png")
                 .otherwise("file:up.png"));
 
-        buttonDownColorProperty.bind(Bindings.when(
+        buttonDownImageProperty.bind(Bindings.when(
                 floor.buttonDownProperty())
                 .then("file:down_filled.png")
                 .otherwise("file:down.png"));
     }
 
-    public String getButtonUpColor() {
-        return buttonUpColorProperty.get();
+    public String getButtonUpImage() {
+        return buttonUpImageProperty.get();
     }
 
-    public String getButtonDownColor() {
-        return buttonDownColorProperty.get();
+    public String getButtonDownImage() {
+        return buttonDownImageProperty.get();
     }
 
     public int getFloorNumber() {

@@ -4,15 +4,37 @@ import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
 import at.fhhagenberg.elevator.viewmodel.BuildingViewModel;
+import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class BuildingViewModelTest {
+
+    @Test
+    void testUpdateFromModelIfBuildingIsEmpty(){
+        Building buildingMock = mock(Building.class);
+        when(buildingMock.isEmpty()).thenReturn(true);
+        BuildingViewModel buildingViewModel=new BuildingViewModel(buildingMock);
+        INotifyModelSizeChangedListener changeListenerMock=mock(INotifyModelSizeChangedListener.class);
+        buildingViewModel.addChangeListener(changeListenerMock);
+        buildingViewModel.modelChanged();
+        verify(changeListenerMock, times(0)).modelChanged();
+    }
+
+    @Test
+    void testAddChangeListenerFromModel(){
+        Building buildingMock = mock(Building.class);
+        BuildingViewModel buildingViewModel=new BuildingViewModel(buildingMock);
+        INotifyModelSizeChangedListener changeListenerMock=mock(INotifyModelSizeChangedListener.class);
+        buildingViewModel.addChangeListener(changeListenerMock);
+        buildingViewModel.modelChanged();
+        verify(changeListenerMock, times(1)).modelChanged();
+    }
+
     @Test
     void testModelChangedIfElevatorViewModelsAreCreated() {
         Building building = mock(Building.class);
