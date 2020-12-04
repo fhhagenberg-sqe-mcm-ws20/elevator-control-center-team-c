@@ -18,7 +18,7 @@ public class SingleFilledFloorPane extends SingleFloorPane {
         Image img = new Image("file:up.png", buttonSize, buttonSize, false, false);
         ImageView upImg = new ImageView(img);
         ObjectProperty<Image> upLabelBackground = upImg.imageProperty();
-        upLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonUpColor(), buttonSize, buttonSize, false, false), floorViewModel.buttonUpColorProperty()));
+        upLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonUpImage(), buttonSize, buttonSize, false, false), floorViewModel.buttonUpImageProperty()));
 
         Label floorNumberLabel = new Label("" + floorViewModel.getFloorNumber());
         floorNumberLabel.setPrefWidth(28);
@@ -27,7 +27,7 @@ public class SingleFilledFloorPane extends SingleFloorPane {
         img = new Image("file:down.png", buttonSize, buttonSize, false, false);
         ImageView downImg = new ImageView(img);
         ObjectProperty<Image> downLabelBackground = downImg.imageProperty();
-        downLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonDownColor(), buttonSize, buttonSize, false, false), floorViewModel.buttonDownColorProperty()));
+        downLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonDownImage(), buttonSize, buttonSize, false, false), floorViewModel.buttonDownImageProperty()));
 
         this.getChildren().addAll(upImg, floorNumberLabel, downImg);
 

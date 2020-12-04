@@ -40,6 +40,15 @@ class BuildingTest {
     }
 
     @Test
+    void testSetFloorHeightWhenFloor() {
+        Building building = new Building(new ArrayList<>(), new ArrayList<>(), 100);
+
+        building.setFloorHeight(100);
+
+        assertEquals(100, building.getFloorHeight());
+    }
+
+    @Test
     void testIsEmptyIfBuildingThereAreNoElevatorsFloorsAndFloorHeightIsZero() {
         Building building = new Building(new ArrayList<>(), new ArrayList<>(), 0);
 
