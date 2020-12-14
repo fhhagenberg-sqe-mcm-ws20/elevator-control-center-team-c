@@ -22,10 +22,10 @@ class ElevatorSingleFloorTest {
     @Test
     void testConstructor() {
         ElevatorViewModel elevatorViewModelMock = mock(ElevatorViewModel.class);
-        when(elevatorViewModelMock.elevatorFloorColorProperty(1)).thenReturn(new SimpleObjectProperty<>(Color.GREEN));
-        when(elevatorViewModelMock.getElevatorFloorColor(1)).thenReturn(Color.GREEN);
+        when(elevatorViewModelMock.elevatorFloorColorProperty(0)).thenReturn(new SimpleObjectProperty<>(Color.GREEN));
+        when(elevatorViewModelMock.getElevatorFloorColor(0)).thenReturn(Color.GREEN);
 
-        ElevatorSingleFloor elevatorSingleFloor = new ElevatorSingleFloor(1, elevatorViewModelMock);
+        ElevatorSingleFloor elevatorSingleFloor = new ElevatorSingleFloor(0, elevatorViewModelMock);
 
         assertEquals(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)), elevatorSingleFloor.getBackground());
         assertEquals("1", ((Label) elevatorSingleFloor.getChildren().get(0)).getText());

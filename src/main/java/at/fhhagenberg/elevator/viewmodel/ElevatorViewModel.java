@@ -49,8 +49,8 @@ public class ElevatorViewModel {
         for (int i = 0; i < numberOfFloors; i++) {
             elevatorFloorColors.add(new SimpleObjectProperty<>(Color.WHITE));
         }
-        position.set(1-( ((double)elevator.getPosition()+floorHeight) / buildingHeight));
-        elevator.positionProperty().addListener((observable, oldValue, newValue) -> position.set(1 - ( (newValue.doubleValue()+floorHeight) / buildingHeight)));
+        position.set(1-((double)elevator.getPosition() / buildingHeight));
+        elevator.positionProperty().addListener((observable, oldValue, newValue) -> position.set(1-(newValue.doubleValue()) / buildingHeight));
 
         elevator.targetProperty().addListener((observable, oldValue, newValue) -> updateFloors());
 

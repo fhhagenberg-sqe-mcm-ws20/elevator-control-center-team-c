@@ -39,6 +39,6 @@ class ElevatorAnimationOverlayPaneTest {
 
         testProperty.set(0.8);
 
-        assertEquals((elevatorAnimationOverlayPane.getHeight()-((ImageView)elevatorAnimationOverlayPane.getChildren().get(0)).getFitHeight())*0.8, elevatorAnimationOverlayPane.getPadding().getTop());
+        assertEquals(elevatorAnimationOverlayPane.getHeight()*0.8-elevatorAnimationOverlayPane.getImageSize(), elevatorAnimationOverlayPane.getPadding().getTop());
     }
 }
