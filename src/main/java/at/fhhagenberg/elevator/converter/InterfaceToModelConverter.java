@@ -3,7 +3,7 @@ package at.fhhagenberg.elevator.converter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
-import sqe.IElevator;
+import sqelevator.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class InterfaceToModelConverter {
         List<Floor> floors = new ArrayList<>();
         int numberOfFloors = elevatorConnection.getFloorNum();
         for (int i = 0; i < numberOfFloors; i++) {
-            floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
+            floors.add(new Floor(i+1, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
         }
         return floors;
     }
