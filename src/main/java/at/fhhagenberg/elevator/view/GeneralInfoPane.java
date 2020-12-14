@@ -10,6 +10,8 @@ import javafx.scene.text.TextFlow;
 
 @SuppressWarnings("java:S110")
 public class GeneralInfoPane extends VBox {
+    private TextArea errorMessagesTextArea;
+
     public GeneralInfoPane() {
         super();
         Label systemStatusLabel = new Label("System status");
@@ -19,7 +21,7 @@ public class GeneralInfoPane extends VBox {
         Pane spacePane = new Pane();
         spacePane.setPrefHeight(500);
         Label errorMessagesLabel = new Label("Error Messages");
-        TextArea errorMessagesTextArea = new TextArea();
+        errorMessagesTextArea = new TextArea();
         errorMessagesTextArea.setDisable(true);
         errorMessagesTextArea.setStyle("-fx-opacity: 1;");
         errorMessagesTextArea.setPrefSize(2000, 2000);
@@ -30,5 +32,9 @@ public class GeneralInfoPane extends VBox {
                 "-fx-border-width: 1;" +
                 "-fx-border-color: black;");
         this.getChildren().addAll(systemStatusLabel, systemStatusTextFlow, spacePane, errorMessagesLabel, errorMessagesTextArea);
+    }
+
+    public void logError(String error) {
+        errorMessagesTextArea.setText(error);
     }
 }

@@ -11,38 +11,32 @@ import javafx.stage.Stage;
 import lombok.SneakyThrows;
 import sqelevator.IElevator;
 
-import java.rmi.Naming;
-import java.rmi.RemoteException;
-
 /**
  * JavaFX App
  */
 public class App extends Application {
 
     private Building building=new Building();
-    private BuildingViewModel buildingViewModel=new BuildingViewModel(building);
+    private RMIElevatorAdapter simulator = new RMIElevatorAdapter();
+    private BuildingViewModel buildingViewModel=new BuildingViewModel(building, simulator);
     private ElevatorControlCenterPane view;
-
 
     @Override
     public void start(Stage stage) {
 
         try {
-            IElevator controller = (IElevator) Naming.lookup("rmi://localhost/ElevatorSim");
-            InterfaceToModelConverter converter = new InterfaceToModelConverter(controller);
-
             Runnable runnable = new Runnable() {
                 @SneakyThrows
                 @Override
                 public void run() {
                     while(true) {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                         Platform.runLater(() -> {
-                            try {
-                                converter.convert(building);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
+                            simulator.updateBuilding(building);
+                            if (!simulator.isConnected())
+                                view.logError("Lost connection");
+                            else
+                                view.logError("Connected");
                         });
                     }
                 }
@@ -55,12 +49,10 @@ public class App extends Application {
             view = new ElevatorControlCenterPane(buildingViewModel, stage);
             view.initialize();
         } catch (Exception e ){
-            System.out.println("Error: "+e.getMessage());
+            e.printStackTrace();
         }
 
-
         var scene = new Scene(view, 1280, 720);
-
         stage.setScene(scene);
         stage.show();
     }

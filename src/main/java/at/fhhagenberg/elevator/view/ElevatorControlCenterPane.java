@@ -22,6 +22,10 @@ public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeC
         updateLayout();
     }
 
+    public void logError(String error) {
+        generalInfoPane.logError(error);
+    }
+
     private void updateLayout() {
         this.getChildren().clear();
         this.getChildren().addAll(generalInfoPane);

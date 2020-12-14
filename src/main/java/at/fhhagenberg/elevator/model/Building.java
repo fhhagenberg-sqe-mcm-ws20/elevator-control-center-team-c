@@ -125,6 +125,14 @@ public class Building {
                 reload = true;
             }
         }
+
+        int oldSize = this.floors.size();
+        //remove floors if new building has less floors
+        for (int i=building.floors.size(); i < oldSize; i++){
+            this.floors.remove(i);
+            reload = true;
+        }
+
         for (int i = 0; i < building.elevators.size(); i++) {
             if (i < this.elevators.size()) {
                 this.elevators.get(i).copyValues(building.elevators.get(i), this.floors);
@@ -133,6 +141,14 @@ public class Building {
                 reload = true;
             }
         }
+
+        oldSize = this.elevators.size();
+        //remove elevators if new building has less elevators
+        for (int i=building.elevators.size(); i < oldSize; i++){
+            this.elevators.remove(i);
+            reload = true;
+        }
+
         this.floorHeight = building.floorHeight;
         if (reload) {
             notifyChangeListeners();

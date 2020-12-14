@@ -1,5 +1,6 @@
 package at.fhhagenberg.elevator.viewmodel;
 
+import at.fhhagenberg.elevator.RMIElevatorAdapter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
@@ -16,11 +17,13 @@ public class BuildingViewModel implements INotifyModelSizeChangedListener {
     private final List<ElevatorViewModel> elevatorViewModels = new ArrayList<>();
 
     private final Building building;
+    private final RMIElevatorAdapter simulator;
 
     private final List<INotifyModelSizeChangedListener> changeListeners= new ArrayList<>();
 
-    public BuildingViewModel(Building building) {
+    public BuildingViewModel(Building building, RMIElevatorAdapter simulator) {
         this.building = building;
+        this.simulator = simulator;
         building.addChangeListener(this);
         updateFromModel();
     }
@@ -51,7 +54,7 @@ public class BuildingViewModel implements INotifyModelSizeChangedListener {
             floorViewModels.add(new FloorViewModel(floor));
         }
         for (Elevator elevator : building.getElevators()) {
-            elevatorViewModels.add(new ElevatorViewModel(elevator, building.getNumberOfFloors(),building.getFloorHeight()));
+            elevatorViewModels.add(new ElevatorViewModel(simulator, elevator, building.getNumberOfFloors(),building.getFloorHeight()));
         }
         notifyChangeListeners();
     }

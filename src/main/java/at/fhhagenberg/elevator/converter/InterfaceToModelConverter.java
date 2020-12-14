@@ -7,6 +7,7 @@ import sqelevator.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -65,8 +66,8 @@ public class InterfaceToModelConverter {
     private List<Floor> getFloorsFromInterface() throws RemoteException {
         List<Floor> floors = new ArrayList<>();
         int numberOfFloors = elevatorConnection.getFloorNum();
-        for (int i = 0; i < numberOfFloors; i++) {
-            floors.add(new Floor(i+1, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
+        for (int i = numberOfFloors-1; i >=0; i--) {
+            floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
         }
         return floors;
     }
@@ -83,15 +84,16 @@ public class InterfaceToModelConverter {
     private List<Elevator> getElevatorsFromInterface(List<Floor> floors) throws RemoteException {
         List<Elevator> elevators = new ArrayList<>();
         int numberOfElevators = elevatorConnection.getElevatorNum();
-
         for (int i = 0; i < numberOfElevators; i++) {
             List<Boolean> floorButtonMap = new ArrayList<>();
+            Boolean[] floorButtons = new Boolean[floors.size()];
             List<Integer> listOfServicedFloors = new ArrayList<>();
             for (Floor floor : floors) {
                 if (elevatorConnection.getServicesFloors(i, floor.getNumber())) {
                     listOfServicedFloors.add(floor.getNumber());
                 }
-                floorButtonMap.add(elevatorConnection.getElevatorButton(i, floor.getNumber()));
+                floorButtons[floor.getNumber()] = elevatorConnection.getElevatorButton(i, floor.getNumber());
+                floorButtonMap = Arrays.asList(floorButtons);
             }
             elevators.add(new Elevator(i, elevatorConnection.getCommittedDirection(i), elevatorConnection.getElevatorAccel(i), elevatorConnection.getElevatorDoorStatus(i), elevatorConnection.getElevatorFloor(i), elevatorConnection.getElevatorPosition(i), elevatorConnection.getElevatorSpeed(i), elevatorConnection.getElevatorWeight(i), elevatorConnection.getElevatorCapacity(i), elevatorConnection.getTarget(i), listOfServicedFloors, floorButtonMap));
         }

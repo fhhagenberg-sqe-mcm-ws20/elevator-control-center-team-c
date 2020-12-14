@@ -46,6 +46,7 @@ public class Floor {
      * @param floor floor which hold the values that should be copied
      */
     public void copyValues(Floor floor) {
+        this.number = floor.number;
         this.buttonUp.set(floor.buttonUp.get());
         this.buttonDown.set(floor.buttonDown.get());
     }

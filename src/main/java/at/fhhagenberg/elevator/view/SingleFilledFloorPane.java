@@ -20,7 +20,7 @@ public class SingleFilledFloorPane extends SingleFloorPane {
         ObjectProperty<Image> upLabelBackground = upImg.imageProperty();
         upLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonUpImage(), buttonSize, buttonSize, false, false), floorViewModel.buttonUpImageProperty()));
 
-        Label floorNumberLabel = new Label("" + floorViewModel.getFloorNumber());
+        Label floorNumberLabel = new Label("" + (floorViewModel.getFloorNumber()+1));
         floorNumberLabel.setPrefWidth(28);
         floorNumberLabel.setPadding(new Insets(0, 10, 0, 10));
 
