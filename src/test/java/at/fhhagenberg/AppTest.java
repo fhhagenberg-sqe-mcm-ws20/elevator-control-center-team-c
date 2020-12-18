@@ -3,6 +3,8 @@ package at.fhhagenberg;
 import at.fhhagenberg.elevator.App;
 import at.fhhagenberg.elevator.RMIElevatorAdapter;
 import at.fhhagenberg.elevator.SystemStatus;
+import javafx.scene.Node;
+import javafx.scene.text.Text;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -11,6 +13,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import javafx.scene.control.Button;
@@ -24,8 +27,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -56,13 +62,17 @@ public class AppTest {
         app.start(stage);
     }
 
+    private Node findNodeWithText(String text) {
+        return robot.lookup((Text t) -> t.getText().equals(text)).tryQuery().orElse(null);
+    }
+
     @Test
     void testGUIShowsCorrectErrorStateWhenConnecting() throws RemoteException, InterruptedException {
         try {
             rmiRegistry.unbind("ElevatorSim");
         } catch (NotBoundException e) {}
-
-        Thread.sleep(500);
+        
+        await().atMost(600, TimeUnit.MILLISECONDS).until(() -> findNodeWithText(SystemStatus.CONNECTING.name().toLowerCase()) != null);
         FxAssert.verifyThat("#statusText", TextMatchers.hasText(SystemStatus.CONNECTING.name().toLowerCase()));
     }
 
@@ -74,7 +84,7 @@ public class AppTest {
             rmiRegistry.bind("ElevatorSim", interfaceMock);
         }
 
-        Thread.sleep(500);
+        await().atMost(600, TimeUnit.MILLISECONDS).until(() -> findNodeWithText(SystemStatus.CONNECTED.name().toLowerCase()) != null);
         FxAssert.verifyThat("#statusText", TextMatchers.hasText(SystemStatus.CONNECTED.name().toLowerCase()));
     }
 }

@@ -1,30 +1,20 @@
 package at.fhhagenberg;
 
-import at.fhhagenberg.elevator.App;
 import at.fhhagenberg.elevator.RMIElevatorAdapter;
-import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
-import at.fhhagenberg.elevator.model.Building;
-import javafx.application.Platform;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
-import org.testfx.api.FxAssert;
-import org.testfx.api.FxRobot;
-import org.testfx.api.FxToolkit;
-import org.testfx.matcher.control.LabeledMatchers;
-import org.testfx.matcher.control.TextInputControlMatchers;
 import sqelevator.IElevator;
 
-import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -43,21 +33,20 @@ public class RMIElevatorAdapterTest {
         simulator = new RMIElevatorAdapter("rmi://localhost:1100/ElevatorSimTest");
     }
 
-
     @Test
     void testReconnectAfterRemoteException() throws RemoteException, InterruptedException, AlreadyBoundException {
-        Thread.sleep(150);
+        await().atMost(300, TimeUnit.MILLISECONDS).until(() -> simulator.isConnected());
         assertTrue(simulator.isConnected());
 
         try {
             rmiRegistry.unbind("ElevatorSimTest");
         } catch (NotBoundException e) {}
         simulator.reconnect();
-        Thread.sleep(150);
+        await().atMost(300, TimeUnit.MILLISECONDS).until(() -> !simulator.isConnected());
         assertFalse(simulator.isConnected());
 
         rmiRegistry.bind("ElevatorSimTest", interfaceMock);
-        Thread.sleep(150);
+        await().atMost(300, TimeUnit.MILLISECONDS).until(() -> simulator.isConnected());
         assertTrue(simulator.isConnected());
     }
 
