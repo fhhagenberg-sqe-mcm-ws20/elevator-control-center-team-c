@@ -45,23 +45,20 @@ public class RMIElevatorAdapterTest {
 
 
     @Test
-    void testReconnectAfterRemoteException() throws RemoteException, InterruptedException {
-            doThrow(RemoteException.class).when(interfaceMock).setTarget(anyInt(), anyInt());
-            rmiRegistry.rebind("ElevatorSimTest", interfaceMock);
-            simulator.reconnect();
+    void testReconnectAfterRemoteException() throws RemoteException, InterruptedException, AlreadyBoundException {
+        Thread.sleep(150);
+        assertTrue(simulator.isConnected());
 
-            Thread.sleep(100);
-            assertTrue(simulator.isConnected());
+        try {
+            rmiRegistry.unbind("ElevatorSimTest");
+        } catch (NotBoundException e) {}
+        simulator.reconnect();
+        Thread.sleep(150);
+        assertFalse(simulator.isConnected());
 
-            assertThrows(RemoteException.class, () -> {
-                interfaceMock.setTarget(0,0);
-            });
-
-            simulator.setTarget(0,0);
-            assertFalse(simulator.isConnected());
-
-            Thread.sleep(100);
-            assertTrue(simulator.isConnected());
+        rmiRegistry.bind("ElevatorSimTest", interfaceMock);
+        Thread.sleep(150);
+        assertTrue(simulator.isConnected());
     }
 
 }
