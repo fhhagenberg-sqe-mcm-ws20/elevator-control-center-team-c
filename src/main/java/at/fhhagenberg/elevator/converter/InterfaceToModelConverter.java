@@ -65,11 +65,11 @@ public class InterfaceToModelConverter {
      */
     private List<Floor> getFloorsFromInterface() throws RemoteException {
         int numberOfFloors = elevatorConnection.getFloorNum();
-        Floor[] floors = new Floor[numberOfFloors];
-        for (int i = numberOfFloors-1; i >=0; i--) {
-            floors[i] = new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i));
+        List floors = new ArrayList();
+        for (int i = 0; i < numberOfFloors; i++) {
+            floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
         }
-        return Arrays.asList(floors);
+        return floors;
     }
 
     /**

@@ -15,9 +15,11 @@ public class RMIElevatorAdapter {
     private IElevator controller;
     private InterfaceToModelConverter converter;
     private Boolean connected=false;
+    private String lookupName;
 
-    public RMIElevatorAdapter() {
-        connect();
+    public RMIElevatorAdapter(String lookupName) {
+        this.lookupName = lookupName;
+        reconnect();
     }
 
     public Boolean isConnected() {
@@ -42,7 +44,7 @@ public class RMIElevatorAdapter {
 
     private void connect() {
         try {
-            controller = (IElevator) Naming.lookup("rmi://localhost/ElevatorSim");
+            controller = (IElevator) Naming.lookup(lookupName);
             converter = new InterfaceToModelConverter(controller);
             connected= true;
         } catch (Exception e) {
@@ -50,9 +52,22 @@ public class RMIElevatorAdapter {
         }
     }
 
-    private void reconnect() {
+    public void reconnect() {
         connected = false;
-        connect();
+        Runnable runnable = new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                while (!connected) {
+                    connect();
+                    Thread.sleep(100);
+                }
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.setDaemon(true);
+        thread.start();
     }
 
 }

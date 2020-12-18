@@ -1,6 +1,5 @@
 package at.fhhagenberg.elevator;
 
-import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.view.ElevatorControlCenterPane;
 import at.fhhagenberg.elevator.viewmodel.BuildingViewModel;
@@ -9,7 +8,6 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
-import sqelevator.IElevator;
 
 /**
  * JavaFX App
@@ -17,7 +15,7 @@ import sqelevator.IElevator;
 public class App extends Application {
 
     private Building building=new Building();
-    private RMIElevatorAdapter simulator = new RMIElevatorAdapter();
+    private RMIElevatorAdapter simulator = new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
     private BuildingViewModel buildingViewModel=new BuildingViewModel(building, simulator);
     private ElevatorControlCenterPane view;
 
@@ -30,14 +28,15 @@ public class App extends Application {
                 @Override
                 public void run() {
                     while(true) {
-                        Thread.sleep(500);
                         Platform.runLater(() -> {
-                            simulator.updateBuilding(building);
-                            if (!simulator.isConnected())
-                                view.logError("Lost connection");
-                            else
-                                view.logError("Connected");
+                            if (!simulator.isConnected()) {
+                                view.setSystemStatus(SystemStatus.CONNECTING);
+                            } else {
+                                simulator.updateBuilding(building);
+                                view.setSystemStatus(SystemStatus.CONNECTED);
+                            }
                         });
+                        Thread.sleep(250);
                     }
                 }
             };

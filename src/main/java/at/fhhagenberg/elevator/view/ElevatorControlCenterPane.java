@@ -1,5 +1,6 @@
 package at.fhhagenberg.elevator.view;
 
+import at.fhhagenberg.elevator.SystemStatus;
 import at.fhhagenberg.elevator.viewmodel.BuildingViewModel;
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
@@ -22,8 +23,8 @@ public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeC
         updateLayout();
     }
 
-    public void logError(String error) {
-        generalInfoPane.logError(error);
+    public void setSystemStatus(SystemStatus status) {
+        generalInfoPane.setSystemStatus(status);
     }
 
     private void updateLayout() {

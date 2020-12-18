@@ -1,5 +1,6 @@
 package at.fhhagenberg.elevator.view;
 
+import at.fhhagenberg.elevator.SystemStatus;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -11,11 +12,13 @@ import javafx.scene.text.TextFlow;
 @SuppressWarnings("java:S110")
 public class GeneralInfoPane extends VBox {
     private TextArea errorMessagesTextArea;
+    private Text systemStatusText;
 
     public GeneralInfoPane() {
         super();
         Label systemStatusLabel = new Label("System status");
-        Text systemStatusText = new Text("Everything is running fine");
+        systemStatusText = new Text(SystemStatus.CONNECTED.name().toLowerCase());
+        systemStatusText.setId("statusText");
         systemStatusText.setFill(Color.GREEN);
         TextFlow systemStatusTextFlow = new TextFlow(systemStatusText);
         Pane spacePane = new Pane();
@@ -34,7 +37,17 @@ public class GeneralInfoPane extends VBox {
         this.getChildren().addAll(systemStatusLabel, systemStatusTextFlow, spacePane, errorMessagesLabel, errorMessagesTextArea);
     }
 
-    public void logError(String error) {
-        errorMessagesTextArea.setText(error);
+    public void setSystemStatus(SystemStatus status) {
+        systemStatusText.setText(status.name().toLowerCase());
+        switch (status) {
+            case CONNECTED: {
+                systemStatusText.setFill(Color.GREEN);
+                break;
+            }
+            case CONNECTING: {
+                systemStatusText.setFill(Color.RED);
+                break;
+            }
+        }
     }
 }
