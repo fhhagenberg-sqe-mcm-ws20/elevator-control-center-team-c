@@ -14,7 +14,7 @@ import javafx.scene.layout.CornerRadii;
 public class ElevatorSingleFloor extends SingleFloorPane {
     public ElevatorSingleFloor(int floorNumber, ElevatorViewModel elevatorViewModel) {
         super();
-        Label tempLabel = new Label("" + floorNumber);
+        Label tempLabel = new Label("" + (floorNumber+1));
         ObjectProperty<Background> floorPaneBackground = this.backgroundProperty();
         this.setId("targetFloorButton");
         floorPaneBackground.bind(Bindings.createObjectBinding(() -> {
@@ -23,8 +23,7 @@ public class ElevatorSingleFloor extends SingleFloorPane {
         }, elevatorViewModel.elevatorFloorColorProperty(floorNumber)));
         this.setOnMouseClicked(e -> {
             if (elevatorViewModel.isManualControl())
-                System.out.println("Floor clicked! Elevator: " + elevatorViewModel.getElevatorNumber() + " FloorNumber: " + floorNumber);
-                elevatorViewModel.setTarget(floorNumber);
+                elevatorViewModel.setTargetString(floorNumber);
         });
 
         this.getChildren().add(tempLabel);

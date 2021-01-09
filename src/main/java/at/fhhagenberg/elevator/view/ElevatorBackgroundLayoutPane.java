@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 public class ElevatorBackgroundLayoutPane extends VBox {
     public ElevatorBackgroundLayoutPane(int numberOfFloors, ElevatorViewModel elevatorViewModel) {
         super();
-        for (int i = 0; i < numberOfFloors; i++) {
+        for (int i = numberOfFloors-1; i >=0; i--) {
             this.getChildren().add(new ElevatorSingleFloor(i, elevatorViewModel));
         }
     }

@@ -6,7 +6,7 @@ import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sqe.IElevator;
+import sqelevator.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
