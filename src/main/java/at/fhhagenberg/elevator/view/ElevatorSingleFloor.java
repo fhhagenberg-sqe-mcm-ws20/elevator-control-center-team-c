@@ -16,6 +16,7 @@ public class ElevatorSingleFloor extends SingleFloorPane {
         super();
         Label tempLabel = new Label("" + floorNumber);
         ObjectProperty<Background> floorPaneBackground = this.backgroundProperty();
+        this.setId("targetFloorButton");
         floorPaneBackground.bind(Bindings.createObjectBinding(() -> {
             BackgroundFill fill = new BackgroundFill(elevatorViewModel.getElevatorFloorColor(floorNumber), CornerRadii.EMPTY, Insets.EMPTY);
             return new Background(fill);
@@ -23,6 +24,7 @@ public class ElevatorSingleFloor extends SingleFloorPane {
         this.setOnMouseClicked(e -> {
             if (elevatorViewModel.isManualControl())
                 System.out.println("Floor clicked! Elevator: " + elevatorViewModel.getElevatorNumber() + " FloorNumber: " + floorNumber);
+                elevatorViewModel.setTarget(floorNumber);
         });
 
         this.getChildren().add(tempLabel);

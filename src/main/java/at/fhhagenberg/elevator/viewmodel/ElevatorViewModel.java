@@ -12,6 +12,7 @@ public class ElevatorViewModel {
 
     private final Elevator elevator;
 
+
     private final StringProperty capacityString = new SimpleStringProperty("NaN");
     private final StringProperty weightString = new SimpleStringProperty("NaN");
     private final StringProperty targetString = new SimpleStringProperty("NaN");
@@ -141,6 +142,8 @@ public class ElevatorViewModel {
     public Boolean isManualControl() {
         return elevator.isManualControl();
     }
+
+    public void setTarget(int target){elevator.setTarget(target);}
 }
 
 
