@@ -3,6 +3,7 @@ package at.fhhagenberg;
 import at.fhhagenberg.elevator.App;
 import at.fhhagenberg.elevator.RMIElevatorAdapter;
 import at.fhhagenberg.elevator.SystemStatus;
+import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import javafx.scene.Node;
 import javafx.scene.text.Text;
 import org.junit.jupiter.api.*;

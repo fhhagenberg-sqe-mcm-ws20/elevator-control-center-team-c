@@ -1,6 +1,9 @@
 package at.fhhagenberg.elevator;
 
+import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import at.fhhagenberg.elevator.model.Building;
+import at.fhhagenberg.elevator.model.Elevator;
+import at.fhhagenberg.elevator.model.Floor;
 import at.fhhagenberg.elevator.view.ElevatorControlCenterPane;
 import at.fhhagenberg.elevator.viewmodel.BuildingViewModel;
 import javafx.application.Application;
@@ -8,6 +11,9 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
+import sqelevator.IElevator;
+
+import java.util.List;
 
 /**
  * JavaFX App
@@ -54,6 +60,11 @@ public class App extends Application {
         var scene = new Scene(view, 1280, 720);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void injectMock(IElevator mock){
+        this.simulator.controller = mock;
+        this.simulator.converter = new InterfaceToModelConverter(mock);
     }
 
     public static void main(String[] args) {

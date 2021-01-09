@@ -49,6 +49,8 @@ public class InterfaceToModelConverter {
             lastClockTick = elevatorConnection.getClockTick();
 
             if (compareTicks(firstClockTick, lastClockTick)) {
+                //System.out.println("copying values");
+                //System.out.println(newBuildingMapping.getNumberOfFloors());
                 building.copyValues(newBuildingMapping);
                 return true;
             }
