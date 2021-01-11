@@ -106,6 +106,8 @@ public class GuiTest {
         System.out.println(this.application.simulator.controller == interfaceMock);
         System.out.println(this.application.simulator.controller.getFloorNum());
         System.out.println(this.application.simulator.converter.elevatorConnection.getFloorNum());
+        System.out.println("interface in test");
+        System.out.println(this.application.simulator.controller.hashCode());
         await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
         await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
