@@ -102,6 +102,8 @@ public class GuiTest {
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
         System.out.println(interfaceMock);
         System.out.println(this.application.simulator.controller == interfaceMock);
+        System.out.println(this.application.simulator.controller.getFloorNum());
+        System.out.println(this.application.simulator.converter.elevatorConnection.getFloorNum());
         await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
         await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
