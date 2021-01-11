@@ -87,10 +87,12 @@ public class GuiTest {
 
     @Start
     public void start(Stage stage) {
-        var app = new App();
+        /*var app = new App();
         app.start(stage);
         app.injectMock(interfaceMock);
-        this.application = app;
+        this.application = app;*/
+        this.application.start(stage);
+        this.application.injectMock(interfaceMock);
     }
 
     private Node findNodeWithId(String id) {
