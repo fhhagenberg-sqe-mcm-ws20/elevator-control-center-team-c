@@ -21,7 +21,7 @@ public class InterfaceToModelConverter {
     /**
      * Elevator interface to retrieve data from
      */
-    public IElevator elevatorConnection;
+    private IElevator elevatorConnection;
 
     public InterfaceToModelConverter(IElevator elevatorConnection) {
         this.elevatorConnection = elevatorConnection;

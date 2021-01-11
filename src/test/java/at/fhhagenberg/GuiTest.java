@@ -101,7 +101,6 @@ public class GuiTest {
         robot.clickOn("#elevatorModeSwitch");
         await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
         robot.clickOn("#targetFloorButton");
-        System.out.println(interfaceMock);
         verify(interfaceMock, times(1)).setTarget(0, floorCount-1);
     }
 

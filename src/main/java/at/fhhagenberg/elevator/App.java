@@ -21,13 +21,11 @@ import java.util.List;
 public class App extends Application {
 
     private Building building=new Building();
-    public RMIElevatorAdapter simulator = new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
+    private RMIElevatorAdapter simulator = new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
     private BuildingViewModel buildingViewModel=new BuildingViewModel(building, simulator);
     private ElevatorControlCenterPane view;
 
-    public App(){
-
-    }
+    public App(){}
 
     public App(IElevator interfaceMock){
         simulator = new RMIElevatorAdapter(interfaceMock);
@@ -69,11 +67,6 @@ public class App extends Application {
         var scene = new Scene(view, 1280, 720);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void injectMock(IElevator mock){
-        this.simulator.controller = mock;
-        this.simulator.converter = new InterfaceToModelConverter(mock);
     }
 
     public static void main(String[] args) {

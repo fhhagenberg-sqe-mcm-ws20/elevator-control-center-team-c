@@ -24,7 +24,6 @@ public class ElevatorSingleFloor extends SingleFloorPane {
         }, elevatorViewModel.elevatorFloorColorProperty(floorNumber)));
         this.setOnMouseClicked(e -> {
             if (elevatorViewModel.isManualControl())
-                System.out.println("clicked on target floor");
                 elevatorViewModel.setTargetString(floorNumber);
         });
 

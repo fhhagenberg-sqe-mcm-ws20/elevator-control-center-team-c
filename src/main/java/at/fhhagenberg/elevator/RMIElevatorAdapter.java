@@ -12,8 +12,8 @@ import java.rmi.RemoteException;
 
 public class RMIElevatorAdapter {
 
-    public IElevator controller;
-    public InterfaceToModelConverter converter;
+    private IElevator controller;
+    private InterfaceToModelConverter converter;
     private Boolean connected=false;
     private String lookupName;
     private IElevator mock;
