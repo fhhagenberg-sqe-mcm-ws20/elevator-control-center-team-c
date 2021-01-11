@@ -57,7 +57,6 @@ public class GuiTest {
         //prepare the mock object
         interfaceMock = mock(IElevator.class, Mockito.withSettings().serializable());
         when(interfaceMock.getElevatorNum()).thenReturn(elevatorCount);
-        System.out.println("floor count " + floorCount);
         when(interfaceMock.getFloorNum()).thenReturn(floorCount);
         when(interfaceMock.getFloorHeight()).thenReturn(20);
         when(interfaceMock.getFloorButtonDown(0)).thenReturn(false);
@@ -87,13 +86,9 @@ public class GuiTest {
 
     @Start
     public void start(Stage stage) {
-        /*var app = new App();
+        var app = new App(interfaceMock);
         app.start(stage);
-        app.injectMock(interfaceMock);
-        this.application = app;*/
-        this.application = new App();
-        this.application.start(stage);
-        this.application.injectMock(interfaceMock);
+        this.application = app;
     }
 
     private Node findNodeWithId(String id) {
@@ -103,16 +98,14 @@ public class GuiTest {
 
     @Test
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
-        System.out.println(interfaceMock);
-        System.out.println(this.application.simulator.controller == interfaceMock);
-        System.out.println(this.application.simulator.controller.getFloorNum());
-        System.out.println(this.application.simulator.converter.elevatorConnection.getFloorNum());
         System.out.println("interface in test");
-        System.out.println(this.application.simulator.controller.hashCode());
-        await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
+        Thread.sleep(2000);
+        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
-        await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
+        Thread.sleep(2000);
+        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
         robot.clickOn("#targetFloorButton");
+        Thread.sleep(2000);
         verify(interfaceMock, times(1)).setTarget(0, floorCount-1);
     }
 

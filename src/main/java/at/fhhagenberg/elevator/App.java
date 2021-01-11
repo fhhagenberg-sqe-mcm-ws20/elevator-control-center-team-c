@@ -25,6 +25,14 @@ public class App extends Application {
     private BuildingViewModel buildingViewModel=new BuildingViewModel(building, simulator);
     private ElevatorControlCenterPane view;
 
+    public App(){
+
+    }
+
+    public App(IElevator interfaceMock){
+        simulator = new RMIElevatorAdapter(interfaceMock);
+    }
+
     @Override
     public void start(Stage stage) {
 

@@ -65,10 +65,6 @@ public class InterfaceToModelConverter {
      */
     private List<Floor> getFloorsFromInterface() throws RemoteException {
         int numberOfFloors = elevatorConnection.getFloorNum();
-        System.out.println("requested nr of floors");
-        System.out.println(numberOfFloors);
-        System.out.println("interface in converter");
-        System.out.println(elevatorConnection.hashCode());
         List floors = new ArrayList();
         for (int i = 0; i < numberOfFloors; i++) {
             floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
