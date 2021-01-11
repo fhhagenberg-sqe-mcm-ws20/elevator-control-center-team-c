@@ -6,10 +6,12 @@ import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
+import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import lombok.var;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -48,6 +50,7 @@ public class GuiTest {
     int elevatorCount = 1;
     int floorCount = 3;
     int elevatorWeight = 100;
+    App application = new App();
 
 
     @BeforeAll
@@ -87,6 +90,7 @@ public class GuiTest {
         var app = new App();
         app.start(stage);
         app.injectMock(interfaceMock);
+        this.application = app;
     }
 
     private Node findNodeWithId(String id) {
@@ -97,6 +101,7 @@ public class GuiTest {
     @Test
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
         System.out.println(interfaceMock);
+        System.out.println(this.application.simulator.controller == interfaceMock);
         await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
         await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);

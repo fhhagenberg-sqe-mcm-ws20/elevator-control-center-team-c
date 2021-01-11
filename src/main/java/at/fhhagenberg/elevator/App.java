@@ -21,7 +21,7 @@ import java.util.List;
 public class App extends Application {
 
     private Building building=new Building();
-    private RMIElevatorAdapter simulator = new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
+    public RMIElevatorAdapter simulator = new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
     private BuildingViewModel buildingViewModel=new BuildingViewModel(building, simulator);
     private ElevatorControlCenterPane view;
 
