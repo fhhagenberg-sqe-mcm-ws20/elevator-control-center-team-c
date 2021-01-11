@@ -57,6 +57,7 @@ public class GuiTest {
         //prepare the mock object
         interfaceMock = mock(IElevator.class, Mockito.withSettings().serializable());
         when(interfaceMock.getElevatorNum()).thenReturn(elevatorCount);
+        System.out.println("floor count " + floorCount);
         when(interfaceMock.getFloorNum()).thenReturn(floorCount);
         when(interfaceMock.getFloorHeight()).thenReturn(20);
         when(interfaceMock.getFloorButtonDown(0)).thenReturn(false);
