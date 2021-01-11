@@ -24,7 +24,7 @@ public class RMIElevatorAdapter {
     }
 
     public RMIElevatorAdapter(IElevator mock){
-        this.lookupName = "simulation";
+        this.lookupName = "mock";
         this.mock = mock;
         reconnect();
     }
@@ -51,7 +51,7 @@ public class RMIElevatorAdapter {
 
     private void connect() {
         try {
-            if(lookupName.equals("simulation")){
+            if(lookupName.equals("mock")){
                 controller = this.mock;
                 converter = new InterfaceToModelConverter(this.mock);
                 connected = true;

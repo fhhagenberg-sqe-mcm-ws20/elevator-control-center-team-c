@@ -31,6 +31,7 @@ public class App extends Application {
 
     public App(IElevator interfaceMock){
         simulator = new RMIElevatorAdapter(interfaceMock);
+        buildingViewModel = new BuildingViewModel(building, simulator);
     }
 
     @Override

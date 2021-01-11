@@ -88,7 +88,6 @@ public class GuiTest {
     public void start(Stage stage) {
         var app = new App(interfaceMock);
         app.start(stage);
-        this.application = app;
     }
 
     private Node findNodeWithId(String id) {
@@ -98,14 +97,11 @@ public class GuiTest {
 
     @Test
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
-        System.out.println("interface in test");
-        Thread.sleep(2000);
         await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
-        Thread.sleep(2000);
         await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
         robot.clickOn("#targetFloorButton");
-        Thread.sleep(2000);
+        System.out.println(interfaceMock);
         verify(interfaceMock, times(1)).setTarget(0, floorCount-1);
     }
 
