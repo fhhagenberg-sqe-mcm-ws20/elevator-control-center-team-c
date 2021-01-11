@@ -91,6 +91,7 @@ public class GuiTest {
         app.start(stage);
         app.injectMock(interfaceMock);
         this.application = app;*/
+        this.application = new App();
         this.application.start(stage);
         this.application.injectMock(interfaceMock);
     }
