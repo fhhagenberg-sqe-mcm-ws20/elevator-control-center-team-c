@@ -96,9 +96,10 @@ public class GuiTest {
 
     @Test
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
-        await().atMost(20000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
+        System.out.println(interfaceMock);
+        await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
-        await().atMost(20000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
+        await().atMost(2000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
         robot.clickOn("#targetFloorButton");
         verify(interfaceMock, times(1)).setTarget(0, floorCount-1);
     }
@@ -108,7 +109,7 @@ public class GuiTest {
     void testGUIShowsCorrectWeight() throws InterruptedException, RemoteException {
         when(interfaceMock.getClockTick()).thenReturn((long) 1);
         when(interfaceMock.getElevatorWeight(0)).thenReturn(elevatorWeight);
-        Thread.sleep(20000);
+        Thread.sleep(2000);
         FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " kg"));
     }
 
