@@ -49,8 +49,6 @@ public class InterfaceToModelConverter {
             lastClockTick = elevatorConnection.getClockTick();
 
             if (compareTicks(firstClockTick, lastClockTick)) {
-                //System.out.println("copying values");
-                //System.out.println(newBuildingMapping.getNumberOfFloors());
                 building.copyValues(newBuildingMapping);
                 return true;
             }
@@ -67,6 +65,8 @@ public class InterfaceToModelConverter {
      */
     private List<Floor> getFloorsFromInterface() throws RemoteException {
         int numberOfFloors = elevatorConnection.getFloorNum();
+        System.out.println("requested nr of floors");
+        System.out.println(numberOfFloors);
         List floors = new ArrayList();
         for (int i = 0; i < numberOfFloors; i++) {
             floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
