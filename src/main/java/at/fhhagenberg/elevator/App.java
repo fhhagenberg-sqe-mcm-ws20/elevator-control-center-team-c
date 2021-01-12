@@ -21,11 +21,14 @@ import java.util.List;
 public class App extends Application {
 
     private Building building=new Building();
-    private RMIElevatorAdapter simulator = new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
-    private BuildingViewModel buildingViewModel=new BuildingViewModel(building, simulator);
+    private RMIElevatorAdapter simulator;
+    private BuildingViewModel buildingViewModel;
     private ElevatorControlCenterPane view;
 
-    public App(){}
+    public App(){
+        simulator=new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
+        buildingViewModel=new BuildingViewModel(building, simulator);
+    }
 
     public App(IElevator interfaceMock){
         simulator = new RMIElevatorAdapter(interfaceMock);

@@ -2,8 +2,6 @@ package at.fhhagenberg.elevator;
 
 import at.fhhagenberg.elevator.converter.InterfaceToModelConverter;
 import at.fhhagenberg.elevator.model.Building;
-import at.fhhagenberg.elevator.view.ElevatorControlCenterPane;
-import javafx.application.Platform;
 import lombok.SneakyThrows;
 import sqelevator.IElevator;
 
@@ -14,7 +12,7 @@ public class RMIElevatorAdapter {
 
     private IElevator controller;
     private InterfaceToModelConverter converter;
-    private Boolean connected=false;
+    private Boolean connected = false;
     private String lookupName;
 
     public RMIElevatorAdapter(String lookupName) {
@@ -22,10 +20,10 @@ public class RMIElevatorAdapter {
         reconnect();
     }
 
-    public RMIElevatorAdapter(IElevator mock){
-        this.lookupName = "mock";
-        this.controller = mock;
-        reconnect();
+    public RMIElevatorAdapter(IElevator elevatorInterface) {
+        converter = new InterfaceToModelConverter(elevatorInterface);
+        controller = elevatorInterface;
+        connected = true;
     }
 
     public Boolean isConnected() {
@@ -50,14 +48,9 @@ public class RMIElevatorAdapter {
 
     private void connect() {
         try {
-            if(lookupName.equals("mock")){
-                converter = new InterfaceToModelConverter(this.controller);
-                connected = true;
-            }else{
-                controller = (IElevator) Naming.lookup(lookupName);
-                converter = new InterfaceToModelConverter(controller);
-                connected= true;
-            }
+            controller = (IElevator) Naming.lookup(lookupName);
+            converter = new InterfaceToModelConverter(controller);
+            connected = true;
 
         } catch (Exception e) {
             connected = false;
@@ -76,10 +69,8 @@ public class RMIElevatorAdapter {
                 }
             }
         };
-
         Thread thread = new Thread(runnable);
         thread.setDaemon(true);
         thread.start();
     }
-
 }
