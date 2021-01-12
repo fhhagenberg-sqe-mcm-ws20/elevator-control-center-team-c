@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 public class ElevatorModeButtonPane extends EmptyElevatorModeButtonPane {
     public ElevatorModeButtonPane(ElevatorViewModel elevatorViewModel) {
         super();
-        Label switchButtonLabel = new Label("Automatic");
+        Label switchButtonLabel = new Label("Manual");
         switchButtonLabel.setPadding(new Insets(0,10,0,0));
         SwitchButton switchButton=new SwitchButton();
         switchButton.setId("elevatorModeSwitch");

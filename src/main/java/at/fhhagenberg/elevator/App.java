@@ -24,6 +24,7 @@ public class App extends Application {
     private RMIElevatorAdapter simulator;
     private BuildingViewModel buildingViewModel;
     private ElevatorControlCenterPane view;
+    private boolean errorState = false;
 
     public App(){
         simulator=new RMIElevatorAdapter("rmi://localhost/ElevatorSim");
@@ -44,6 +45,9 @@ public class App extends Application {
                 @Override
                 public void run() {
                     while(true) {
+                        if (errorState) {
+                            break;
+                        }
                         Platform.runLater(() -> {
                             if (!simulator.isConnected()) {
                                 view.setSystemStatus(SystemStatus.CONNECTING);
@@ -64,7 +68,7 @@ public class App extends Application {
             view = new ElevatorControlCenterPane(buildingViewModel, stage);
             view.initialize();
         } catch (Exception e ){
-            e.printStackTrace();
+            errorState = true;
         }
 
         var scene = new Scene(view, 1280, 720);
