@@ -49,7 +49,6 @@ public class GuiTest {
     int elevatorCount = 1;
     int floorCount = 3;
     int elevatorWeight = 100;
-    App application = new App();
 
 
     @BeforeAll
