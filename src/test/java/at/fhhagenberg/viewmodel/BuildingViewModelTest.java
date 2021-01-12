@@ -1,5 +1,6 @@
 package at.fhhagenberg.viewmodel;
 
+import at.fhhagenberg.elevator.RMIElevatorAdapter;
 import at.fhhagenberg.elevator.model.Building;
 import at.fhhagenberg.elevator.model.Elevator;
 import at.fhhagenberg.elevator.model.Floor;
@@ -17,8 +18,9 @@ class BuildingViewModelTest {
     @Test
     void testUpdateFromModelIfBuildingIsEmpty(){
         Building buildingMock = mock(Building.class);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
         when(buildingMock.isEmpty()).thenReturn(true);
-        BuildingViewModel buildingViewModel=new BuildingViewModel(buildingMock);
+        BuildingViewModel buildingViewModel=new BuildingViewModel(buildingMock, simulator);
         INotifyModelSizeChangedListener changeListenerMock=mock(INotifyModelSizeChangedListener.class);
         buildingViewModel.addChangeListener(changeListenerMock);
         buildingViewModel.modelChanged();
@@ -28,7 +30,8 @@ class BuildingViewModelTest {
     @Test
     void testAddChangeListenerFromModel(){
         Building buildingMock = mock(Building.class);
-        BuildingViewModel buildingViewModel=new BuildingViewModel(buildingMock);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
+        BuildingViewModel buildingViewModel=new BuildingViewModel(buildingMock, simulator);
         INotifyModelSizeChangedListener changeListenerMock=mock(INotifyModelSizeChangedListener.class);
         buildingViewModel.addChangeListener(changeListenerMock);
         buildingViewModel.modelChanged();
@@ -38,7 +41,8 @@ class BuildingViewModelTest {
     @Test
     void testModelChangedIfElevatorViewModelsAreCreated() {
         Building building = mock(Building.class);
-        BuildingViewModel buildingViewModel = new BuildingViewModel(building);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
+        BuildingViewModel buildingViewModel = new BuildingViewModel(building, simulator);
         when(building.getElevators()).thenReturn(List.of(new Elevator(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, List.of(1), List.of(false))));
         buildingViewModel.modelChanged();
         assertEquals(0, buildingViewModel.getFloorViewModels().size());
@@ -48,7 +52,8 @@ class BuildingViewModelTest {
     @Test
     void testModelChangedIfFloorViewModelsAreCreated() {
         Building building = mock(Building.class);
-        BuildingViewModel buildingViewModel = new BuildingViewModel(building);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
+        BuildingViewModel buildingViewModel = new BuildingViewModel(building, simulator);
         when(building.getFloors()).thenReturn(List.of(new Floor(1, false, false)));
         buildingViewModel.modelChanged();
         assertEquals(1, buildingViewModel.getFloorViewModels().size());
@@ -58,7 +63,8 @@ class BuildingViewModelTest {
     @Test
     void testModelChangedIfNoViewModelsAreCreated() {
         Building building = mock(Building.class);
-        BuildingViewModel buildingViewModel = new BuildingViewModel(building);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
+        BuildingViewModel buildingViewModel = new BuildingViewModel(building, simulator);
         buildingViewModel.modelChanged();
         assertEquals(0, buildingViewModel.getFloorViewModels().size());
         assertEquals(0, buildingViewModel.getElevatorViewModels().size());
@@ -67,8 +73,9 @@ class BuildingViewModelTest {
     @Test
     void testConstructorIfElevatorViewModelsAreCreated() {
         Building building = mock(Building.class);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
         when(building.getElevators()).thenReturn(List.of(new Elevator(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, List.of(1), List.of(false))));
-        BuildingViewModel buildingViewModel = new BuildingViewModel(building);
+        BuildingViewModel buildingViewModel = new BuildingViewModel(building, simulator);
         assertEquals(0, buildingViewModel.getFloorViewModels().size());
         assertEquals(1, buildingViewModel.getElevatorViewModels().size());
     }
@@ -76,8 +83,9 @@ class BuildingViewModelTest {
     @Test
     void testConstructorIfFloorViewModelsAreCreated() {
         Building building = mock(Building.class);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
         when(building.getFloors()).thenReturn(List.of(new Floor(1, false, false)));
-        BuildingViewModel buildingViewModel = new BuildingViewModel(building);
+        BuildingViewModel buildingViewModel = new BuildingViewModel(building, simulator);
         assertEquals(1, buildingViewModel.getFloorViewModels().size());
         assertEquals(0, buildingViewModel.getElevatorViewModels().size());
     }
@@ -85,7 +93,8 @@ class BuildingViewModelTest {
     @Test
     void testConstructorIfNoViewModelsAreCreated() {
         Building building = mock(Building.class);
-        BuildingViewModel buildingViewModel = new BuildingViewModel(building);
+        RMIElevatorAdapter simulator = mock(RMIElevatorAdapter.class);
+        BuildingViewModel buildingViewModel = new BuildingViewModel(building, simulator);
         assertEquals(0, buildingViewModel.getFloorViewModels().size());
         assertEquals(0, buildingViewModel.getElevatorViewModels().size());
     }

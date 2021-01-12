@@ -15,7 +15,7 @@ public class ElevatorButtonInfoPane extends GridPane {
     public ElevatorButtonInfoPane(int numberOfFloors, ElevatorViewModel elevatorViewModel) {
         for (int i = 0; i < numberOfFloors; i++) {
             Button singleButton = new Button();
-            singleButton.setText(""+i);
+            singleButton.setText(""+(i+1));
             singleButton.setDisable(true);
             singleButton.setStyle(
                     "-fx-background-radius: 15em; " +
@@ -35,7 +35,7 @@ public class ElevatorButtonInfoPane extends GridPane {
                 BackgroundFill fill = new BackgroundFill(elevatorViewModel.getElevatorFloorButtonColor(floorNumber), CornerRadii.EMPTY, Insets.EMPTY);
                 return new Background(fill);
             }, elevatorViewModel.elevatorFloorButtonColorProperty(floorNumber)));
-            this.add(singleButton, i%(Math.floorDiv(numberOfFloors,6)+1), i/(Math.floorDiv(numberOfFloors,6)+1));
+            this.add(singleButton, i%(Math.floorDiv(numberOfFloors,6)+1), 6-(i/(Math.floorDiv(numberOfFloors,6)+1)));
         }
     }
 }

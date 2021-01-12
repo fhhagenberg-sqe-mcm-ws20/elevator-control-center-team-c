@@ -11,6 +11,7 @@ public class ElevatorModeButtonPane extends EmptyElevatorModeButtonPane {
         Label switchButtonLabel = new Label("Automatic");
         switchButtonLabel.setPadding(new Insets(0,10,0,0));
         SwitchButton switchButton=new SwitchButton();
+        switchButton.setId("elevatorModeSwitch");
         switchButton.stateProperty().addListener((observable, oldValue, newValue) -> elevatorViewModel.setManualControl(newValue));
 
         this.getChildren().addAll(switchButtonLabel,switchButton);

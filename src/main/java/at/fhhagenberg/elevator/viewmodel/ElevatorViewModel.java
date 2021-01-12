@@ -1,5 +1,6 @@
 package at.fhhagenberg.elevator.viewmodel;
 
+import at.fhhagenberg.elevator.RMIElevatorAdapter;
 import at.fhhagenberg.elevator.model.Elevator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -11,6 +12,8 @@ import java.util.List;
 public class ElevatorViewModel {
 
     private final Elevator elevator;
+    private final RMIElevatorAdapter simulator;
+
 
     private final StringProperty capacityString = new SimpleStringProperty("NaN");
     private final StringProperty weightString = new SimpleStringProperty("NaN");
@@ -21,9 +24,11 @@ public class ElevatorViewModel {
     private final List<ObjectProperty<Color>> elevatorFloorButtonColors = new ArrayList<>();
     private final DoubleProperty position = new SimpleDoubleProperty(0);
     private final int buildingHeight;
+    private final int floorHeight;
 
-    public ElevatorViewModel(Elevator elevator, int numberOfFloors, int floorHeight) {
+    public ElevatorViewModel(RMIElevatorAdapter simulator, Elevator elevator, int numberOfFloors, int floorHeight) {
         this.buildingHeight = floorHeight * numberOfFloors;
+        this.floorHeight = floorHeight;
         capacityString.bind(Bindings.createStringBinding(() -> (elevator.getCapacity() + " kg"), elevator.capacityProperty()));
         weightString.bind(Bindings.createStringBinding(() -> (elevator.getWeight() + " kg"), elevator.weightProperty()));
         targetString.bind(Bindings.createStringBinding(() -> (elevator.getTarget() + ""), elevator.targetProperty()));
@@ -40,12 +45,13 @@ public class ElevatorViewModel {
         }
 
         this.elevator = elevator;
+        this.simulator = simulator;
 
         for (int i = 0; i < numberOfFloors; i++) {
             elevatorFloorColors.add(new SimpleObjectProperty<>(Color.WHITE));
         }
-        position.set((double)elevator.getPosition() / buildingHeight);
-        elevator.positionProperty().addListener((observable, oldValue, newValue) -> position.set(newValue.doubleValue() / buildingHeight));
+        position.set(1-((double)elevator.getPosition() / buildingHeight));
+        elevator.positionProperty().addListener((observable, oldValue, newValue) -> position.set(1-(newValue.doubleValue()) / buildingHeight));
 
         elevator.targetProperty().addListener((observable, oldValue, newValue) -> updateFloors());
 
@@ -141,6 +147,11 @@ public class ElevatorViewModel {
     public Boolean isManualControl() {
         return elevator.isManualControl();
     }
+
+    public void setTargetString(int target) {
+        simulator.setTarget(getElevatorNumber(), target);
+    }
+
 }
 
 
