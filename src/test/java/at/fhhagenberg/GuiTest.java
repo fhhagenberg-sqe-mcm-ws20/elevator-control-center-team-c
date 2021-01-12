@@ -45,7 +45,6 @@ public class GuiTest {
 
     IElevator interfaceMock;
     FxRobot robot;
-    Registry rmiRegistry;
     int elevatorCount = 1;
     int floorCount = 3;
     int elevatorWeight = 100;
@@ -75,11 +74,8 @@ public class GuiTest {
         when(interfaceMock.getTarget(0)).thenReturn(0);
         when(interfaceMock.getClockTick()).thenReturn((long) 0);
 
-        rmiRegistry = LocateRegistry.createRegistry(1098);
-
         FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(App.class);
-        robot = new FxRobot();
+        FxToolkit.setupApplication(() -> new App(interfaceMock));
 
     }
 
@@ -96,6 +92,7 @@ public class GuiTest {
 
     @Test
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
+        robot = new FxRobot();
         await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
         robot.clickOn("#elevatorModeSwitch");
         await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
