@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(ApplicationExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GuiTest {
+class GuiTest {
 
     IElevator interfaceMock;
     FxRobot robot;
