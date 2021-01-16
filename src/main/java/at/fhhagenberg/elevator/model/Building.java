@@ -127,6 +127,7 @@ public class Building {
         }
 
         int oldSize = this.floors.size();
+
         //remove floors if new building has less floors
         for (int i=building.floors.size(); i < oldSize; i++){
             this.floors.remove(i);
