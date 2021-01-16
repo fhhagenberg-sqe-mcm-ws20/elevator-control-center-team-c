@@ -275,9 +275,6 @@ class InterfaceToModelConverterTest {
     void testConvertIfOverridingValueCorrectly() throws RemoteException {
         Floor floor1 = new Floor(0, false, false);
         Floor floor2 = new Floor(1, false, false);
-        Floor floor3 = new Floor(2, false, false);
-        Floor floor5 = new Floor(4, false, false);
-        Floor floor6 = new Floor(5, false, false);
 
         List<Boolean> floorButtons = new ArrayList<>();
         floorButtons.add(false);

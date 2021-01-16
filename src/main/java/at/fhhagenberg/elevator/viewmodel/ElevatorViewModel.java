@@ -24,11 +24,9 @@ public class ElevatorViewModel {
     private final List<ObjectProperty<Color>> elevatorFloorButtonColors = new ArrayList<>();
     private final DoubleProperty position = new SimpleDoubleProperty(0);
     private final int buildingHeight;
-    private final int floorHeight;
 
     public ElevatorViewModel(RMIElevatorAdapter simulator, Elevator elevator, int numberOfFloors, int floorHeight) {
         this.buildingHeight = floorHeight * numberOfFloors;
-        this.floorHeight = floorHeight;
         capacityString.bind(Bindings.createStringBinding(() -> (elevator.getCapacity() + " kg"), elevator.capacityProperty()));
         weightString.bind(Bindings.createStringBinding(() -> (elevator.getWeight() + " kg"), elevator.weightProperty()));
         targetString.bind(Bindings.createStringBinding(() -> (elevator.getTarget() + ""), elevator.targetProperty()));

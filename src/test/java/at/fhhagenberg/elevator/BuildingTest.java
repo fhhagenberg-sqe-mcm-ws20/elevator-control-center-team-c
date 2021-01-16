@@ -256,4 +256,54 @@ class BuildingTest {
 
         verify(changeListenerMock, times(1)).modelChanged();
     }
+
+    @Test
+    void testCopyValuesIfFloorsAreRemoved() {
+        Floor floor1 = new Floor(0, false, false);
+        Floor floor2 = new Floor(1, false, true);
+        List<Boolean> floorButtons = new ArrayList<>();
+        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor1.getNumber(), 1, 1, 1, 1, floor1.getNumber(), null, floorButtons);
+        List<Floor> floors1 = new ArrayList<>();
+        floors1.add(floor1);
+        floors1.add(floor2);
+        List<Floor> floors2 = new ArrayList<>();
+        floors2.add(floor1);
+        List<Elevator> elevators = new ArrayList<>();
+        elevators.add(elevator1);
+        INotifyModelSizeChangedListener changeListenerMock = mock(INotifyModelSizeChangedListener.class);
+        Building building1 = new Building(elevators, floors1, 100);
+        building1.addChangeListener(changeListenerMock);
+        Building building2 = new Building(elevators, floors2, 100);
+
+        building1.copyValues(building2);
+
+        assertEquals(1, building1.getNumberOfFloors());
+    }
+
+    @Test
+    void testCopyValuesIfElevatorsAreRemoved() {
+        Floor floor1 = new Floor(0, false, false);
+        Floor floor2 = new Floor(1, false, true);
+        List<Boolean> floorButtons = new ArrayList<>();
+        Elevator elevator1 = new Elevator(0, 1, 1, 1, floor1.getNumber(), 1, 1, 1, 1, floor1.getNumber(), null, floorButtons);
+        Elevator elevator2 = new Elevator(1, 1, 1, 1, floor1.getNumber(), 1, 1, 1, 1, floor1.getNumber(), null, floorButtons);
+        List<Floor> floors = new ArrayList<>();
+        floors.add(floor1);
+        floors.add(floor2);
+        List<Elevator> elevators1 = new ArrayList<>();
+        elevators1.add(elevator1);
+        elevators1.add(elevator2);
+        List<Elevator> elevators2 = new ArrayList<>();
+        elevators2.add(elevator1);
+        INotifyModelSizeChangedListener changeListenerMock = mock(INotifyModelSizeChangedListener.class);
+        Building building1 = new Building(elevators1, floors, 100);
+        building1.addChangeListener(changeListenerMock);
+        Building building2 = new Building(elevators2, floors, 100);
+
+        building1.copyValues(building2);
+
+        assertEquals(1, building1.getNumberOfElevators());
+
+
+    }
 }
