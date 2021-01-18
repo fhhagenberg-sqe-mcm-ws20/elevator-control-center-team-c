@@ -28,7 +28,7 @@ class ElevatorTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
                 new Elevator(1, 1, 1, 5, 1, 1, 1, 1, 1, 1, null, floorButtons));
 
-        assertEquals("Constructor: Door status can either be 1 or 2", exception.getMessage());//assertEquals
+        assertEquals("Constructor: Door status can either be 1, 2, 3 or 4", exception.getMessage());//assertEquals
     }
 
     @Test
