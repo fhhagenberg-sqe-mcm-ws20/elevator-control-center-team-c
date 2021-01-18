@@ -15,8 +15,8 @@ public class Elevator {
             throw new IllegalArgumentException("Constructor: Commited direction has a range from 0 to 2");
         }
 
-        if (doorStatus != 1 && doorStatus != 2) {
-            throw new IllegalArgumentException("Constructor: Door status can either be 1 or 2");
+        if (doorStatus != 1 && doorStatus != 2 && doorStatus != 3 && doorStatus != 4) {
+            throw new IllegalArgumentException("Constructor: Door status can either be 1, 2, 3 or 4");
         }
         this.number = number;
         this.commitedDirection.set(commitedDirection);
