@@ -53,7 +53,7 @@ public class App extends Application {
                             view.setSystemStatus(SystemStatus.CONNECTED);
                         });
                     }
-                    Thread.sleep(50);
+                    Thread.sleep(25);
                 }
             }
         };

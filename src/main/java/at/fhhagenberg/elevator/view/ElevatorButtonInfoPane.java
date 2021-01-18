@@ -19,10 +19,10 @@ public class ElevatorButtonInfoPane extends GridPane {
             singleButton.setDisable(true);
             singleButton.setStyle(
                     "-fx-background-radius: 15em; " +
-                            "-fx-min-width: 20px; " +
-                            "-fx-min-height: 20px; " +
-                            "-fx-max-width: 20px; " +
-                            "-fx-max-height: 20px;" +
+                            "-fx-min-width: 23px; " +
+                            "-fx-min-height: 23px; " +
+                            "-fx-max-width: 23px; " +
+                            "-fx-max-height: 23px;" +
                             "-fx-font: 8 Arial;"+
                             "-fx-border-style: solid inside;" +
                             "-fx-border-width: 1;" +

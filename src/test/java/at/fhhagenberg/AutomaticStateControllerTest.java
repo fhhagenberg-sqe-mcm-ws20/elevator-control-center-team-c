@@ -14,6 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static sqelevator.IElevator.ELEVATOR_DOORS_CLOSED;
+import static sqelevator.IElevator.ELEVATOR_DOORS_OPEN;
 
 class AutomaticStateControllerTest {
 
@@ -29,9 +30,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(true);
         elevatorFloorButtons.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -41,15 +42,11 @@ class AutomaticStateControllerTest {
         floors.add(floor03);
         Building building = new Building(elevators, floors, 50);
 
-
         ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
         ArgumentCaptor<Integer> floorCaptor = ArgumentCaptor.forClass(Integer.class);
-
-
         new AutomaticStateController(rmiAdapterMock, building);
 
         verify(rmiAdapterMock, times(1)).setTarget(elevatorCaptor.capture(), floorCaptor.capture());
-
         assertEquals(0, elevatorCaptor.getValue());
         assertEquals(1, floorCaptor.getValue());
     }
@@ -65,9 +62,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(true);
         elevatorFloorButtons.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -101,9 +98,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(true);
         elevatorFloorButtons.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, ELEVATOR_DOORS_CLOSED, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -135,9 +132,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(false);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -169,9 +166,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(false);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -203,9 +200,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -249,9 +246,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(false);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
         List<Floor> floors = new ArrayList<>();
@@ -271,6 +268,32 @@ class AutomaticStateControllerTest {
     }
 
     @Test
+    void testUpdateStateInitialFloorButtonsOnlyNotServicingFloors() {
+        RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
+        Floor floor01 = new Floor(0, false, false);
+        Floor floor02 = new Floor(1, false, true);
+        Floor floor03 = new Floor(2, false, true);
+        List<Boolean> elevatorFloorButtons = new ArrayList<>();
+        elevatorFloorButtons.add(false);
+        elevatorFloorButtons.add(false);
+        elevatorFloorButtons.add(false);
+        List<Integer> listOfServicedFloors = new ArrayList<>();
+        Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
+        List<Elevator> elevators = new ArrayList<>();
+        List<Floor> floors = new ArrayList<>();
+        elevators.add(elevator);
+        floors.add(floor01);
+        floors.add(floor02);
+        floors.add(floor03);
+        Building building = new Building(elevators, floors, 50);
+
+        new AutomaticStateController(rmiAdapterMock, building);
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> floorCaptor = ArgumentCaptor.forClass(Integer.class);
+        verify(rmiAdapterMock, times(0)).setTarget(elevatorCaptor.capture(), floorCaptor.capture());
+    }
+
+    @Test
     void testUpdateStateInitialFloorButtonsOnlyTwoElevator() {
         RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
         Floor floor01 = new Floor(0, false, false);
@@ -281,9 +304,9 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(false);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         Elevator elevator2 = new Elevator(1, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
@@ -323,9 +346,11 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(false);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
+        listOfServicedFloors.add(3);
+        listOfServicedFloors.add(4);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         Elevator elevator2 = new Elevator(1, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
@@ -431,9 +456,11 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons.add(true);
         elevatorFloorButtons.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-        listOfServicedFloors.add(floor01.getNumber());
-        listOfServicedFloors.add(floor02.getNumber());
-        listOfServicedFloors.add(floor03.getNumber());
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
+        listOfServicedFloors.add(3);
+        listOfServicedFloors.add(4);
         Elevator elevator = new Elevator(0, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         Elevator elevator2 = new Elevator(1, 1, 1, 1, floor01.getNumber(), 1, 1, 1, 1, floor02.getNumber(), listOfServicedFloors, elevatorFloorButtons);
         List<Elevator> elevators = new ArrayList<>();
@@ -490,7 +517,15 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons1.add(false);
         elevatorFloorButtons1.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
+        listOfServicedFloors.add(3);
+        listOfServicedFloors.add(4);
+        listOfServicedFloors.add(5);
+        listOfServicedFloors.add(6);
+        listOfServicedFloors.add(7);
+        listOfServicedFloors.add(8);
         Elevator elevator1 = new Elevator(0, 1, 1, 1, 0, 1, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons1);
         Elevator elevator2 = new Elevator(1, 1, 1, 1, 0, 1, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons1);
         List<Elevator> elevators1 = new ArrayList<>();
@@ -578,7 +613,15 @@ class AutomaticStateControllerTest {
         elevatorFloorButtons1.add(false);
         elevatorFloorButtons1.add(true);
         List<Integer> listOfServicedFloors = new ArrayList<>();
-
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
+        listOfServicedFloors.add(3);
+        listOfServicedFloors.add(4);
+        listOfServicedFloors.add(5);
+        listOfServicedFloors.add(6);
+        listOfServicedFloors.add(7);
+        listOfServicedFloors.add(8);
         Elevator elevator1 = new Elevator(0, 1, 1, 1, 0, 1, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons1);
         elevator1.setManualControl(true);
         Elevator elevator2 = new Elevator(1, 1, 1, 1, 0, 1, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons1);
@@ -633,5 +676,78 @@ class AutomaticStateControllerTest {
         assertEquals(5, allCapturedFloors.get(1));
         assertEquals(3, allCapturedFloors.get(2));
         assertEquals(1, allCapturedFloors.get(3));
+    }
+
+    @Test
+    void testUpdateStateElevatorReachedTargetOfOtherElevatorsFloorTarget() {
+        RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
+        List<Floor> floors1 = new ArrayList<>();
+        floors1.add(new Floor(0, false, false));
+        floors1.add(new Floor(1, false, false));
+        floors1.add(new Floor(2, false, true));
+        floors1.add(new Floor(3, false, true));
+        List<Boolean> elevatorFloorButtons1 = new ArrayList<>();
+        elevatorFloorButtons1.add(true);
+        elevatorFloorButtons1.add(true);
+        elevatorFloorButtons1.add(false);
+        elevatorFloorButtons1.add(false);
+        List<Boolean> elevatorFloorButtons2 = new ArrayList<>();
+        elevatorFloorButtons2.add(false);
+        elevatorFloorButtons2.add(false);
+        elevatorFloorButtons2.add(false);
+        elevatorFloorButtons2.add(false);
+        List<Integer> listOfServicedFloors = new ArrayList<>();
+        listOfServicedFloors.add(0);
+        listOfServicedFloors.add(1);
+        listOfServicedFloors.add(2);
+        listOfServicedFloors.add(3);
+        Elevator elevator1 = new Elevator(0, 1, 1, ELEVATOR_DOORS_OPEN, 0, 0, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons1);
+        Elevator elevator2 = new Elevator(1, 1, 1, 1, 0, 1, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons2);
+        List<Elevator> elevators1 = new ArrayList<>();
+        elevators1.add(elevator1);
+        elevators1.add(elevator2);
+        List<Floor> floors2 = new ArrayList<>();
+        floors2.add(new Floor(0, false, false));
+        floors2.add(new Floor(1, false, false));
+        floors2.add(new Floor(2, false, false));
+        floors2.add(new Floor(3, false, false));
+        List<Boolean> elevatorFloorButtons3 = new ArrayList<>();
+        elevatorFloorButtons3.add(false);
+        elevatorFloorButtons3.add(false);
+        elevatorFloorButtons3.add(true);
+        elevatorFloorButtons3.add(false);
+        Elevator elevator3 = new Elevator(0, 1, 1, ELEVATOR_DOORS_OPEN, 1, 1, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons3);
+        List<Elevator> elevators2 = new ArrayList<>();
+        elevators2.add(elevator3);
+        elevators2.add(elevator2);
+        Elevator elevator4 = new Elevator(0, 1, 1, ELEVATOR_DOORS_OPEN, 2, 3, 1, 1, 1, 1, listOfServicedFloors, elevatorFloorButtons2);
+        List<Elevator> elevators3 = new ArrayList<>();
+        elevators3.add(elevator4);
+        elevators3.add(elevator2);
+
+        Building building1 = new Building(elevators1, floors1, 50);
+        Building building2 = new Building(elevators2, floors2, 50);
+        Building building3 = new Building(elevators3, floors2, 50);
+        AutomaticStateController as = new AutomaticStateController(rmiAdapterMock, building1);
+        building1.copyValues(building2);
+        as.updateState();
+        building1.copyValues(building3);
+        as.updateState();
+
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> floorCaptor = ArgumentCaptor.forClass(Integer.class);
+        verify(rmiAdapterMock, times(5)).setTarget(elevatorCaptor.capture(), floorCaptor.capture());
+        List<Integer> allCapturedElevators = elevatorCaptor.getAllValues();
+        List<Integer> allCapturedFloors = floorCaptor.getAllValues();
+        assertEquals(0, allCapturedElevators.get(0));
+        assertEquals(1, allCapturedElevators.get(1));
+        assertEquals(0, allCapturedElevators.get(2));
+        assertEquals(0, allCapturedElevators.get(3));
+        assertEquals(1, allCapturedElevators.get(4));
+        assertEquals(0, allCapturedFloors.get(0));
+        assertEquals(2, allCapturedFloors.get(1));
+        assertEquals(1, allCapturedFloors.get(2));
+        assertEquals(2, allCapturedFloors.get(3));
+        assertEquals(3, allCapturedFloors.get(4));
     }
 }
