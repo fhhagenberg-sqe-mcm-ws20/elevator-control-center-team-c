@@ -7,6 +7,8 @@ import at.fhhagenberg.elevator.viewmodel.FloorViewModel;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,7 @@ class ElevatorControlCenterPaneTest {
         when(elevatorViewModelMock.targetStringProperty()).thenReturn(new SimpleStringProperty("test"));
         when(elevatorViewModelMock.speedStringProperty()).thenReturn(new SimpleStringProperty("test"));
         when(elevatorViewModelMock.accelerationStringProperty()).thenReturn(new SimpleStringProperty("test"));
+        when(elevatorViewModelMock.doorStatusProperty()).thenReturn(new SimpleStringProperty("test"));
         FloorViewModel floorViewModelMock = mock(FloorViewModel.class);
         when(floorViewModelMock.buttonUpImageProperty()).thenReturn(new SimpleObjectProperty<>("file:up_filled.png"));
         when(floorViewModelMock.buttonDownImageProperty()).thenReturn(new SimpleObjectProperty<>("file:down_filled.png"));
@@ -45,7 +48,9 @@ class ElevatorControlCenterPaneTest {
         when(buildingViewModelMock.getFloorViewModels()).thenReturn(List.of(floorViewModelMock, floorViewModelMock, floorViewModelMock, floorViewModelMock));
 
         elevatorControlCenterPane.initialize();
-        assertEquals(5, elevatorControlCenterPane.getChildren().size());
+        ScrollPane scrollPane = (ScrollPane) elevatorControlCenterPane.getChildren().get(1);
+        HBox content = (HBox) scrollPane.getContent();
+        assertEquals(4, content.getChildren().size());
     }
     @Test
     void testModelChanged(){
@@ -60,6 +65,7 @@ class ElevatorControlCenterPaneTest {
         when(elevatorViewModelMock.targetStringProperty()).thenReturn(new SimpleStringProperty("test"));
         when(elevatorViewModelMock.speedStringProperty()).thenReturn(new SimpleStringProperty("test"));
         when(elevatorViewModelMock.accelerationStringProperty()).thenReturn(new SimpleStringProperty("test"));
+        when(elevatorViewModelMock.doorStatusProperty()).thenReturn(new SimpleStringProperty("test"));
         FloorViewModel floorViewModelMock = mock(FloorViewModel.class);
         when(floorViewModelMock.buttonUpImageProperty()).thenReturn(new SimpleObjectProperty<>("file:up_filled.png"));
         when(floorViewModelMock.buttonDownImageProperty()).thenReturn(new SimpleObjectProperty<>("file:down_filled.png"));
@@ -73,6 +79,9 @@ class ElevatorControlCenterPaneTest {
         when(buildingViewModelMock.getFloorViewModels()).thenReturn(List.of(floorViewModelMock, floorViewModelMock, floorViewModelMock, floorViewModelMock));
 
         elevatorControlCenterPane.modelChanged();
-        assertEquals(6, elevatorControlCenterPane.getChildren().size());
+
+        ScrollPane scrollPane = (ScrollPane) elevatorControlCenterPane.getChildren().get(1);
+        HBox content = (HBox) scrollPane.getContent();
+        assertEquals(5, content.getChildren().size());
     }
 }

@@ -106,7 +106,7 @@ class GuiTest {
         when(interfaceMock.getClockTick()).thenReturn((long) 1);
         when(interfaceMock.getElevatorWeight(0)).thenReturn(elevatorWeight);
         Thread.sleep(2000);
-        FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " kg"));
+        FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " lbs"));
     }
 
 }

@@ -1,6 +1,7 @@
 package at.fhhagenberg.elevator.view;
 
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -19,6 +20,10 @@ public class ElevatorTextInfoPane extends GridPane {
         Label targetLabel = new Label("Target:");
         Label targetValue = new Label("NaN");
         targetValue.textProperty().bind(elevatorViewModel.targetStringProperty());
+
+        Label doorStatusLabel = new Label("Door Status:");
+        Label doorStatusValue = new Label("NaN");
+        doorStatusValue.textProperty().bind(elevatorViewModel.doorStatusProperty());
 
         Label speedLabel = new Label("Speed:");
         Label speedValue = new Label("NaN");
@@ -42,5 +47,8 @@ public class ElevatorTextInfoPane extends GridPane {
 
         this.add(accelerationLabel, 1, 4);
         this.add(accelerationValue, 2, 4);
+
+        this.add(doorStatusLabel, 1, 5);
+        this.add(doorStatusValue, 2, 5);
     }
 }
