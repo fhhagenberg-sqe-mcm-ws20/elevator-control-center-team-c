@@ -18,6 +18,7 @@ public class ElevatorViewModel {
     private final StringProperty capacityString = new SimpleStringProperty("NaN");
     private final StringProperty weightString = new SimpleStringProperty("NaN");
     private final StringProperty targetString = new SimpleStringProperty("NaN");
+    private final StringProperty doorStatusString = new SimpleStringProperty("NaN");
     private final StringProperty speedString = new SimpleStringProperty("NaN");
     private final StringProperty accelerationString = new SimpleStringProperty("NaN");
     private final List<ObjectProperty<Color>> elevatorFloorColors = new ArrayList<>();
@@ -27,11 +28,12 @@ public class ElevatorViewModel {
 
     public ElevatorViewModel(RMIElevatorAdapter simulator, Elevator elevator, int numberOfFloors, int floorHeight) {
         this.buildingHeight = floorHeight * numberOfFloors;
-        capacityString.bind(Bindings.createStringBinding(() -> (elevator.getCapacity() + " kg"), elevator.capacityProperty()));
-        weightString.bind(Bindings.createStringBinding(() -> (elevator.getWeight() + " kg"), elevator.weightProperty()));
+        capacityString.bind(Bindings.createStringBinding(() -> (elevator.getCapacity() + ""), elevator.capacityProperty()));
+        weightString.bind(Bindings.createStringBinding(() -> (elevator.getWeight() + " lbs"), elevator.weightProperty()));
         targetString.bind(Bindings.createStringBinding(() -> (elevator.getTarget() + ""), elevator.targetProperty()));
-        speedString.bind(Bindings.createStringBinding(() -> (elevator.getSpeed() + " m/s"), elevator.speedProperty()));
-        accelerationString.bind(Bindings.createStringBinding(() -> (elevator.getAcceleration() + " m/s2"), elevator.accelerationProperty()));
+        doorStatusString.bind(Bindings.createStringBinding(() ->(elevator.getDoorStatusString()), elevator.doorStatusProperty()));
+        speedString.bind(Bindings.createStringBinding(() -> (elevator.getSpeed() + " ft/s"), elevator.speedProperty()));
+        accelerationString.bind(Bindings.createStringBinding(() -> (elevator.getAcceleration() + " ft/s2"), elevator.accelerationProperty()));
 
         for (BooleanProperty floorButtonStatus : elevator.getFloorButtonStatuses()) {
             ObjectProperty<Color> floorButtonColorProperty = new SimpleObjectProperty<>(Color.WHITE);
@@ -96,6 +98,10 @@ public class ElevatorViewModel {
 
     public StringProperty targetStringProperty() {
         return targetString;
+    }
+
+    public StringProperty doorStatusProperty() {
+        return doorStatusString;
     }
 
     public String getSpeedString() {

@@ -47,7 +47,6 @@ public class App extends Application {
                         Platform.runLater(() -> view.setSystemStatus(SystemStatus.CONNECTING));
                     } else {
 
-
                         Platform.runLater(() -> {
                             adapter.updateBuilding(building);
                             view.setSystemStatus(SystemStatus.CONNECTED);
@@ -78,9 +77,7 @@ public class App extends Application {
         thread1.setDaemon(true);
         thread1.start();
 
-        view = new
-
-                ElevatorControlCenterPane(buildingViewModel, stage);
+        view = new ElevatorControlCenterPane(buildingViewModel, stage);
         view.initialize();
 
 

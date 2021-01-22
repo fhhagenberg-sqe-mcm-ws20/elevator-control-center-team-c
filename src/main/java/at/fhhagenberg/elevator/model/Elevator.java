@@ -45,7 +45,7 @@ public class Elevator {
     private IntegerProperty commitedDirection = new SimpleIntegerProperty();
 
     /**
-     * Elevators acceleration in m/sec^2. Downwards is negative signed.
+     * Elevators acceleration in ft/sec^2. Downwards is negative signed.
      */
     private IntegerProperty acceleration = new SimpleIntegerProperty();
 
@@ -75,7 +75,7 @@ public class Elevator {
     private IntegerProperty weight = new SimpleIntegerProperty();
 
     /**
-     * Elevators max. capacity in kg.
+     * Elevators max. capacity.
      */
     private IntegerProperty capacity = new SimpleIntegerProperty();
 
@@ -130,7 +130,7 @@ public class Elevator {
      * @param doorStatus
      */
     public void setDoorStatus(int doorStatus) {
-        if (doorStatus == 1 || doorStatus == 2) {
+        if (doorStatus >= 1 && doorStatus <= 4) {
             this.doorStatus.set(doorStatus);
         } else {
             throw new IllegalArgumentException("Set: Door status can either be 1 or 2");
@@ -198,6 +198,16 @@ public class Elevator {
         return doorStatus.get();
     }
 
+    public String getDoorStatusString() {
+        switch (doorStatus.get()) {
+            case 1: return "OPEN";
+            case 2: return "CLOSED";
+            case 3: return "OPENING";
+            case 4: return "CLOSING";
+            default: return "NaN";
+        }
+    }
+
     public int getFloor() {
         return floor.get();
     }
@@ -241,6 +251,8 @@ public class Elevator {
     public IntegerProperty targetProperty() {
         return target;
     }
+
+    public IntegerProperty doorStatusProperty() { return doorStatus; }
 
     public List<BooleanProperty> getFloorButtonStatuses() {
         return floorButtonStatuses;

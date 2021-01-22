@@ -4,9 +4,16 @@ import at.fhhagenberg.elevator.viewmodel.FloorViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
+
 
 @SuppressWarnings("java:S110")
 public class SingleFilledFloorPane extends SingleFloorPane {
@@ -21,8 +28,9 @@ public class SingleFilledFloorPane extends SingleFloorPane {
         upLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonUpImage(), buttonSize, buttonSize, false, false), floorViewModel.buttonUpImageProperty()));
 
         Label floorNumberLabel = new Label("" + (floorViewModel.getFloorNumber()+1));
-        floorNumberLabel.setPrefWidth(28);
-        floorNumberLabel.setPadding(new Insets(0, 10, 0, 10));
+        floorNumberLabel.setPrefWidth(35);
+        floorNumberLabel.setAlignment(Pos.CENTER);
+        floorNumberLabel.setTextAlignment(TextAlignment.CENTER);
 
         img = new Image("file:down.png", buttonSize, buttonSize, false, false);
         ImageView downImg = new ImageView(img);

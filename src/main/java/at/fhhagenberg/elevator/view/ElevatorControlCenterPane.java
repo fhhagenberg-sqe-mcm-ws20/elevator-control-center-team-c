@@ -4,6 +4,8 @@ import at.fhhagenberg.elevator.SystemStatus;
 import at.fhhagenberg.elevator.viewmodel.BuildingViewModel;
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -30,11 +32,19 @@ public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeC
     private void updateLayout() {
         this.getChildren().clear();
         this.getChildren().addAll(generalInfoPane);
+
+        ScrollPane scrollLayout = new ScrollPane();
+        HBox layout = new HBox();
         var floorsPane = new FloorsPane(buildingViewModel.getFloorViewModels());
-        this.getChildren().add(floorsPane);
+        layout.getChildren().add(floorsPane);
         for (ElevatorViewModel elevatorViewModel : buildingViewModel.getElevatorViewModels()) {
-            this.getChildren().add(new ElevatorPane(buildingViewModel.getFloorViewModels().size(), elevatorViewModel));
+            layout.getChildren().add(new ElevatorPane(buildingViewModel.getFloorViewModels().size(), elevatorViewModel));
         }
+        scrollLayout.setFitToHeight(true);
+        scrollLayout.setFitToWidth(true);
+        scrollLayout.setStyle("-fx-background-color:transparent;"); //remove border
+        scrollLayout.setContent(layout);
+        this.getChildren().add(scrollLayout);
     }
 
     @Override
