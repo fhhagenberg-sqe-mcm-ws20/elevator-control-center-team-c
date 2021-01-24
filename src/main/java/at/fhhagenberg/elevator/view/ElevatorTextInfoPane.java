@@ -14,6 +14,8 @@ public class ElevatorTextInfoPane extends GridPane {
 
         Label weightLabel = new Label("Weight:");
         Label weightValue = new Label("NaN");
+        this.getStyleClass().add("elevator-text-info-pane");
+        this.setId("elevator-" + elevatorViewModel.getElevatorNumber());
         weightValue.setId("weightLabel");
         weightValue.textProperty().bind(elevatorViewModel.weightStringProperty());
 

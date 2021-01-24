@@ -16,7 +16,8 @@ public class ElevatorSingleFloor extends SingleFloorPane {
         super();
         Label tempLabel = new Label("" + (floorNumber+1));
         ObjectProperty<Background> floorPaneBackground = this.backgroundProperty();
-        this.setId("targetFloorButton");
+        this.getStyleClass().add("elevator-single-floor");
+        this.setId("floor-" + floorNumber);
         floorPaneBackground.bind(Bindings.createObjectBinding(() -> {
             BackgroundFill fill = new BackgroundFill(elevatorViewModel.getElevatorFloorColor(floorNumber), CornerRadii.EMPTY, Insets.EMPTY);
             return new Background(fill);

@@ -24,6 +24,7 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.control.TextMatchers;
 import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.service.query.NodeQuery;
 import sqelevator.IElevator;
 
 import java.rmi.AlreadyBoundException;
@@ -46,9 +47,9 @@ class GuiTest {
 
     IElevator interfaceMock;
     FxRobot robot;
-    int elevatorCount = 1;
+    final int elevatorCount = 1;
     final int floorCount = 3;
-    int elevatorWeight = 100;
+    final int elevatorWeight = 100;
 
 
     @BeforeAll
@@ -91,7 +92,7 @@ class GuiTest {
     }
 
     private void waitForGUI(){
-        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
+        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#weightLabel") != null);
     }
 
 
@@ -99,9 +100,11 @@ class GuiTest {
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
         robot = new FxRobot();
         waitForGUI();
-        robot.clickOn("#elevatorModeSwitch");
-        robot.clickOn("#targetFloorButton");
-        verify(interfaceMock, times(1)).setTarget(0, floorCount-1);
+        Node elevatorModeSwitch = robot.lookup(".elevator-pane").lookup("#elevator-0").lookup(".elevator-mode-button-pane").query();
+        robot.clickOn(elevatorModeSwitch);
+        Node floor = robot.lookup(".elevator-single-floor").lookup("#floor-0").query();
+        robot.clickOn(floor);
+        verify(interfaceMock, times(1)).setTarget(0, 0);
     }
 
 
@@ -109,8 +112,9 @@ class GuiTest {
     void testGUIShowsCorrectWeight() throws InterruptedException, RemoteException {
         when(interfaceMock.getClockTick()).thenReturn((long) 1);
         when(interfaceMock.getElevatorWeight(0)).thenReturn(elevatorWeight);
-        Thread.sleep(2000);
-        FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " lbs"));
+        waitForGUI();
+        NodeQuery query = robot.lookup(".elevator-text-info-pane").lookup("#elevator-0").lookup("#weightLabel");
+        FxAssert.verifyThat(query, LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " lbs"));
     }
 
 }
