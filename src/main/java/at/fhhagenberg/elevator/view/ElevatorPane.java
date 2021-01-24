@@ -7,6 +7,8 @@ import javafx.scene.layout.VBox;
 public class ElevatorPane extends VBox {
     public ElevatorPane(int numberOfFLoors, ElevatorViewModel elevatorViewModel) {
         super();
+        this.setId("elevator-" + elevatorViewModel.getElevatorNumber());
+        this.getStyleClass().add("elevator-pane");
         this.getChildren().addAll(new ElevatorModeButtonPane(elevatorViewModel),new ElevatorAnimationPane(numberOfFLoors, elevatorViewModel), new ElevatorInfoPane(numberOfFLoors, elevatorViewModel));
     }
 }

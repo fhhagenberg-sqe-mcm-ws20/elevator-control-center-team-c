@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -46,7 +47,7 @@ public class GuiTest {
     IElevator interfaceMock;
     FxRobot robot;
     int elevatorCount = 1;
-    int floorCount = 3;
+    final int floorCount = 3;
     int elevatorWeight = 100;
 
 
@@ -89,13 +90,16 @@ public class GuiTest {
         return robot.lookup(id).tryQuery().orElse(null);
     }
 
+    private void waitForGUI(){
+        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
+    }
+
 
     @Test
     void testSetTargetFloor() throws InterruptedException, RemoteException, AlreadyBoundException {
         robot = new FxRobot();
-        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#elevatorModeSwitch") != null);
+        waitForGUI();
         robot.clickOn("#elevatorModeSwitch");
-        await().atMost(5000, TimeUnit.MILLISECONDS).until(() -> findNodeWithId("#targetFloorButton") != null);
         robot.clickOn("#targetFloorButton");
         verify(interfaceMock, times(1)).setTarget(0, floorCount-1);
     }
@@ -105,7 +109,7 @@ public class GuiTest {
     void testGUIShowsCorrectWeight() throws InterruptedException, RemoteException {
         when(interfaceMock.getClockTick()).thenReturn((long) 1);
         when(interfaceMock.getElevatorWeight(0)).thenReturn(elevatorWeight);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " kg"));
     }
 
