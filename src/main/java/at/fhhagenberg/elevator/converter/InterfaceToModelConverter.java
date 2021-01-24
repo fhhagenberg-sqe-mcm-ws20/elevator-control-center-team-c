@@ -7,7 +7,6 @@ import sqelevator.IElevator;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,11 +43,17 @@ public class InterfaceToModelConverter {
         Long firstClockTick = elevatorConnection.getClockTick();
         if (!firstClockTick.equals(lastClockTick)) {
             List<Floor> floors = getFloorsFromInterface();
+            if (!compareTicks(firstClockTick, elevatorConnection.getClockTick())) {
+                return false;
+            }
             List<Elevator> elevators = getElevatorsFromInterface(floors);
-            Building newBuildingMapping = new Building(elevators, floors, getFloorHeight());
+            if (!compareTicks(firstClockTick, elevatorConnection.getClockTick())) {
+                return false;
+            }
+            int floorHeight = getFloorHeight();
             lastClockTick = elevatorConnection.getClockTick();
-
             if (compareTicks(firstClockTick, lastClockTick)) {
+                Building newBuildingMapping = new Building(elevators, floors, floorHeight);
                 building.copyValues(newBuildingMapping);
                 return true;
             }
@@ -65,7 +70,7 @@ public class InterfaceToModelConverter {
      */
     private List<Floor> getFloorsFromInterface() throws RemoteException {
         int numberOfFloors = elevatorConnection.getFloorNum();
-        List floors = new ArrayList();
+        List<Floor> floors = new ArrayList<>();
         for (int i = 0; i < numberOfFloors; i++) {
             floors.add(new Floor(i, elevatorConnection.getFloorButtonUp(i), elevatorConnection.getFloorButtonDown(i)));
         }
@@ -85,17 +90,15 @@ public class InterfaceToModelConverter {
         List<Elevator> elevators = new ArrayList<>();
         int numberOfElevators = elevatorConnection.getElevatorNum();
         for (int i = 0; i < numberOfElevators; i++) {
-            List<Boolean> floorButtonMap = new ArrayList<>();
-            Boolean[] floorButtons = new Boolean[floors.size()];
+            List<Boolean> floorButtons = new ArrayList<>();
             List<Integer> listOfServicedFloors = new ArrayList<>();
-            for (Floor floor : floors) {
-                if (elevatorConnection.getServicesFloors(i, floor.getNumber())) {
-                    listOfServicedFloors.add(floor.getNumber());
+            for (int j = 0; j < floors.size(); j++) {
+                if (elevatorConnection.getServicesFloors(i, j)) {
+                    listOfServicedFloors.add(j);
                 }
-                floorButtons[floor.getNumber()] = elevatorConnection.getElevatorButton(i, floor.getNumber());
-                floorButtonMap = Arrays.asList(floorButtons);
+                floorButtons.add(elevatorConnection.getElevatorButton(i, j));
             }
-            elevators.add(new Elevator(i, elevatorConnection.getCommittedDirection(i), elevatorConnection.getElevatorAccel(i), elevatorConnection.getElevatorDoorStatus(i), elevatorConnection.getElevatorFloor(i), elevatorConnection.getElevatorPosition(i), elevatorConnection.getElevatorSpeed(i), elevatorConnection.getElevatorWeight(i), elevatorConnection.getElevatorCapacity(i), elevatorConnection.getTarget(i), listOfServicedFloors, floorButtonMap));
+            elevators.add(new Elevator(i, elevatorConnection.getCommittedDirection(i), elevatorConnection.getElevatorAccel(i), elevatorConnection.getElevatorDoorStatus(i), elevatorConnection.getElevatorFloor(i), elevatorConnection.getElevatorPosition(i), elevatorConnection.getElevatorSpeed(i), elevatorConnection.getElevatorWeight(i), elevatorConnection.getElevatorCapacity(i), elevatorConnection.getTarget(i), listOfServicedFloors, floorButtons));
         }
         return elevators;
     }

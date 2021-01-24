@@ -30,6 +30,7 @@ public class GeneralInfoPane extends VBox {
         errorMessagesTextArea.setPrefSize(2000, 2000);
         this.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250), CornerRadii.EMPTY, Insets.EMPTY)));
         this.setPrefSize(150, Double.MAX_VALUE);
+        this.setMinWidth(150);
         this.setStyle("-fx-padding: 10;" +
                 "-fx-border-style: solid inside;" +
                 "-fx-border-width: 1;" +

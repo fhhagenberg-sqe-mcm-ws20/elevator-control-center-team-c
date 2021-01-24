@@ -5,7 +5,6 @@ import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -23,7 +22,7 @@ public class ElevatorSingleFloor extends SingleFloorPane {
             return new Background(fill);
         }, elevatorViewModel.elevatorFloorColorProperty(floorNumber)));
         this.setOnMouseClicked(e -> {
-            if (elevatorViewModel.isManualControl())
+            if (Boolean.TRUE.equals(elevatorViewModel.isManualControl()))
                 elevatorViewModel.setTargetString(floorNumber);
         });
 

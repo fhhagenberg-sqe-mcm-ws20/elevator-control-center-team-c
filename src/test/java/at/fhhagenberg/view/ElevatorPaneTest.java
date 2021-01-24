@@ -31,6 +31,7 @@ class ElevatorPaneTest {
         when(elevatorViewModelMock.targetStringProperty()).thenReturn(new SimpleStringProperty("test"));
         when(elevatorViewModelMock.speedStringProperty()).thenReturn(new SimpleStringProperty("test"));
         when(elevatorViewModelMock.accelerationStringProperty()).thenReturn(new SimpleStringProperty("test"));
+        when(elevatorViewModelMock.doorStatusProperty()).thenReturn(new SimpleStringProperty("test"));
 
         ElevatorPane elevatorPane = new ElevatorPane(3, elevatorViewModelMock);
 

@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(ApplicationExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class GuiTest {
+class GuiTest {
 
     IElevator interfaceMock;
     FxRobot robot;
@@ -109,8 +109,8 @@ public class GuiTest {
     void testGUIShowsCorrectWeight() throws InterruptedException, RemoteException {
         when(interfaceMock.getClockTick()).thenReturn((long) 1);
         when(interfaceMock.getElevatorWeight(0)).thenReturn(elevatorWeight);
-        Thread.sleep(1000);
-        FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " kg"));
+        Thread.sleep(2000);
+        FxAssert.verifyThat("#weightLabel", LabeledMatchers.hasText(String.valueOf(elevatorWeight) + " lbs"));
     }
 
 }

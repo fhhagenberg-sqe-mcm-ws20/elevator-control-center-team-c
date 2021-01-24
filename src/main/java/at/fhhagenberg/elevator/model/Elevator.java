@@ -15,8 +15,8 @@ public class Elevator {
             throw new IllegalArgumentException("Constructor: Commited direction has a range from 0 to 2");
         }
 
-        if (doorStatus != 1 && doorStatus != 2) {
-            throw new IllegalArgumentException("Constructor: Door status can either be 1 or 2");
+        if (doorStatus != 1 && doorStatus != 2 && doorStatus != 3 && doorStatus != 4) {
+            throw new IllegalArgumentException("Constructor: Door status can either be 1, 2, 3 or 4");
         }
         this.number = number;
         this.commitedDirection.set(commitedDirection);
@@ -29,8 +29,8 @@ public class Elevator {
         this.capacity.set(capacity);
         this.target.set(target);
         this.listOfServicedFloors.set(listOfServicedFloors);
-        for (int i = 0; i < floorButtonStatuses.size(); i++) {
-            this.floorButtonStatuses.add(new SimpleBooleanProperty(floorButtonStatuses.get(i)));
+        for (Boolean floorButtonStatus : floorButtonStatuses) {
+            this.floorButtonStatuses.add(new SimpleBooleanProperty(floorButtonStatus));
         }
     }
 
@@ -45,7 +45,7 @@ public class Elevator {
     private IntegerProperty commitedDirection = new SimpleIntegerProperty();
 
     /**
-     * Elevators acceleration in m/sec^2. Downwards is negative signed.
+     * Elevators acceleration in ft/sec^2. Downwards is negative signed.
      */
     private IntegerProperty acceleration = new SimpleIntegerProperty();
 
@@ -75,7 +75,7 @@ public class Elevator {
     private IntegerProperty weight = new SimpleIntegerProperty();
 
     /**
-     * Elevators max. capacity in kg.
+     * Elevators max. capacity.
      */
     private IntegerProperty capacity = new SimpleIntegerProperty();
 
@@ -130,7 +130,7 @@ public class Elevator {
      * @param doorStatus
      */
     public void setDoorStatus(int doorStatus) {
-        if (doorStatus == 1 || doorStatus == 2) {
+        if (doorStatus >= 1 && doorStatus <= 4) {
             this.doorStatus.set(doorStatus);
         } else {
             throw new IllegalArgumentException("Set: Door status can either be 1 or 2");
@@ -186,10 +186,6 @@ public class Elevator {
         return commitedDirection.get();
     }
 
-    public IntegerProperty commitedDirectionProperty() {
-        return commitedDirection;
-    }
-
     public int getAcceleration() {
         return acceleration.get();
     }
@@ -202,16 +198,18 @@ public class Elevator {
         return doorStatus.get();
     }
 
-    public IntegerProperty doorStatusProperty() {
-        return doorStatus;
+    public String getDoorStatusString() {
+        switch (doorStatus.get()) {
+            case 1: return "OPEN";
+            case 2: return "CLOSED";
+            case 3: return "OPENING";
+            case 4: return "CLOSING";
+            default: return "NaN";
+        }
     }
 
     public int getFloor() {
         return floor.get();
-    }
-
-    public IntegerProperty floorProperty() {
-        return floor;
     }
 
     public int getPosition() {
@@ -254,6 +252,8 @@ public class Elevator {
         return target;
     }
 
+    public IntegerProperty doorStatusProperty() { return doorStatus; }
+
     public List<BooleanProperty> getFloorButtonStatuses() {
         return floorButtonStatuses;
     }
@@ -270,28 +270,12 @@ public class Elevator {
         return manualControl.get();
     }
 
-    public void setAcceleration(int acceleration) {
-        this.acceleration.set(acceleration);
-    }
-
     public void setFloor(int floor) {
         this.floor.set(floor);
     }
 
-    public void setPosition(int position) {
-        this.position.set(position);
-    }
-
     public void setSpeed(int speed) {
         this.speed.set(speed);
-    }
-
-    public void setWeight(int weight) {
-        this.weight.set(weight);
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity.set(capacity);
     }
 
     public void setTarget(int target) {
@@ -304,15 +288,5 @@ public class Elevator {
 
     public void setManualControl(Boolean isManual) {
         this.manualControl.set(isManual);
-    }
-
-    public void setFloorButtonStatuses(List<Boolean> floorButtonStatuses) {
-        for (int i = 0; i < floorButtonStatuses.size(); i++) {
-            if (i < this.floorButtonStatuses.size()) {
-                this.floorButtonStatuses.get(i).set(floorButtonStatuses.get(i));
-            } else {
-                this.floorButtonStatuses.add(new SimpleBooleanProperty(floorButtonStatuses.get(i)));
-            }
-        }
     }
 }

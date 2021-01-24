@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class RMIElevatorAdapterTest {
+class RMIElevatorAdapterTest {
 
     IElevator interfaceMock;
     RMIElevatorAdapter simulator;

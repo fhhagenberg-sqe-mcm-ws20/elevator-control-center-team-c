@@ -92,12 +92,4 @@ public class Floor {
     public BooleanProperty buttonDownProperty() {
         return buttonDown;
     }
-
-    public void setButtonUp(boolean buttonUp) {
-        this.buttonUp.set(buttonUp);
-    }
-
-    public void setButtonDown(boolean buttonDown) {
-        this.buttonDown.set(buttonDown);
-    }
 }

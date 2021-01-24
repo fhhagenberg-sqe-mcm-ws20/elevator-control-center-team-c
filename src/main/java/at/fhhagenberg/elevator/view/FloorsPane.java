@@ -3,7 +3,6 @@ package at.fhhagenberg.elevator.view;
 import at.fhhagenberg.elevator.viewmodel.FloorViewModel;
 import javafx.scene.layout.VBox;
 
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("java:S110")

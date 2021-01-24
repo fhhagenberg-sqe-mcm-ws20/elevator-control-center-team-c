@@ -63,7 +63,7 @@ public class RMIElevatorAdapter {
             @SneakyThrows
             @Override
             public void run() {
-                while (!connected) {
+                while (Boolean.FALSE.equals(connected)) {
                     connect();
                     Thread.sleep(100);
                 }
