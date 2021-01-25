@@ -28,6 +28,11 @@ For development reasons, especially for testing, the project is able to connnect
 
 The project is using Github actions as CI tool of choise and runs several unit tests and also GUI tests using TestFX to ensure a constantly working codebase. Moreover, Sonarcloud is used to check for code quality.
 
+# Installation
+
+To run the Elevator Control Center, the .jar file provided with the newest release needs to be downloaded. 
+Before or after executing the .jar file, the simulator needs to be started. The ECC will connect automatically to the simulator once started.
+
 
 # Graphical User Interface with JavaFx
 
