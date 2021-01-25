@@ -143,7 +143,7 @@ public class AutomaticStateController {
             for (int j = 0; j < elevatorSpecificTargetList.get(i).size(); j++) {
                 if (elevatorSpecificTargetList.get(i).get(j).getKey() == floor && Boolean.FALSE.equals(elevatorSpecificTargetList.get(i).get(j).getValue())) {
                     elevatorSpecificTargetList.get(i).remove(j);
-                    if (j == 0) {
+                    if (j == 0 && Boolean.FALSE.equals(elevatorSpecificTargetList.get(i).isEmpty())) {
                         setTarget(building.getElevator(i), elevatorSpecificTargetList.get(i).get(0).getKey());
                     }
                 }
