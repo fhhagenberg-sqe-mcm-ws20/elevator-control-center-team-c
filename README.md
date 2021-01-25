@@ -1,3 +1,34 @@
+# Elevator Control Center - Team C
+
+### Team Members
+
+- Julia Hauptmannn
+- Dominik Grüneis
+- Lukas Hubl
+
+# Project
+
+### Structure
+
+As the name already suggests, the project is about controling elevators. The system is designed to control multiple elevators within a single building. Both passive status reads and active elevator control mechanisms are provided and depicted via a graphical user interface.
+
+### RMI
+
+This project uses Remote Method Invocation as a technique for interaction between the house's elevators and the control center. The interface provides the possibility to read out elevator stats in real time and also provides the neccessary endpoints to actively control the elevators.
+
+### Graphical User Interface
+
+The project comes with a graphical user interface which depicts real-time elevator stats and lets the user control the elevators in the building. 
+
+### Simulation
+
+For development reasons, especially for testing, the project is able to connnect to a simulation software provided within the course. The simulation is used to configre specific house-elevator settings for testing correct application behavior.
+
+### Testing
+
+The project is using Github actions as CI tool of choise and runs several unit tests and also GUI tests using TestFX to ensure a constantly working codebase. Moreover, Sonarcloud is used to check for code quality.
+
+
 # Graphical User Interface with JavaFx
 
 ### Prerequisites
