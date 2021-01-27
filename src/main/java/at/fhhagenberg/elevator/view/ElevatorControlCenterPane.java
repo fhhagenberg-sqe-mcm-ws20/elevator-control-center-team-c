@@ -5,7 +5,6 @@ import at.fhhagenberg.elevator.viewmodel.BuildingViewModel;
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import at.fhhagenberg.elevator.viewmodel.INotifyModelSizeChangedListener;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 

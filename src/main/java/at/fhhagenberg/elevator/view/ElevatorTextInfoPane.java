@@ -1,7 +1,6 @@
 package at.fhhagenberg.elevator.view;
 
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
