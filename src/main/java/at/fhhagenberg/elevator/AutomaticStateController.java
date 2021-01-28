@@ -198,6 +198,8 @@ public class AutomaticStateController {
                     elevatorSpecificTargetList.get(i).remove(0);
                     if (!elevatorSpecificTargetList.get(i).isEmpty()) {
                         setTarget(elevator, elevatorSpecificTargetList.get(i).get(0).getKey());
+                    }else{
+                        setCommittedDirection(elevator,2);
                     }
                 }
             }
@@ -230,10 +232,26 @@ public class AutomaticStateController {
      */
     private void setTarget(Elevator elevator, Floor floor) {
         rmiElevatorAdapter.setTarget(elevator.getNumber(), floor.getNumber());
+        setCommittedDirection(elevator, calculateCommittedDirection(elevator,floor));
+    }
+
+    private int calculateCommittedDirection(Elevator elevator, Floor floor){
+        int direction=elevator.getFloor()-floor.getNumber();
+        if(direction<0){
+            return 0;
+        }else if(direction>0){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+    private void setCommittedDirection(Elevator elevator, int direction){
+        rmiElevatorAdapter.setCommitedDirection(elevator.getNumber(),direction);
     }
 
     /**
-     * Cheks if the floor is target of any elevator
+     * Checks if the floor is target of any elevator
      * @param floor floor that should be checked
      * @return true if is a target, false if not
      */

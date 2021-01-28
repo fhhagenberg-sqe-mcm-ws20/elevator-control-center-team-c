@@ -23,6 +23,86 @@ import static sqelevator.IElevator.ELEVATOR_DOORS_OPEN;
  * These test were really useful
  */
 class AutomaticStateControllerTest {
+
+    @Test
+    void testUpdateSetCommittedDirectionUp() {
+        RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
+        Floor floor02 = new Floor(1, false, true);
+        List<Integer> listOfServicedFloors = new ArrayList<>();
+        listOfServicedFloors.add(1);
+        List<Boolean> elevatorFloorButtons = new ArrayList<>();
+        elevatorFloorButtons.add(false);
+        elevatorFloorButtons.add(false);
+        Elevator elevator = new Elevator(0, 1, 1, 1, 0, 1, 1, 1, 1, 0, listOfServicedFloors, elevatorFloorButtons);
+        List<Elevator> elevators = new ArrayList<>();
+        List<Floor> floors = new ArrayList<>();
+        elevators.add(elevator);
+        floors.add(floor02);
+        Building building = new Building(elevators, floors, 50);
+
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> direction = ArgumentCaptor.forClass(Integer.class);
+        new AutomaticStateController(rmiAdapterMock, building);
+
+        verify(rmiAdapterMock, times(1)).setCommitedDirection(elevatorCaptor.capture(), direction.capture());
+        assertEquals(0, elevatorCaptor.getValue());
+        assertEquals(0, direction.getValue());
+    }
+
+    @Test
+    void testUpdateSetCommittedDirectionDown() {
+        RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
+        Floor floor02 = new Floor(1, false, true);
+        List<Integer> listOfServicedFloors = new ArrayList<>();
+        listOfServicedFloors.add(1);
+        List<Boolean> elevatorFloorButtons = new ArrayList<>();
+        elevatorFloorButtons.add(false);
+        elevatorFloorButtons.add(false);
+        Elevator elevator = new Elevator(0, 1, 1, 1, 2, 1, 1, 1, 1, 0, listOfServicedFloors, elevatorFloorButtons);
+        List<Elevator> elevators = new ArrayList<>();
+        List<Floor> floors = new ArrayList<>();
+        elevators.add(elevator);
+        floors.add(floor02);
+        Building building = new Building(elevators, floors, 50);
+
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> direction = ArgumentCaptor.forClass(Integer.class);
+        new AutomaticStateController(rmiAdapterMock, building);
+
+        verify(rmiAdapterMock, times(1)).setCommitedDirection(elevatorCaptor.capture(), direction.capture());
+        assertEquals(0, elevatorCaptor.getValue());
+        assertEquals(1, direction.getValue());
+    }
+
+    @Test
+    void testUpdateSetCommittedDirectionUncommitted() {
+        RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
+        Floor floor02 = new Floor(1, false, true);
+        List<Integer> listOfServicedFloors = new ArrayList<>();
+        listOfServicedFloors.add(1);
+        List<Boolean> elevatorFloorButtons = new ArrayList<>();
+        elevatorFloorButtons.add(false);
+        elevatorFloorButtons.add(false);
+        Elevator elevator = new Elevator(0, 1, 1, 1, 1, 1, 1, 1, 1, 0, listOfServicedFloors, elevatorFloorButtons);
+        List<Elevator> elevators = new ArrayList<>();
+        List<Floor> floors = new ArrayList<>();
+        elevators.add(elevator);
+        floors.add(floor02);
+        Building building = new Building(elevators, floors, 50);
+
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> direction = ArgumentCaptor.forClass(Integer.class);
+        new AutomaticStateController(rmiAdapterMock, building);
+
+        verify(rmiAdapterMock, times(2)).setCommitedDirection(elevatorCaptor.capture(), direction.capture());
+        List<Integer> allCapturedElevators = elevatorCaptor.getAllValues();
+        List<Integer> allCapturedDirections = direction.getAllValues();
+        assertEquals(0, allCapturedElevators.get(0));
+        assertEquals(0, allCapturedElevators.get(1));
+        assertEquals(2, allCapturedDirections.get(0));
+        assertEquals(2, allCapturedDirections.get(1));
+    }
+
     @Test
     void testUpdateStateInitialElevatorButtonsOnly() {
         RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);

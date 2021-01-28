@@ -165,6 +165,18 @@ public class ElevatorViewModel {
 
     public void setTargetString(int target) {
         simulator.setTarget(getElevatorNumber(), target);
+        simulator.setCommitedDirection(getElevatorNumber(),calculateCommittedDirection(elevator,target));
+    }
+
+    private int calculateCommittedDirection(Elevator elevator, int floor){
+        int direction=elevator.getFloor()-floor;
+        if(direction<0){
+            return 0;
+        }else if(direction>0){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 
 }
