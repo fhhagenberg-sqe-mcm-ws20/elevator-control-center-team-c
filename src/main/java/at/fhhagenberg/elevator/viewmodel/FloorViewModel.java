@@ -6,6 +6,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import lombok.Getter;
 
+/**
+ * Floor view model which abstracts floor model from the floor view
+ * Every floor has such a view model
+ * It translates the raw model values to view values
+ */
 public class FloorViewModel {
     @Getter
     private final Floor floor;
@@ -22,6 +27,7 @@ public class FloorViewModel {
 
     public FloorViewModel(Floor floor) {
         this.floor = floor;
+        //Bind button state properties to image property
         buttonUpImageProperty.bind(Bindings.when(
                 floor.buttonUpProperty())
                 .then("file:up_filled.png")

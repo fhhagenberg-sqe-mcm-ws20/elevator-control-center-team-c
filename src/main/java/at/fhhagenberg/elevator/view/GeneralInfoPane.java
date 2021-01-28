@@ -9,6 +9,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+/**
+ * This class shows the general information like connection status
+ */
 @SuppressWarnings("java:S110")
 public class GeneralInfoPane extends VBox {
     private TextArea errorMessagesTextArea;

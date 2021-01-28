@@ -16,15 +16,19 @@ import static org.mockito.Mockito.*;
 import static sqelevator.IElevator.ELEVATOR_DOORS_CLOSED;
 import static sqelevator.IElevator.ELEVATOR_DOORS_OPEN;
 
+/**
+ * This test cases try to model every state of the automatic controller
+ * Some test cases are also checked in the bigger state test, but we think it makes sense in this case to keep the small ones to find smaller problems more easily
+ * In the whole application, these were the only tests which really showed me error of the controller
+ * These test were really useful
+ */
 class AutomaticStateControllerTest {
-
-
     @Test
     void testUpdateStateInitialElevatorButtonsOnly() {
         RMIElevatorAdapter rmiAdapterMock = mock(RMIElevatorAdapter.class);
         Floor floor01 = new Floor(0, false, false);
-        Floor floor02 = new Floor(1, false, true);
-        Floor floor03 = new Floor(2, false, true);
+        Floor floor02 = new Floor(1, false, false);
+        Floor floor03 = new Floor(2, false, false);
         List<Boolean> elevatorFloorButtons = new ArrayList<>();
         elevatorFloorButtons.add(false);
         elevatorFloorButtons.add(true);

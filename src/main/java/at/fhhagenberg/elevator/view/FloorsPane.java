@@ -5,6 +5,9 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+/**
+ * This pane is the container for all floor elements
+ */
 @SuppressWarnings("java:S110")
 public class FloorsPane extends VBox {
 

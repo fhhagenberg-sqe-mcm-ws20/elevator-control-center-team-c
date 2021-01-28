@@ -3,6 +3,10 @@ package at.fhhagenberg.elevator.view;
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.scene.layout.VBox;
 
+/**
+ * This is the container for all elements of a single elevator view
+ * Consists of the ElevatorModeButtonpane, ElevatorAnimationPane and ElevatorInfoPane
+ */
 @SuppressWarnings("java:S110")
 public class ElevatorPane extends VBox {
     public ElevatorPane(int numberOfFLoors, ElevatorViewModel elevatorViewModel) {

@@ -4,6 +4,10 @@ import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This class shows the textual information of a single elevator view
+ * This is part of the ElevatorInfoPane
+ */
 @SuppressWarnings("java:S110")
 public class ElevatorTextInfoPane extends GridPane {
     public ElevatorTextInfoPane(ElevatorViewModel elevatorViewModel) {

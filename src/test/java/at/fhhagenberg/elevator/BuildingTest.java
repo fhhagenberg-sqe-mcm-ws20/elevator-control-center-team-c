@@ -303,7 +303,5 @@ class BuildingTest {
         building1.copyValues(building2);
 
         assertEquals(1, building1.getNumberOfElevators());
-
-
     }
 }
