@@ -9,7 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.TextAlignment;
 
-
+/**
+ * This is a single floor filled with the number and button elements
+ */
 @SuppressWarnings("java:S110")
 public class SingleFilledFloorPane extends SingleFloorPane {
 
@@ -33,6 +35,5 @@ public class SingleFilledFloorPane extends SingleFloorPane {
         downLabelBackground.bind(Bindings.createObjectBinding(() -> new Image(floorViewModel.getButtonDownImage(), buttonSize, buttonSize, false, false), floorViewModel.buttonDownImageProperty()));
 
         this.getChildren().addAll(upImg, floorNumberLabel, downImg);
-
     }
 }

@@ -3,6 +3,10 @@ package at.fhhagenberg.elevator.view;
 import at.fhhagenberg.elevator.viewmodel.ElevatorViewModel;
 import javafx.scene.layout.VBox;
 
+/**
+ * Info pane which is shown in every single ElevatorPane
+ * Consist of hte ElevatorButtonInfoPane and the ElevatorTextInfopane
+ */
 @SuppressWarnings("java:S110")
 public class ElevatorInfoPane extends VBox {
     public ElevatorInfoPane(int numberOfFloors, ElevatorViewModel elevatorViewModel) {

@@ -1,7 +1,10 @@
 package at.fhhagenberg;
 
+import at.fhhagenberg.elevator.AutomaticStateController;
 import at.fhhagenberg.elevator.RMIElevatorAdapter;
+import at.fhhagenberg.elevator.model.Building;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import sqelevator.IElevator;
 
@@ -48,6 +51,34 @@ class RMIElevatorAdapterTest {
         rmiRegistry.bind("ElevatorSimTest", interfaceMock);
         await().atMost(300, TimeUnit.MILLISECONDS).until(() -> simulator.isConnected());
         assertTrue(simulator.isConnected());
+    }
+
+    @Test
+    void testSetCommittedDirection() throws RemoteException {
+        IElevator interfaceMock = mock(IElevator.class);
+        RMIElevatorAdapter rmiElevatorAdapter=new RMIElevatorAdapter(interfaceMock);
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> direction = ArgumentCaptor.forClass(Integer.class);
+
+        rmiElevatorAdapter.setCommitedDirection(5,4);
+
+        verify(interfaceMock, times(1)).setCommittedDirection(elevatorCaptor.capture(), direction.capture());
+        assertEquals(5, elevatorCaptor.getValue());
+        assertEquals(4, direction.getValue());
+    }
+
+    @Test
+    void testSetTarget() throws RemoteException {
+        IElevator interfaceMock = mock(IElevator.class);
+        RMIElevatorAdapter rmiElevatorAdapter=new RMIElevatorAdapter(interfaceMock);
+        ArgumentCaptor<Integer> elevatorCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> target = ArgumentCaptor.forClass(Integer.class);
+
+        rmiElevatorAdapter.setCommitedDirection(6,7);
+
+        verify(interfaceMock, times(1)).setCommittedDirection(elevatorCaptor.capture(), target.capture());
+        assertEquals(6, elevatorCaptor.getValue());
+        assertEquals(7, target.getValue());
     }
 
 }

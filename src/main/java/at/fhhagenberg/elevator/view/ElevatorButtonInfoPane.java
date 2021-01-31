@@ -10,9 +10,14 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 
+/**
+ * This pane shows the buttons inside the elevator
+ * Is part of the ElevatorInfoPane
+ */
 @SuppressWarnings("java:S110")
 public class ElevatorButtonInfoPane extends GridPane {
     public ElevatorButtonInfoPane(int numberOfFloors, ElevatorViewModel elevatorViewModel) {
+        //Create button for every floor
         for (int i = 0; i < numberOfFloors; i++) {
             Button singleButton = new Button();
             singleButton.setText(""+(i+1));
@@ -29,12 +34,15 @@ public class ElevatorButtonInfoPane extends GridPane {
                             "-fx-border-color: black;" +
                             "-fx-opacity: 1;"
             );
-            ObjectProperty<Background> floorPaneBackground = singleButton.backgroundProperty();
+
+            //Bind button color to viewmodel
+            ObjectProperty<Background> buttonBackground = singleButton.backgroundProperty();
             final int floorNumber = i;
-            floorPaneBackground.bind(Bindings.createObjectBinding(() -> {
+            buttonBackground.bind(Bindings.createObjectBinding(() -> {
                 BackgroundFill fill = new BackgroundFill(elevatorViewModel.getElevatorFloorButtonColor(floorNumber), CornerRadii.EMPTY, Insets.EMPTY);
                 return new Background(fill);
             }, elevatorViewModel.elevatorFloorButtonColorProperty(floorNumber)));
+            //Add button with numeration
             this.add(singleButton, i%(Math.floorDiv(numberOfFloors,6)+1), 6-(i/(Math.floorDiv(numberOfFloors,6)+1)));
         }
     }

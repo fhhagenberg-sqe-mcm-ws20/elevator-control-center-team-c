@@ -46,6 +46,14 @@ public class RMIElevatorAdapter {
         }
     }
 
+    public void setCommitedDirection(int elevatorNumber, int direction) {
+        try {
+            controller.setCommittedDirection(elevatorNumber, direction);
+        } catch (RemoteException e) {
+            reconnect();
+        }
+    }
+
     private void connect() {
         try {
             controller = (IElevator) Naming.lookup(lookupName);

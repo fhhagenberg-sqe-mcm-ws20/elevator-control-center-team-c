@@ -36,8 +36,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-
-
+        //Can't make anonmous because of annotations
+        //Polling loop
         Runnable runnable = new Runnable() {
             @SneakyThrows
             @Override
@@ -57,6 +57,8 @@ public class App extends Application {
             }
         };
 
+        //Can't make anonmous because of annotations
+        //Automatic state loop
         Runnable automaticSystemRunnable = new Runnable() {
             @SneakyThrows
             @Override

@@ -8,6 +8,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+/**
+ * This is the overal view
+ * It consists of the GeneralInfoPane, FloorsPane and multiple ElevatorPane
+ * It can be reloaded if the number of elevators or floors changes
+ */
 @SuppressWarnings("java:S110")
 public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeChangedListener {
     private BuildingViewModel buildingViewModel;
@@ -28,6 +33,11 @@ public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeC
         generalInfoPane.setSystemStatus(status);
     }
 
+    /**
+     * Creates a new view
+     * Called at the beginning
+     * Called when the building changes
+     */
     private void updateLayout() {
         this.getChildren().clear();
         this.getChildren().addAll(generalInfoPane);
@@ -36,6 +46,7 @@ public class ElevatorControlCenterPane extends HBox implements INotifyModelSizeC
         HBox layout = new HBox();
         var floorsPane = new FloorsPane(buildingViewModel.getFloorViewModels());
         layout.getChildren().add(floorsPane);
+        //Add elevatorPane for every elevator
         for (ElevatorViewModel elevatorViewModel : buildingViewModel.getElevatorViewModels()) {
             layout.getChildren().add(new ElevatorPane(buildingViewModel.getFloorViewModels().size(), elevatorViewModel));
         }

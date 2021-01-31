@@ -11,6 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Switch button for the manual mode
+ * With every click the switch position and the state property are changed
+ */
 @SuppressWarnings("java:S110")
 public class SwitchButton extends StackPane {
     private final Rectangle back = new Rectangle(30, 10, Color.RED);

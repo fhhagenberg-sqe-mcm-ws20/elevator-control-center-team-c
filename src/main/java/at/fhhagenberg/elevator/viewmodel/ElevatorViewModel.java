@@ -9,11 +9,15 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * View model representing the elevator
+ * Converts the model values to the view values
+ * There is a elevator view model for every elevator model / elevator view
+ */
 public class ElevatorViewModel {
 
     private final Elevator elevator;
     private final RMIElevatorAdapter simulator;
-
 
     private final StringProperty capacityString = new SimpleStringProperty("NaN");
     private final StringProperty weightString = new SimpleStringProperty("NaN");
@@ -27,6 +31,8 @@ public class ElevatorViewModel {
     private final int buildingHeight;
 
     public ElevatorViewModel(RMIElevatorAdapter simulator, Elevator elevator, int numberOfFloors, int floorHeight) {
+
+        //Bind different properties and convert at the same time
         this.buildingHeight = floorHeight * numberOfFloors;
         capacityString.bind(Bindings.createStringBinding(() -> (elevator.getCapacity() + ""), elevator.capacityProperty()));
         weightString.bind(Bindings.createStringBinding(() -> (elevator.getWeight() + " lbs"), elevator.weightProperty()));
@@ -53,13 +59,18 @@ public class ElevatorViewModel {
         position.set(1-((double)elevator.getPosition() / buildingHeight));
         elevator.positionProperty().addListener((observable, oldValue, newValue) -> position.set(1-(newValue.doubleValue()) / buildingHeight));
 
+        //If target changes, update floor colors
         elevator.targetProperty().addListener((observable, oldValue, newValue) -> updateFloors());
 
+        //If serviced floors changes, update floor colors
         elevator.listOfServicedFloorsProperty().addListener((observable, oldValue, newValue) -> updateFloors());
 
         updateFloors();
     }
 
+    /**
+     * Set colors of the individual elevator floors
+     */
     private void updateFloors() {
         for (int i = 0; i < elevatorFloorColors.size(); i++) {
             if (i == elevator.getTarget()) {
@@ -154,6 +165,18 @@ public class ElevatorViewModel {
 
     public void setTargetString(int target) {
         simulator.setTarget(getElevatorNumber(), target);
+        simulator.setCommitedDirection(getElevatorNumber(),calculateCommittedDirection(elevator,target));
+    }
+
+    private int calculateCommittedDirection(Elevator elevator, int floor){
+        int direction=elevator.getFloor()-floor;
+        if(direction<0){
+            return 0;
+        }else if(direction>0){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 
 }
